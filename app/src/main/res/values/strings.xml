@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">IflytekAiui</string>
+    <string name="accessibility_service_description">该服务用于帮助用户去自动触发应用事件</string>
+    <string name="launcher_text">今天天气不错,您有什么吩咐的吗?</string>
+</resources>
