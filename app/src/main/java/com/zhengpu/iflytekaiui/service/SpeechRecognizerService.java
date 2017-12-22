@@ -24,7 +24,7 @@ import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
 /**
  * ....
- * Created by wengmf on 2017/11/21.
+ * Created by wengmf on 2017/11/21
  */
 
 public class SpeechRecognizerService extends Service implements IGetVoiceToWord, WakeUpListener, IGetWordToVoice {
