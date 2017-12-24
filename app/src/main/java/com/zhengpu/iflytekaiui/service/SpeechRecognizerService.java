@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import com.blankj.utilcode.utils.Utils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 import com.orhanobut.logger.Logger;
@@ -18,8 +19,9 @@ import com.zhengpu.iflytekaiui.iflytekutils.MyWakeuperListener;
 import com.zhengpu.iflytekaiui.iflytekutils.VoiceToWords;
 import com.zhengpu.iflytekaiui.iflytekutils.WakeUpListener;
 import com.zhengpu.iflytekaiui.iflytekutils.WordsToVoice;
+import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
+import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayThread;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
-
 
 
 /**
@@ -27,12 +29,12 @@ import com.zhengpu.iflytekaiui.utils.PreferUtil;
  * Created by wengmf on 2017/11/21
  */
 
-public class SpeechRecognizerService extends Service implements IGetVoiceToWord, WakeUpListener, IGetWordToVoice {
+public class SpeechRecognizerService extends Service implements IGetVoiceToWord, WakeUpListener, IGetWordToVoice, KuGuoMuiscPlayListener {
 
     private IflytekWakeUp iflytekWakeUp;
     private VoiceToWords voiceToWords;
-    private WordsToVoice wordsToVoice;
-
+    private static WordsToVoice wordsToVoice;
+    private KuGuoMuiscPlayThread kuGuoMuiscPlayThread;
 
     @Override
     public void onCreate() {
@@ -44,8 +46,8 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 //            startActivity(intent);
 //        }
 
-
-        SpeechUtility.createUtility(this.getApplication(), SpeechConstant.APPID + "=5a127875");// 传递科大讯飞appid
+        Utils.init(this);
+        SpeechUtility.createUtility(this.getApplication(), SpeechConstant.APPID + "=5a3ca6a9");// 传递科大讯飞appid
         PreferUtil.getInstance().init(this);
         //初始化讯飞语音识别
         voiceToWords = VoiceToWords.getInstance(this);
@@ -54,9 +56,11 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         wordsToVoice.setiGetWordToVoice(this);
         iflytekWakeUp = new IflytekWakeUp(this, new MyWakeuperListener(this, this));
 
-        wordsToVoice.startSynthesizer(AppController.LAUNCHER_TEXT,getResources().getString(R.string.launcher_text));
+        wordsToVoice.startSynthesizer(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text));
 
         iflytekWakeUp.startWakeuper();
+        kuGuoMuiscPlayThread = KuGuoMuiscPlayThread.getInstance(this);
+        kuGuoMuiscPlayThread.setKuGuoMuiscPlayListener(this);
 
 //        new Thread(){
 //            @Override
@@ -94,6 +98,16 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     @Override
     public void getResult(String service, BaseBean result) {
         Logger.e(result.toString());
+        switch (service){
+            case  AppController.R4:    //  听不懂说什么
+                wordsToVoice.startSynthesizer(AppController.R4, getResources().getString(R.string.r4_text));
+                break;
+            case AppController.MUSICX:
+                voiceToWords.mIatDestroy();
+                KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());
+                break;
+        }
+        voiceToWords.startRecognizer();
     }
 
     /**
@@ -101,8 +115,8 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void showLowVoice(String result) {
-//    wordsToVoice.startSynthesizer(result);
-//        voiceToWords.startRecognizer();
+        wordsToVoice.startSynthesizer(AppController.SHOWLOWVOICE_TEXT, getResources().getString(R.string.showLowVoice_text));
+        voiceToWords.mIatDestroy();
     }
 
 
@@ -129,8 +143,8 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void OnWakeUpSuccess() {
-//        wordsToVoice.startSynthesizer("是的主人");
-//        voiceToWords.startRecognizer();
+        wordsToVoice.startSynthesizer("ddd", "是的主人");
+        voiceToWords.startRecognizer();
     }
 
     /**
@@ -142,12 +156,30 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     }
 
     @Override
-    public void SpeechEnd(String wordsData) {
-
+    public void SpeechEnd(String service) {
+        Logger.e(service);
+        if(service.equals(AppController.SHOWLOWVOICE_TEXT)){
+            voiceToWords.mIatDestroy();
+        }else
+        voiceToWords.startRecognizer();
     }
 
     @Override
     public void SpeechError() {
+
+    }
+
+    public static void  startSpeech(String  service,String text ){
+        wordsToVoice.startSynthesizer(service, text);
+    }
+
+    @Override
+    public void KuGuoMuiscPlayPause() {
+
+    }
+
+    @Override
+    public void KuGuoMuiscPlayStop() {
 
     }
 }

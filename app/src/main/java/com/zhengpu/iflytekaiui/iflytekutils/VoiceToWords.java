@@ -13,11 +13,15 @@ import com.iflytek.cloud.SpeechUnderstanderListener;
 import com.iflytek.cloud.UnderstanderResult;
 import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.base.AppController;
+import com.zhengpu.iflytekaiui.iflytekaction.BaikeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.CalcAction;
+import com.zhengpu.iflytekaiui.iflytekaction.CustomBaikeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.OpenAppAction;
+import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CalcBean;
+import com.zhengpu.iflytekaiui.iflytekbean.CustomBaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.DatetimeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FlightBean;
 import com.zhengpu.iflytekaiui.iflytekbean.JokeBean;
@@ -117,7 +121,7 @@ public class VoiceToWords {
 //    mIat.setParameter(SpeechConstant.NET_TIMEOUT,"30000");
         mIat.setParameter(SpeechConstant.PARAMS, null);
         //设置语音输入超时时间
-        mIat.setParameter(SpeechConstant.KEY_SPEECH_TIMEOUT, "10000");
+        mIat.setParameter(SpeechConstant.KEY_SPEECH_TIMEOUT, "50000");
         mIat.setParameter(SpeechConstant.SAMPLE_RATE, "16000");
         // 设置听写引擎
         mIat.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
@@ -199,35 +203,31 @@ public class VoiceToWords {
                 Logger.e(result.getResultString());
                 String text = result.getResultString();
                 JSONObject jsonObject2;
-                String service;
+                String service = "";
                 try {
                     jsonObject2 = new JSONObject(text);
-                    service = jsonObject2.getString("service");
+                    if (jsonObject2.has("service")) {
+                        service = jsonObject2.getString("service");
+                    }
                     int rc = jsonObject2.getInt("rc");
-                    if (service != null && rc != 4) {
+                    if (service != "" && rc != 4) {
                         judgeService(service, text);
                     } else {
                         if (mIGetVoiceToWord != null) {
-//                            mIGetVoiceToWord.SpeechError("不好意思，我好像没听懂");
-
                             R4Bean r4Bean = JsonParser.parseResultR4Bean(text);
                             BaseBean baseBean = new BaseBean();
                             baseBean.setContext(r4Bean.getText());
                             baseBean.setR4Bean(r4Bean);
                             mIGetVoiceToWord.getResult("r4", baseBean);
-
-
                         }
                     }
                 } catch (JSONException e) {
                     if (mIGetVoiceToWord != null) {
-//                        mIGetVoiceToWord.SpeechError("不好意思，我好像没听懂");
                         R4Bean r4Bean = JsonParser.parseResultR4Bean(text);
                         BaseBean baseBean = new BaseBean();
                         baseBean.setContext(r4Bean.getText());
                         baseBean.setR4Bean(r4Bean);
                         mIGetVoiceToWord.getResult("r4", baseBean);
-
                     }
                     e.printStackTrace();
                 }
@@ -306,35 +306,40 @@ public class VoiceToWords {
             BaseBean baseBean = new BaseBean();
             switch (service) {
 
-                case "baike": {     //互动百科词条查询。
+                case AppController.BAIKE: {     //互动百科词条查询。
 
                     BaikeBean baikeBean = JsonParser.parseResultBaikeBean(text);
-                    if (baikeBean != null) {
+                    if (baikeBean != null && baikeBean.getAnswer().getText() != null) {
 
                         baseBean.setContext(baikeBean.getText());
                         baseBean.setBaikeBean(baikeBean);
                         mIGetVoiceToWord.getResult(service, baseBean);
 
-                        String txt = "";
-                        if (baikeBean.getSemantic().size() != 0 && baikeBean.getSemantic().get(0).getSlotsBean() != null &&
-                                baikeBean.getSemantic().get(0).getSlotsBean().getValue() != null) {
-                            txt = "为你在百度百科中搜索" + baikeBean.getSemantic().get(0).getSlotsBean().getValue();
-                        } else {
-                            txt = "为你在百度百科中搜索";
-                        }
-//                        CalcAction calcAction = new CalcAction(txt);
-//                        calcAction.start();
+                        BaikeAction baikeAction = new BaikeAction(service, baikeBean.getAnswer().getText());
+                        baikeAction.start();
 
-//                        if (baikeBean.getSemantic() != null && baikeBean.getSemantic().get(0).getSlotsBean().getValue() != null) {
-//                            //打开浏览器进行百度百科进行搜索
-//                            String keywords = baikeBean.getSemantic().get(0).getSlotsBean().getValue();
-//                            Intent intent = new Intent(Intent.ACTION_VIEW);
-//                            intent.setData(Uri.parse("https://www.baidu.com/s?wd=" + keywords + "&tn=SE_PSStatistics_p1d9m0nf"));
-//                            context.startActivity(intent);
-//                        }
                     }
+
                     break;
                 }
+                case AppController.OPENAPPTEST_CUSTOM_BAIKE: // 自定义百科 对人名 地名进行百科
+
+
+                    CustomBaikeBean customBaikeBean = JsonParser.parseResultCustomBaikeBean(text);
+                    if (customBaikeBean != null && customBaikeBean.getSemantic().size() != 0 && customBaikeBean.getSemantic().get(0).getSlots().size() != 0
+                            && customBaikeBean.getSemantic().get(0).getSlots().get(0).getValue() != null) {
+
+                        baseBean.setContext(customBaikeBean.getText());
+                        baseBean.setCustomBaikeBean(customBaikeBean);
+                        mIGetVoiceToWord.getResult(service, baseBean);
+
+                        CustomBaikeAction customBaikeAction = new CustomBaikeAction(service, customBaikeBean.getSemantic().get(0).getSlots().get(0).getValue(), context);
+                        customBaikeAction.start();
+
+                    }
+
+
+                    break;
                 case "calc": {    //  数值计算问答
                     CalcBean calcBean = JsonParser.parseResultCalc(text);
                     operation = calcBean.getOperation();
@@ -348,7 +353,7 @@ public class VoiceToWords {
                                     mIGetVoiceToWord.getResult(service, baseBean);
 
                                     String str = calcBean.getAnswer().getText();
-                                    CalcAction calcAction = new CalcAction(service,str);
+                                    CalcAction calcAction = new CalcAction(service, str);
                                     calcAction.start();
 
                                 }
@@ -370,7 +375,7 @@ public class VoiceToWords {
                                     mIGetVoiceToWord.getResult(service, baseBean);
 
                                     String str = datetimeBean.getAnswer().getText();
-                                    CalcAction calcAction = new CalcAction(service,str);
+                                    CalcAction calcAction = new CalcAction(service, str);
                                     calcAction.start();
 
                                 }
@@ -393,13 +398,13 @@ public class VoiceToWords {
                     break;
                 }
 
-                case "joke": {  //     笑话的点播
+                case "joke": {  // 笑话的点播
                     JokeBean jokeBean = JsonParser.parseResultJokeBean(text);
                     if (jokeBean != null) {
 
-                            baseBean.setContext(jokeBean.getText());
-                            baseBean.setJokeBean(jokeBean);
-                            mIGetVoiceToWord.getResult(service, baseBean);
+                        baseBean.setContext(jokeBean.getText());
+                        baseBean.setJokeBean(jokeBean);
+                        mIGetVoiceToWord.getResult(service, baseBean);
 
 //                            if (jokeBean.getData().getResult().get(0).getTitle() != null && jokeBean.getData().getResult().get(0).getMp3Url() != null) {
 //                                String mp3Url = jokeBean.getData().getResult().get(0).getMp3Url();
@@ -417,29 +422,17 @@ public class VoiceToWords {
                     }
                     break;
                 }
-                case "musicX": {  //   音乐的搜索和播放
+                case AppController.MUSICX: {  //   音乐的搜索和播放
 
                     MusicXBean musicXBean = JsonParser.parseResultMusicXBean(text);
-                    if (musicXBean.getSemantic().size() != 0) {
-                        if (musicXBean.getSemantic().get(0).getSlots().size() != 0) {
-                            if (musicXBean.getSemantic().get(0).getSlots().get(0).getValue() != null) {
+                    if (musicXBean != null && musicXBean.getText() != null) {
 
-                                baseBean.setContext(musicXBean.getText());
-                                baseBean.setMusicXBean(musicXBean);
-                                mIGetVoiceToWord.getResult(service, baseBean);
+                        baseBean.setContext(musicXBean.getText());
+                        baseBean.setMusicXBean(musicXBean);
+                        mIGetVoiceToWord.getResult(service, baseBean);
 
-//                                String songName = musicXBean.getSemantic().get(0).getSlots().get(0).getValue();
-//                                String appName = "酷狗音乐";
-//                                String str = musicXBean.getAnswer().getText();
-//
-//                                if (isAppInstalled(context, appName)) {
-//                                    PlayMusicxAction playMusicxAction = new PlayMusicxAction(songName, appName, str, context);
-//                                    playMusicxAction.start();
-//                                } else {
-//                                    Logger.e("没有安装酷狗音乐APP");
-//                                }
-                            }
-                        }
+                        PlayMusicxAction playMusicxAction = new PlayMusicxAction(musicXBean.getText(),musicXBean.getText(),context);
+                        playMusicxAction.start();
                     }
                     break;
                 }
@@ -593,7 +586,7 @@ public class VoiceToWords {
                 }
 
                 default:
-                    WordsToVoice.startSynthesizer(AppController.R4,"不好意思，我好像没听懂。");
+                    WordsToVoice.startSynthesizer(AppController.R4, "不好意思，我好像没听懂。");
             }
 
         }

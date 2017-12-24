@@ -18,19 +18,19 @@ public final class PreferUtil {
     private static SharedPreferences mPrefer;
     private static final String APP_NAME = "om.zhengpu.zhengpuandroid";
 
-    private static final String PLAY_MUSIC_NAME = "play_music_name";
+    private static final String PLAY_MUSIC_URL = "play_music_name";
     private static final String PLAY_VIDEO_NAME = "play_video_name";
 
     private static final String PLAY_STORY_URL = "play_story_url";
 
 
 
-    public String getPlayMusicName() {
-        return getString(PLAY_MUSIC_NAME, "");
+    public String getPlayMusicUrl() {
+        return getString(PLAY_MUSIC_URL, "");
     }
 
-    public void setPlayMusicName(String flag) {
-        putString(PLAY_MUSIC_NAME, flag);
+    public void setPlayMusicUrl(String flag) {
+        putString(PLAY_MUSIC_URL, flag);
     }
 
     public void setPlayVideoName(String flag) {

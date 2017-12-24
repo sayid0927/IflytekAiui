@@ -55,6 +55,15 @@ public class BaseBean    {
     private CustomMusicBean customMusicBean;
     private CmdBean cmdBean;
     private TianJokeBean tianJokeBean;
+    private  CustomBaikeBean customBaikeBean;
+
+    public CustomBaikeBean getCustomBaikeBean() {
+        return customBaikeBean;
+    }
+
+    public void setCustomBaikeBean(CustomBaikeBean customBaikeBean) {
+        this.customBaikeBean = customBaikeBean;
+    }
 
     public CustomMusicBean getCustomMusicBean() {
         return customMusicBean;

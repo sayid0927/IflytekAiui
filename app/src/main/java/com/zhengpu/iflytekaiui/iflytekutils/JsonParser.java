@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zhengpu.iflytekaiui.iflytekbean.BaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CalcBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CmdBean;
+import com.zhengpu.iflytekaiui.iflytekbean.CustomBaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.DatetimeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FlightBean;
 import com.zhengpu.iflytekaiui.iflytekbean.JokeBean;
@@ -20,10 +21,19 @@ import com.zhengpu.iflytekaiui.iflytekbean.StoryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.CustomMusicBean;
+import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfCustomBaikeBean;
+import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicBean;
+import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicResBean;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.lang.reflect.Type;
 
 public class JsonParser {
+
+
 
 
     static CalcBean parseResultCalc(String json) {
@@ -40,7 +50,7 @@ public class JsonParser {
     }
 
 
-    static BaikeBean parseResultBaikeBean(String json) {
+     static BaikeBean parseResultBaikeBean(String json) {
         BaikeBean baikeBean = new BaikeBean();
         try {
             Type type = new TypeToken<BaikeBean>() {
@@ -232,7 +242,55 @@ public class JsonParser {
     }
 
 
+    static CustomBaikeBean parseResultCustomBaikeBean(String json) {
+        CustomBaikeBean customBaikeBean = new CustomBaikeBean();
+        try {
+            Type type = new TypeToken<CustomBaikeBean>() {
+            }.getType();
+            customBaikeBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return customBaikeBean;
+    }
 
+
+
+    public static IfCustomBaikeBean parseResultIfCustomBaikeBean(String json) {
+        IfCustomBaikeBean ifCustomBaikeBean = new IfCustomBaikeBean();
+        try {
+            Type type = new TypeToken<IfCustomBaikeBean>() {
+            }.getType();
+            ifCustomBaikeBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ifCustomBaikeBean;
+    }
+
+    public static IfMusicBean parseResultIfMusicBean(String json) {
+        IfMusicBean ifMusicBean = new IfMusicBean();
+        try {
+            Type type = new TypeToken<IfMusicBean>() {
+            }.getType();
+            ifMusicBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ifMusicBean;
+    }
+
+    public static IfMusicResBean parseResultIfMusicResBean(String json) {
+        IfMusicResBean ifMusicResBean = new IfMusicResBean();
+        try {
+            Type type = new TypeToken<IfMusicResBean>() {
+            }.getType();
+            ifMusicResBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ifMusicResBean;
+    }
 
 
 

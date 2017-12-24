@@ -2,6 +2,7 @@ package com.zhengpu.iflytekaiui.iflytekaction;
 
 
 import com.zhengpu.iflytekaiui.iflytekutils.WordsToVoice;
+import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 
 /**
  * sayid ....
@@ -14,10 +15,10 @@ public class CalcAction {
     private  String service;
     public CalcAction( String service,String text) {
         this.text = text;
+        this.service = service;
     }
 
     public void start() {
-        WordsToVoice.startSynthesizer(service,text);
+        SpeechRecognizerService.startSpeech(service,text);
     }
-
 }

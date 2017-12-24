@@ -19,7 +19,9 @@ public class AppController {
 
 
     public  static  final  String LAUNCHER_TEXT="launcher_text";
-    public static final String BAIKE = "baike";
+    public  static  final  String SHOWLOWVOICE_TEXT="showLowVoice_text";
+
+    public static final String BAIKE = "baike";  //互动百科词条查询。
     public static final String CALC = "calc";
     public static final String DATETIME = "datetime";
     public static final String FLIGHT = "flight";
@@ -32,12 +34,12 @@ public class AppController {
     public static final String STORY = "story";
     public static final String OPENAPPTEST_SHIPING = "OPENAPPTEST.shiping";
     public static final String OPENAPPTEST_MUSIC_DEMO = "OPENAPPTEST.music_demo";
+    public static final String OPENAPPTEST_CUSTOM_BAIKE = "OPENAPPTEST.custom_baike";
+
 
     public static final String WEATHER = "weather";
     public static final String POINT = "point";
     public static final String R4 = "r4";
-
-
 
 
 }

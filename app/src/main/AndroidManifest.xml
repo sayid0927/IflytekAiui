@@ -61,17 +61,17 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <!--<service android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />-->
+        <service android:name=".service.SpeechRecognizerService" />
 
 
 
-        <!--<activity android:name=".MainActivity">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
 
