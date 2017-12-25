@@ -24,6 +24,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.otherbean.CustomMusicBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfCustomBaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicResBean;
+import com.zhengpu.iflytekaiui.iflytekbean.otherbean.TianJokeBean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -290,6 +291,18 @@ public class JsonParser {
             e.printStackTrace();
         }
         return ifMusicResBean;
+    }
+
+    public static TianJokeBean parseResultTianJokeBean(String json) {
+        TianJokeBean tianJokeBean = new TianJokeBean();
+        try {
+            Type type = new TypeToken<TianJokeBean>() {
+            }.getType();
+            tianJokeBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tianJokeBean;
     }
 
 

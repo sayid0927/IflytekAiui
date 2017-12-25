@@ -11,7 +11,6 @@ import java.util.List;
 
 public class WXItemBean   {
 
-
     /**
      * code : 200
      * msg : success

@@ -100,6 +100,4 @@ public class IflytekWakeUp {
         mIvw.stopListening();
         Logger.e("讯飞停止唤醒");
     }
-
-
 }

@@ -38,8 +38,6 @@ public class MyAccessibilityService extends AccessibilityService  {
 //                    youKu.start(rootNode);
 //                }
 //                break;
-//
-//
 //        }
     }
 
@@ -47,6 +45,7 @@ public class MyAccessibilityService extends AccessibilityService  {
     public void onInterrupt() {
         //服务中断，如授权关闭或者将服务杀死
         Log.i(TAG, "授权中断");
+
     }
 
     @Override

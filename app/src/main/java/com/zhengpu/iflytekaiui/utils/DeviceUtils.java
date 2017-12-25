@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.media.AudioManager;
 import android.provider.MediaStore;
 import android.view.accessibility.AccessibilityManager;
 
@@ -14,6 +15,8 @@ import com.zhengpu.iflytekaiui.service.MyAccessibilityService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.AUDIO_SERVICE;
 
 /**
  * Created by zs on 2016/7/7.
@@ -132,6 +135,27 @@ public class DeviceUtils {
             }
         }
         return allAudioSongBeanList;
+    }
+
+    /***
+     * 控制系统音量大小
+     * @param Type =0 ; 减少音量
+     * @param context
+     */
+
+    public static void setCurrentVolume(int Type, Context context) {
+        //初始化音频管理器
+        AudioManager mAudioManager = (AudioManager)context.getSystemService(AUDIO_SERVICE);
+        //获取系统最大音量
+        int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        // 获取设备当前音量
+        int currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        if (Type == 0) {
+            //减少音量
+            mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);//调低声音
+        } else {
+            mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);  //调高声音
+        }
     }
 }
 

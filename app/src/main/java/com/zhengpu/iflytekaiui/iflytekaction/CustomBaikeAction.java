@@ -27,11 +27,12 @@ public class CustomBaikeAction {
 
     private String value;
     private String service;
-private  Context    context;
+    private Context context;
+
     public CustomBaikeAction(String service, String value, Context context) {
         this.value = value;
         this.service = service;
-this.context = context;
+        this.context = context;
     }
 
     public void start() {
@@ -51,9 +52,9 @@ this.context = context;
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                 String res = response.body().string();
+                String res = response.body().string();
                 IfCustomBaikeBean ifCustomBaikeBean = JsonParser.parseResultIfCustomBaikeBean(res);
-                if (ifCustomBaikeBean != null && ifCustomBaikeBean.getData()!= null && ifCustomBaikeBean.getData().getAnswer()!=null ) {
+                if (ifCustomBaikeBean != null && ifCustomBaikeBean.getData() != null && ifCustomBaikeBean.getData().getAnswer() != null) {
                     SpeechRecognizerService.startSpeech(service, ifCustomBaikeBean.getData().getAnswer());
                 }
             }

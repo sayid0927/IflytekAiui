@@ -6,8 +6,6 @@ package com.zhengpu.iflytekaiui.iflytekbean;
 
 public class AllAudioSongBean {
 
-
-
     private  int musicId;
     private  String musicTitle;
     private  String musicFileUrl;
@@ -15,7 +13,6 @@ public class AllAudioSongBean {
     private  String music_author;
     private  String music_url;
     private  int music_duration;
-
 
     public int getMusicId() {
         return musicId;
