@@ -73,12 +73,16 @@ public class VoiceToWords {
      */
     public VoiceToWords(Context context) {
         this.context = context;
+        Logger.d("context >>>" +context);
+        Logger.d("mInitListener >>>" +mInitListener);
         mIat = SpeechUnderstander.createUnderstander(context, mInitListener);
+        Logger.d("mIat >>>" +mIat);
         //设置参数
         setParams();
     }
 
     public static synchronized VoiceToWords getInstance(Context context) {
+        Logger.d("getInstance >>>" +context);
         if (voiceToWords == null)
             voiceToWords = new VoiceToWords(context);
         return voiceToWords;
@@ -461,6 +465,7 @@ public class VoiceToWords {
                                 String appName = openAppBean.getSemantic().get(0).getSlots().get(0).getNormValue();
                                 OpenAppAction openAppAction = new OpenAppAction(appName, context);
                                 openAppAction.start();
+
                             }
                         }
                     }
@@ -501,18 +506,17 @@ public class VoiceToWords {
                     break;
                 }
                 case AppController.STORY: { //     故事的点播
+
                     StoryBean storyBean = JsonParser.parseResultStoryBean(text);
                     if (storyBean != null ) {
 
                         baseBean.setContext(storyBean.getText());
                         baseBean.setStoryBean(storyBean);
                         mIGetVoiceToWord.getResult(service, baseBean);
-
                         StoryAction storyAction = new StoryAction(service,storyBean,  context);
                         storyAction.start();
 
                     }
-
                     break;
                 }
                 case "OPENAPPTEST.shiping": {//   视频的搜索和播放
@@ -521,7 +525,6 @@ public class VoiceToWords {
                     if (videoBean != null && videoBean.getSemantic().size() != 0) {
                         if (videoBean.getSemantic().get(0).getSlots().size() != 0) {
                             if (videoBean.getSemantic().get(0).getSlots().get(0).getValue() != null) {
-
                                 baseBean.setContext(videoBean.getText());
                                 baseBean.setVideoBean(videoBean);
                                 mIGetVoiceToWord.getResult(service, baseBean);
@@ -577,12 +580,9 @@ public class VoiceToWords {
                     }
                     break;
                 }
-
                 default:
                     WordsToVoice.startSynthesizer(AppController.R4, "不好意思，我好像没听懂。");
             }
-
         }
     }
-
 }

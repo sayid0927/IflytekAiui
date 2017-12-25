@@ -3,12 +3,17 @@ package com.zhengpu.iflytekaiui.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.RemoteCallbackList;
+import android.os.RemoteException;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.blankj.utilcode.utils.Utils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 import com.orhanobut.logger.Logger;
+import com.unicool.aidlcallback.server.ITaskBinder;
+import com.unicool.aidlcallback.server.ITaskCallback;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
@@ -22,6 +27,8 @@ import com.zhengpu.iflytekaiui.iflytekutils.WordsToVoice;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayThread;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
+
+import java.util.Random;
 
 
 /**
@@ -40,6 +47,8 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void onCreate() {
         super.onCreate();
 
+        Logger.e("onCreate" );
+
 //        if (!isStartAccessibilityService(getApplicationContext())) {
 //           Intent intent=  new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -47,48 +56,26 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 //        }
 
         Utils.init(this);
-        SpeechUtility.createUtility(this.getApplication(), SpeechConstant.APPID + "=5a3ca6a9");// 传递科大讯飞appid
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5a3ca6a9,"+ SpeechConstant.FORCE_LOGIN +"=true");// 传递科大讯飞appid
         PreferUtil.getInstance().init(this);
-        //初始化讯飞语音识别
+      //初始化讯飞语音识别
+
         voiceToWords = VoiceToWords.getInstance(this);
         voiceToWords.setmIGetVoiceToWord(this);
         wordsToVoice = WordsToVoice.getInstance(this);
         wordsToVoice.setiGetWordToVoice(this);
         iflytekWakeUp = new IflytekWakeUp(this, new MyWakeuperListener(this, this));
-
         wordsToVoice.startSynthesizer(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text));
-
         iflytekWakeUp.startWakeuper();
         kuGuoMuiscPlayThread = KuGuoMuiscPlayThread.getInstance(this);
         kuGuoMuiscPlayThread.setKuGuoMuiscPlayListener(this);
 
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                super.run();
-//                while (true){
-//                    iflytekWakeUp.startWakeuper();
-//                    try {
-//                        sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }.start();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        Logger.e("MyService onStartCommand: startId=" + startId);
         return super.onStartCommand(intent, flags, startId);
-
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
     }
 
 
@@ -182,4 +169,84 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void KuGuoMuiscPlayStop() {
 
     }
+
+    final RemoteCallbackList<ITaskCallback> mRcbList = new RemoteCallbackList<>();
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        Log.e("TAG", "MyService onBind: ");
+//        callbackClient(-1);
+        return mBinder;
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Log.e("TAG", "MyService onUnbind: ");
+        return super.onUnbind(intent);
+    }
+
+    @Override
+    public void onRebind(Intent intent) {
+        Log.e("TAG", "MyService onRebind: ");
+    }
+
+
+    @Override
+    public void onDestroy() {
+        Log.e("TAG", "MyService onDestroy: ");
+        mRcbList.kill();
+    }
+
+    private final ITaskBinder.Stub mBinder = new ITaskBinder.Stub() {
+        @Override
+        public boolean isTaskRunning() {
+            Log.e("TAG", "ITaskBinder isTaskRunning: ");
+            return false;
+        }
+
+        @Override
+        public void stopRunningTask() {
+            Log.e("TAG", "ITaskBinder stopRunningTask: ");
+            stopSelf(); //对应startId，默认值-1
+        }
+
+        @Override
+        public void registerCallback(ITaskCallback cb) {
+            Log.e("TAG", "ITaskBinder registerCallback: " + (cb != null));
+            if (cb == null) return;
+            mRcbList.register(cb);
+
+            // TODO: 2017/5/5 先注册，后使用
+            callbackClient(new Random().nextInt());
+        }
+
+        @Override
+        public void unregisterCallback(ITaskCallback cb) {
+            Log.e("TAG", "ITaskBinder unregisterCallback: " + (cb != null));
+            if (cb != null) {
+                mRcbList.unregister(cb);
+            }
+        }
+    };
+
+
+    private void callbackClient(int val) {
+        final int N = mRcbList.beginBroadcast();
+        Log.e("TAG", "RemoteCallbackList N: " + N);
+        for (int i = 0; i < N; i++) {
+            try {
+                mRcbList.getBroadcastItem(i).actionPerformed(val);
+            } catch (RemoteException e) {
+                // The RemoteCallbackList will take care of removing
+                // the dead object for us.
+                Log.e("TAG", "RemoteCallbackList i: " + i);
+                Log.e("TAG", "RemoteCallbackList RemoteException: " + e.getMessage());
+            }
+        }
+        mRcbList.finishBroadcast();
+    }
+
+
+
 }
