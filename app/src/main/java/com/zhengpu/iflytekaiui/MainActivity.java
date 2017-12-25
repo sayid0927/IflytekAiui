@@ -22,7 +22,5 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//    startService(new Intent(MainActivity.this, SpeechRecognizerService.class));
-
     }
 }
