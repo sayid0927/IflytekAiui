@@ -4,6 +4,8 @@ HermesEventBus
 
 AidlCallback-master
 
+am startservice -n com.zhengpu.iflytekaiui/com.zhengpu.iflytekaiui.service.SpeechRecognizerService
+
 百科接口
  http://aiui.xfyun.cn/taste/getAnswer?text=%E7%99%BE%E7%A7%91%E5%82%AC%E7%9C%A0%E5%A4%A7%E5%B8%88&uid=1513932129105&appid=all&category=baike&timestamp=1513932137263
  音乐
