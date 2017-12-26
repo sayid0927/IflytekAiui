@@ -47,11 +47,13 @@ public class PlayMusicxAction {
     private MusicXBean musicXBean;
     private String artist = "", song = "";
     private int PalyMode;
+    private  String strRequest;
 
-    public PlayMusicxAction(String service, MusicXBean musicXBean, Context context) {
+    public PlayMusicxAction(String service, MusicXBean musicXBean, String strRequest ,Context context) {
         this.service = service;
         this.musicXBean = musicXBean;
         this.context = context;
+        this.strRequest = strRequest;
 
     }
 
@@ -94,14 +96,14 @@ public class PlayMusicxAction {
                     if (artist != "" && song != "") {
                         if (artist.equals(Author) && song.equals(Music_Title)) {                    //如果歌手跟歌名一样
                             PreferUtil.getInstance().setPlayMusicUrl(allAudioSongBeanList.get(i).getMusicFileUrl());
-                            SpeechRecognizerService.startSpeech(service,"请欣赏" + artist + "的" + song);
+                            SpeechRecognizerService.startSpeech(service,"请欣赏" + artist + "的" + song,strRequest);
                             PalyMode = 0;
                             break;
                         }
                     } else if (song != "") {
                         if (song.equals(Music_Title)) {
                             PreferUtil.getInstance().setPlayMusicUrl(allAudioSongBeanList.get(i).getMusicFileUrl());
-                            SpeechRecognizerService.startSpeech(service,"请欣赏"+song );
+                            SpeechRecognizerService.startSpeech(service,"请欣赏"+song,strRequest );
                             PalyMode = 0;
                             break;
                         }
@@ -119,7 +121,7 @@ public class PlayMusicxAction {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             e.printStackTrace();
-                            SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.error_network_text));
+                            SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.error_network_text),strRequest);
                         }
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
@@ -129,7 +131,7 @@ public class PlayMusicxAction {
                                 IfMusicResBean ifMusicResBean = JsonParser.parseResultIfMusicResBean(ifMusicBean.getData().getRes());
                                 if (ifMusicResBean != null && ifMusicResBean.getData() != null && ifMusicResBean.getData().getResult() != null && ifMusicResBean.getData().getResult().get(0).getAudiopath() != null) {
                                     PreferUtil.getInstance().setPlayMusicUrl(ifMusicResBean.getData().getResult().get(0).getAudiopath());
-                                    SpeechRecognizerService.startSpeech(service, ifMusicResBean.getAnswer().getText());
+                                    SpeechRecognizerService.startSpeech(service, ifMusicResBean.getAnswer().getText(),strRequest);
                                 }
                             }
                         }

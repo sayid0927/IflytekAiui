@@ -27,11 +27,13 @@ public class JokeAction {
 
     private Context context;
     private String service;
+    private String strRequest;
 
 
-    public JokeAction(String service, Context context) {
+    public JokeAction(String service, String strRequest,Context context) {
         this.service = service;
         this.context = context;
+        this.strRequest = strRequest;
     }
 
     public void start() {
@@ -46,7 +48,7 @@ public class JokeAction {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.error_network_text));
+                SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.error_network_text),strRequest);
             }
 
             @Override
@@ -64,7 +66,7 @@ public class JokeAction {
                     content = content.replace(">", " ");
                     tianJokeBean.getNewslist().get(0).setContent(content);
 
-                    SpeechRecognizerService.startSpeech(service,"请欣赏笑话"+ tianJokeBean.getNewslist().get(0).getTitle() +tianJokeBean.getNewslist().get(0).getContent());
+                    SpeechRecognizerService.startSpeech(service,"请欣赏笑话"+ tianJokeBean.getNewslist().get(0).getTitle() +tianJokeBean.getNewslist().get(0).getContent(),strRequest);
                 }
             }
         });

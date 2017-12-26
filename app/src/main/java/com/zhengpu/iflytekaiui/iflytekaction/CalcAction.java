@@ -1,6 +1,7 @@
 package com.zhengpu.iflytekaiui.iflytekaction;
 
 
+import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
 import com.zhengpu.iflytekaiui.iflytekutils.WordsToVoice;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 
@@ -13,12 +14,14 @@ public class CalcAction {
 
     private String text;
     private  String service;
-    public CalcAction( String service,String text) {
+    private String  request;
+    public CalcAction(String service, String text, String  request) {
         this.text = text;
         this.service = service;
+        this.request = request;
     }
 
     public void start() {
-        SpeechRecognizerService.startSpeech(service,text);
+        SpeechRecognizerService.startSpeech(service,text,request);
     }
 }

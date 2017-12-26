@@ -16,17 +16,19 @@ public class StoryAction {
     private Context context;
     private String service;
     private StoryBean storyBean;
+    private  String strRequest;
 
-    public StoryAction(String service, StoryBean storyBean, Context context) {
+    public StoryAction(String service, StoryBean storyBean, String strRequest, Context context) {
         this.context = context;
         this.service = service;
         this.storyBean = storyBean;
+        this.strRequest =strRequest ;
     }
 
     public void start() {
         if (storyBean != null && storyBean.getData() != null && storyBean.getData().getResult().size() != 0 && storyBean.getData().getResult().get(0).getName() != null && storyBean.getData().getResult().get(0).getPlayUrl() != null) {
             PreferUtil.getInstance().setPlayStoryUrl(storyBean.getData().getResult().get(0).getPlayUrl());
-            SpeechRecognizerService.startSpeech(service, "请欣赏" + storyBean.getData().getResult().get(0).getName());
+            SpeechRecognizerService.startSpeech(service, "请欣赏" + storyBean.getData().getResult().get(0).getName(),strRequest);
         }
     }
 }

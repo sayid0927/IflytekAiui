@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,6 +22,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="停止服务" />
+
+        <EditText
+            android:text="今天天气不错"
+            android:id="@+id/edit_sendMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/butn_sendMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="发送消息" />
+
+        <TextView
+            android:id="@+id/text"
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+
+
+</LinearLayout>

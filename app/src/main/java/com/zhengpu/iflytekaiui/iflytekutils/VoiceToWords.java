@@ -322,7 +322,7 @@ public class VoiceToWords {
                         baseBean.setBaikeBean(baikeBean);
                         mIGetVoiceToWord.getResult(service, baseBean);
 
-                        BaikeAction baikeAction = new BaikeAction(service, baikeBean.getAnswer().getText());
+                        BaikeAction baikeAction = new BaikeAction(service, baikeBean.getAnswer().getText(),text);
                         baikeAction.start();
 
                     }
@@ -339,7 +339,7 @@ public class VoiceToWords {
                         baseBean.setCustomBaikeBean(customBaikeBean);
                         mIGetVoiceToWord.getResult(service, baseBean);
 
-                        CustomBaikeAction customBaikeAction = new CustomBaikeAction(service, customBaikeBean.getSemantic().get(0).getSlots().get(0).getValue(), context);
+                        CustomBaikeAction customBaikeAction = new CustomBaikeAction(service, customBaikeBean.getSemantic().get(0).getSlots().get(0).getValue(), text,context);
                         customBaikeAction.start();
 
                     }
@@ -358,7 +358,7 @@ public class VoiceToWords {
                                     mIGetVoiceToWord.getResult(service, baseBean);
 
                                     String str = calcBean.getAnswer().getText();
-                                    CalcAction calcAction = new CalcAction(service, str);
+                                    CalcAction calcAction = new CalcAction(service, str,text);
                                     calcAction.start();
 
                                 }
@@ -380,7 +380,7 @@ public class VoiceToWords {
                                     mIGetVoiceToWord.getResult(service, baseBean);
 
                                     String str = datetimeBean.getAnswer().getText();
-                                    CalcAction calcAction = new CalcAction(service, str);
+                                    CalcAction calcAction = new CalcAction(service, str,text);
                                     calcAction.start();
 
                                 }
@@ -400,7 +400,7 @@ public class VoiceToWords {
                         mIGetVoiceToWord.getResult(service, baseBean);
 
                         String str = flightBean.getAnswer().getText();
-                        CalcAction calcAction = new CalcAction(service, str);
+                        CalcAction calcAction = new CalcAction(service, str,text);
                         calcAction.start();
 
 
@@ -416,7 +416,7 @@ public class VoiceToWords {
                         baseBean.setJokeBean(jokeBean);
                         mIGetVoiceToWord.getResult(service, baseBean);
 
-                        JokeAction jokeAction = new JokeAction(service, context);
+                        JokeAction jokeAction = new JokeAction(service,text, context);
                         jokeAction.start();
 
                     }
@@ -431,7 +431,7 @@ public class VoiceToWords {
                         baseBean.setMusicXBean(musicXBean);
                         mIGetVoiceToWord.getResult(service, baseBean);
 
-                        PlayMusicxAction playMusicxAction = new PlayMusicxAction(service,musicXBean,context);
+                        PlayMusicxAction playMusicxAction = new PlayMusicxAction(service,musicXBean,text,context);
                         playMusicxAction.start();
                     }
                     break;
@@ -445,7 +445,7 @@ public class VoiceToWords {
                         baseBean.setNewsBean(newsBean);
                         mIGetVoiceToWord.getResult(service, baseBean);
 
-                        NewsAction newsAction = new NewsAction(service,newsBean ,context);
+                        NewsAction newsAction = new NewsAction(service,newsBean,text ,context);
                         newsAction.start();
 
                     }
@@ -481,7 +481,7 @@ public class VoiceToWords {
                         mIGetVoiceToWord.getResult(service, baseBean);
 
                         String str = openQABean.getAnswer().getText();
-                        CalcAction calcAction = new CalcAction(service,str);
+                        CalcAction calcAction = new CalcAction(service,str,text);
                         calcAction.start();
                     }
                     break;
@@ -497,7 +497,7 @@ public class VoiceToWords {
                                 mIGetVoiceToWord.getResult(service, baseBean);
 
                                 String str = poetryBean.getAnswer().getText();
-                                CalcAction calcAction = new CalcAction(service,str);
+                                CalcAction calcAction = new CalcAction(service,str,text);
                                 calcAction.start();
 
                             }
@@ -513,7 +513,7 @@ public class VoiceToWords {
                         baseBean.setContext(storyBean.getText());
                         baseBean.setStoryBean(storyBean);
                         mIGetVoiceToWord.getResult(service, baseBean);
-                        StoryAction storyAction = new StoryAction(service,storyBean,  context);
+                        StoryAction storyAction = new StoryAction(service,storyBean,text,context);
                         storyAction.start();
 
                     }

@@ -1,6 +1,5 @@
 package com.zhengpu.app2;
 
-import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,26 +10,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.unicool.aidlcallback.server.ITaskBinder;
-import com.unicool.aidlcallback.server.ITaskCallback;
+import com.zhengpu.iflytekaiui.ipc.entity.RequestMessage;
+import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Intent intent;
-    private Button start, stop;
+    private Button start, stop , sendMessage;
+    private TextView textView;
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Intent intent = new Intent();
-//        intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui", "com.zhengpu.iflytekaiui.SpeechRecognizerService"));//设置一个组件名称  同组件名来启动所需要启动Service
         start = (Button) this.findViewById(R.id.start);
         stop = (Button) this.findViewById(R.id.stop);
+        sendMessage = (Button)this.findViewById(R.id.butn_sendMessage);
+        textView= (TextView)this.findViewById(R.id.text);
+        editText = (EditText )this.findViewById(R.id.edit_sendMessage);
         start.setOnClickListener(this);
         stop.setOnClickListener(this);
+        sendMessage.setOnClickListener(this);
+        HermesEventBus.getDefault().register(this);
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getMainAppEvent(SendMessage message) {
+        textView.setText( "service ===  " + message.getService() +"\n"+"message ===  "+message.getMessage() );
     }
 
 
@@ -39,63 +55,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.start:
 
-//                Bundle args = new Bundle();
-//                Intent intent = new Intent();
-//                intent.setAction("com.zhengpu.iflytekaiui.service.SpeechRecognizerService");
-//                intent.setPackage(this.getPackageName());
-//                intent.putExtras(args);
-//                bindService(intent,mConnection,Service.BIND_AUTO_CREATE);
-
                 Bundle args = new Bundle();
                 Intent intent = new Intent("com.zhengpu.iflytekaiui.service.SpeechRecognizerService");
                 intent.putExtras(args);
+//                intent.setPackage(this.getPackageName());
                 bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
-//                Intent mIntent = new Intent();
-//                mIntent.setAction("com.zhengpu.iflytekaiui.service.SpeechRecognizerService");//你定义的service的action
-//                mIntent.setPackage(getPackageName());//这里你需要设置你应用的包名
-//                mIntent.putExtras(args);
-//                bindService(mIntent, mConnection, Context.BIND_AUTO_CREATE);
-
                 break;
             case R.id.stop:
 //                stopService(intent);
 
                 break;
+            case  R.id.butn_sendMessage:
+               String message =  editText.getText().toString().trim();
+                RequestMessage requestMessage = new RequestMessage();
+                requestMessage.setMessage(message);
+                requestMessage.setService("AAAAA");
+                HermesEventBus.getDefault().post(requestMessage);
+                break;
         }
     }
 
-    private ITaskBinder mService;
     private ServiceConnection mConnection = new ServiceConnection() {
-
         public void onServiceConnected(ComponentName className, IBinder service) {
-            Log.e("TAG","FFFFF");
 
-//            mService = ITaskBinder.Stub.asInterface(service);
-//            try {
-//                mService.registerCallback(mCallback);
-//            } catch (RemoteException e) {
-//                e.printStackTrace();
-//            }
         }
 
         public void onServiceDisconnected(ComponentName className) {
-//            mService = null;
         }
     };
-
-
-
-    private ITaskCallback mCallback = new ITaskCallback.Stub() {
-
-        public void actionPerformed(int id) {
-            Log.e("TAG","client：callback by server id=" + id);
-        }
-    };
-
-
-
-
-
-
 }

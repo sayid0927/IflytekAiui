@@ -28,18 +28,20 @@ public class CustomBaikeAction {
     private String value;
     private String service;
     private Context context;
+    private String strRequest;
 
-    public CustomBaikeAction(String service, String value, Context context) {
+    public CustomBaikeAction(String service, String value, String strRequest, Context context) {
         this.value = value;
         this.service = service;
         this.context = context;
+        this.strRequest = strRequest;
     }
 
     public void start() {
 
         String url = "http://aiui.xfyun.cn/taste/getAnswer?text=" + EncodeUtils.urlEncode(value + "百科") + "&appid=all&category=baike&timestamp=1513932137263";
         OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
+        final Request request = new Request.Builder()
                 .url(url)
                 .build();
         Call call = okHttpClient.newCall(request);
@@ -47,7 +49,7 @@ public class CustomBaikeAction {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.error_network_text));
+                SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.error_network_text),strRequest);
             }
 
             @Override
@@ -55,7 +57,7 @@ public class CustomBaikeAction {
                 String res = response.body().string();
                 IfCustomBaikeBean ifCustomBaikeBean = JsonParser.parseResultIfCustomBaikeBean(res);
                 if (ifCustomBaikeBean != null && ifCustomBaikeBean.getData() != null && ifCustomBaikeBean.getData().getAnswer() != null) {
-                    SpeechRecognizerService.startSpeech(service, ifCustomBaikeBean.getData().getAnswer());
+                    SpeechRecognizerService.startSpeech(service, ifCustomBaikeBean.getData().getAnswer(),strRequest);
                 }
             }
         });

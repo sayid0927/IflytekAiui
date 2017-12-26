@@ -14,13 +14,15 @@ public class BaikeAction {
 
     private String text;
     private String service;
+    private  String request;
 
-    public BaikeAction(String service, String text ) {
+    public BaikeAction(String service, String text ,String request) {
         this.text = text;
         this.service = service;
+        this.request = request;
     }
 
     public void start() {
-        SpeechRecognizerService.startSpeech(service, text);
+        SpeechRecognizerService.startSpeech(service, text,request);
     }
 }

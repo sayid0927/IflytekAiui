@@ -17,17 +17,18 @@ public class NewsAction {
     private Context context;
     private String service;
     private NewsBean newsBean;
-
-    public NewsAction(String service, NewsBean newsBean, Context context) {
+    private  String strRequest;
+    public NewsAction(String service, NewsBean newsBean,String strRequest,  Context context) {
         this.context = context;
         this.newsBean = newsBean;
         this.service = service;
+        this.strRequest = strRequest;
     }
 
     public void start() {
         if (newsBean != null && newsBean.getData() != null && newsBean.getData().getResult().size() != 0 && newsBean.getData().getResult().get(0).getUrl() != null) {
             PreferUtil.getInstance().setPlayMusicUrl(newsBean.getData().getResult().get(0).getUrl());
-            SpeechRecognizerService.startSpeech(service, newsBean.getAnswer().getText());
+            SpeechRecognizerService.startSpeech(service, newsBean.getAnswer().getText(),strRequest);
         }
     }
 }

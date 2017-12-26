@@ -1,5 +1,6 @@
 package com.zhengpu.iflytekaiui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +16,7 @@ import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
  * Created by Administrator on 2017/12/23 0023.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
