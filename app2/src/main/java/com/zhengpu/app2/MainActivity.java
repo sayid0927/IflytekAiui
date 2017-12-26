@@ -1,9 +1,12 @@
 package com.zhengpu.app2;
 
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +22,8 @@ import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
@@ -40,17 +45,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         start.setOnClickListener(this);
         sendMessage.setOnClickListener(this);
         HermesEventBus.getDefault().register(this);
-
-        Bundle args = new Bundle();
-        intent = new Intent("com.zhengpu.iflytekaiui.service.SpeechRecognizerService");
-        intent.putExtras(args);
         textView.setMovementMethod(ScrollingMovementMethod.getInstance());
 
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getMainAppEvent(SendMessage message) {
-        textView.setText(textView.getText() + "\n"+ "service ===  " + message.getService() + "\n" + "message ===  " + message.getMessage());
+        textView.setText(textView.getText() + "\n" + "service ===  " + message.getService() + "\n" + "message ===  " + message.getMessage());
     }
 
 
@@ -58,7 +59,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.start:
+//                Bundle args = new Bundle();
+//                intent = new Intent("com.zhengpu.iflytekaiui.service.SpeechRecognizerService");
+//                intent.putExtras(args);
+//                intent.setPackage(this.getPackageName());
+//                bindService(intent, mConnection, Context.BIND_WAIVE_PRIORITY);
+
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
+                        "com.zhengpu.iflytekaiui.service.SpeechRecognizerService"));
+                // 绑定服务
                 bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
                 break;
 
             case R.id.butn_sendMessage:
@@ -73,10 +85,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-
+            Log.e("TAG", "CCCC");
         }
 
         public void onServiceDisconnected(ComponentName className) {
+            Log.e("TAG", "CVVVV");
         }
     };
+
 }

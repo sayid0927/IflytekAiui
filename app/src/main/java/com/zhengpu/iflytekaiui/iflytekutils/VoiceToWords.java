@@ -12,6 +12,7 @@ import com.iflytek.cloud.SpeechUnderstander;
 import com.iflytek.cloud.SpeechUnderstanderListener;
 import com.iflytek.cloud.UnderstanderResult;
 import com.orhanobut.logger.Logger;
+import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekaction.BaikeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.CalcAction;
@@ -21,7 +22,9 @@ import com.zhengpu.iflytekaiui.iflytekaction.NewsAction;
 import com.zhengpu.iflytekaiui.iflytekaction.OpenAppAction;
 import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
 import com.zhengpu.iflytekaiui.iflytekaction.R4Action;
+import com.zhengpu.iflytekaiui.iflytekaction.ShipingAction;
 import com.zhengpu.iflytekaiui.iflytekaction.StoryAction;
+import com.zhengpu.iflytekaiui.iflytekaction.WeatherAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CalcBean;
@@ -39,6 +42,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.StoryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.CustomMusicBean;
+import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +70,7 @@ public class VoiceToWords {
     // 函数调用返回值,表示返回结果，失败或成功
     //设置回调接口
     private IGetVoiceToWord mIGetVoiceToWord;
+    private KuGuoMuiscPlayListener kuGuoMuiscPlayListener;
     private String operation;
     public static VoiceToWords voiceToWords;
 
@@ -87,6 +92,10 @@ public class VoiceToWords {
 
     public void setmIGetVoiceToWord(IGetVoiceToWord mIGetVoiceToWord) {
         this.mIGetVoiceToWord = mIGetVoiceToWord;
+    }
+
+    public void setkuGuoMuiscPlayListener(KuGuoMuiscPlayListener kuGuoMuiscPlayListener) {
+        this.kuGuoMuiscPlayListener = kuGuoMuiscPlayListener;
     }
 
     /**
@@ -221,7 +230,7 @@ public class VoiceToWords {
                             baseBean.setContext(r4Bean.getText());
                             baseBean.setR4Bean(r4Bean);
                             mIGetVoiceToWord.getResult("r4", baseBean);
-                            R4Action r4Action = new R4Action("r4",text,context);
+                            R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
                             r4Action.start();
                         }
                     }
@@ -232,7 +241,7 @@ public class VoiceToWords {
                         baseBean.setContext(r4Bean.getText());
                         baseBean.setR4Bean(r4Bean);
                         mIGetVoiceToWord.getResult("r4", baseBean);
-                        R4Action r4Action = new R4Action("r4",text,context);
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
                         r4Action.start();
                     }
                     e.printStackTrace();
@@ -301,30 +310,23 @@ public class VoiceToWords {
 
                     BaikeBean baikeBean = JsonParser.parseResultBaikeBean(text);
                     if (baikeBean != null && baikeBean.getAnswer().getText() != null) {
-
-                        baseBean.setContext(baikeBean.getText());
-                        baseBean.setBaikeBean(baikeBean);
-                        mIGetVoiceToWord.getResult(service, baseBean);
-
                         BaikeAction baikeAction = new BaikeAction(service, baikeBean.getAnswer().getText(),text);
                         baikeAction.start();
-
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
                     break;
                 }
                 case AppController.OPENAPPTEST_CUSTOM_BAIKE: // 自定义百科 对人名 地名进行百科
 
                     CustomBaikeBean customBaikeBean = JsonParser.parseResultCustomBaikeBean(text);
-                    if (customBaikeBean != null && customBaikeBean.getSemantic().size() != 0 && customBaikeBean.getSemantic().get(0).getSlots().size() != 0
-                            && customBaikeBean.getSemantic().get(0).getSlots().get(0).getValue() != null) {
-
-                        baseBean.setContext(customBaikeBean.getText());
-                        baseBean.setCustomBaikeBean(customBaikeBean);
-                        mIGetVoiceToWord.getResult(service, baseBean);
-
-                        CustomBaikeAction customBaikeAction = new CustomBaikeAction(service, customBaikeBean.getSemantic().get(0).getSlots().get(0).getValue(), text,context);
+                    if (customBaikeBean != null && customBaikeBean.getQuery()!=null) {
+                        CustomBaikeAction customBaikeAction = new CustomBaikeAction(service, customBaikeBean.getQuery(), text,context);
                         customBaikeAction.start();
-
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
 
                     break;
@@ -335,15 +337,12 @@ public class VoiceToWords {
                         case "ANSWER":
                             if (calcBean.getAnswer() != null) {
                                 if (calcBean.getAnswer().getText() != null) {
-
-                                    baseBean.setContext(calcBean.getText());
-                                    baseBean.setCalcBean(calcBean);
-                                    mIGetVoiceToWord.getResult(service, baseBean);
-
                                     String str = calcBean.getAnswer().getText();
                                     CalcAction calcAction = new CalcAction(service, str,text);
                                     calcAction.start();
-
+                                }else {
+                                    R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                                    r4Action.start();
                                 }
                             }
                             break;
@@ -357,15 +356,12 @@ public class VoiceToWords {
                         case "ANSWER": {
                             if (datetimeBean.getAnswer() != null) {
                                 if (datetimeBean.getAnswer().getText() != null) {
-
-                                    baseBean.setContext(datetimeBean.getText());
-                                    baseBean.setDatetimeBean(datetimeBean);
-                                    mIGetVoiceToWord.getResult(service, baseBean);
-
                                     String str = datetimeBean.getAnswer().getText();
                                     CalcAction calcAction = new CalcAction(service, str,text);
                                     calcAction.start();
-
+                                }else {
+                                    R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                                    r4Action.start();
                                 }
                             }
                         }
@@ -377,15 +373,12 @@ public class VoiceToWords {
 
                     FlightBean flightBean = JsonParser.parseResultFlightoBean(text);
                     if (flightBean != null && flightBean.getAnswer() != null) {
-
-                        baseBean.setContext(flightBean.getText());
-                        baseBean.setFlightBean(flightBean);
-                        mIGetVoiceToWord.getResult(service, baseBean);
-
                         String str = flightBean.getAnswer().getText();
                         CalcAction calcAction = new CalcAction(service, str,text);
                         calcAction.start();
-
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
                     break;
                 }
@@ -393,14 +386,11 @@ public class VoiceToWords {
                 case AppController.JOKE: {  // 笑话的点播
                     JokeBean jokeBean = JsonParser.parseResultJokeBean(text);
                     if (jokeBean != null) {
-
-                        baseBean.setContext(jokeBean.getText());
-                        baseBean.setJokeBean(jokeBean);
-                        mIGetVoiceToWord.getResult(service, baseBean);
-
                         JokeAction jokeAction = new JokeAction(service,text, context);
                         jokeAction.start();
-
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
                     break;
                 }
@@ -408,13 +398,11 @@ public class VoiceToWords {
 
                     MusicXBean musicXBean = JsonParser.parseResultMusicXBean(text);
                     if (musicXBean != null && musicXBean.getText() != null) {
-
-                        baseBean.setContext(musicXBean.getText());
-                        baseBean.setMusicXBean(musicXBean);
-                        mIGetVoiceToWord.getResult(service, baseBean);
-
                         PlayMusicxAction playMusicxAction = new PlayMusicxAction(service,musicXBean,text,context);
                         playMusicxAction.start();
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
                     break;
                 }
@@ -422,14 +410,11 @@ public class VoiceToWords {
 
                     NewsBean newsBean = JsonParser.parseResultNewsBean(text);
                     if (newsBean != null && newsBean.getText() != null) {
-
-                        baseBean.setContext(newsBean.getText());
-                        baseBean.setNewsBean(newsBean);
-                        mIGetVoiceToWord.getResult(service, baseBean);
-
                         NewsAction newsAction = new NewsAction(service,newsBean,text ,context);
                         newsAction.start();
-
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
                     break;
                 }
@@ -439,17 +424,14 @@ public class VoiceToWords {
                     if (openAppBean != null && openAppBean.getSemantic().size() != 0) {
                         if (openAppBean.getSemantic().get(0).getSlots().size() != 0) {
                             if (openAppBean.getSemantic().get(0).getSlots().get(0).getNormValue() != null) {
-
-                                baseBean.setContext(openAppBean.getText());
-                                baseBean.setOpenAppBean(openAppBean);
-                                mIGetVoiceToWord.getResult(service, baseBean);
-
                                 String appName = openAppBean.getSemantic().get(0).getSlots().get(0).getNormValue();
                                 OpenAppAction openAppAction = new OpenAppAction(appName, context);
                                 openAppAction.start();
-
                             }
                         }
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
                     break;
                 }
@@ -457,15 +439,12 @@ public class VoiceToWords {
 
                     OpenQABean openQABean = JsonParser.parseResultOpenQABean(text);
                     if (openQABean != null && openQABean.getAnswer() != null) {
-
-                        baseBean.setContext(openQABean.getText());
-                        baseBean.setOpenQABean(openQABean);
-                        mIGetVoiceToWord.getResult(service, baseBean);
-
                         String str = openQABean.getAnswer().getText();
                         CalcAction calcAction = new CalcAction(service,str,text);
                         calcAction.start();
-
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
                     break;
                 }
@@ -474,17 +453,15 @@ public class VoiceToWords {
                     if (poetryBean != null && poetryBean.getData() != null) {
                         if (poetryBean.getData().getResult().size() != 0) {
                             if (poetryBean.getData().getResult().get(0).getTitle() != null && poetryBean.getData().getResult().get(0).getShowContent() != null) {
-
-                                baseBean.setContext(poetryBean.getText());
-                                baseBean.setPoetryBean(poetryBean);
-                                mIGetVoiceToWord.getResult(service, baseBean);
-
                                 String str = poetryBean.getAnswer().getText();
                                 CalcAction calcAction = new CalcAction(service,str,text);
                                 calcAction.start();
 
                             }
                         }
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
                     break;
                 }
@@ -492,13 +469,11 @@ public class VoiceToWords {
 
                     StoryBean storyBean = JsonParser.parseResultStoryBean(text);
                     if (storyBean != null ) {
-
-                        baseBean.setContext(storyBean.getText());
-                        baseBean.setStoryBean(storyBean);
-                        mIGetVoiceToWord.getResult(service, baseBean);
                         StoryAction storyAction = new StoryAction(service,storyBean,text,context);
                         storyAction.start();
-
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
                     break;
                 }
@@ -508,9 +483,8 @@ public class VoiceToWords {
                     if (videoBean != null && videoBean.getSemantic().size() != 0) {
                         if (videoBean.getSemantic().get(0).getSlots().size() != 0) {
                             if (videoBean.getSemantic().get(0).getSlots().get(0).getValue() != null) {
-                                baseBean.setContext(videoBean.getText());
-                                baseBean.setVideoBean(videoBean);
-                                mIGetVoiceToWord.getResult(service, baseBean);
+//                                ShipingAction shipingAction = new ShipingAction(service,)
+
                             }
                         }
                     }
@@ -519,52 +493,24 @@ public class VoiceToWords {
                 case "weather": {  //  天气情况的查询。
 
                     WeatherBean weatherBean = JsonParser.parseResultWeatherBean(text);
-                    if (weatherBean.getData().getResult().size() != 0) {
-
-                        baseBean.setContext(weatherBean.getText());
-                        baseBean.setWeatherBean(weatherBean);
-                        mIGetVoiceToWord.getResult(service, baseBean);
-
-//                        StringBuilder stringBuffer = new StringBuilder();
-//                        String humidity = weatherBean.getData().getResult().get(0).getHumidity();  //湿度
-//                        String tempRange = weatherBean.getData().getResult().get(0).getTempRange();   // 温度范围
-//                        String weather = weatherBean.getData().getResult().get(0).getWeather(); //天气情况
-//                        String wind = weatherBean.getData().getResult().get(0).getWind();
-//                        String prompt = weatherBean.getData().getResult().get(0).getExp().getCt().getPrompt();
-//
-//                        String airQuality = weatherBean.getData().getResult().get(0).getAirQuality();
-//
-//                        stringBuffer.append("空气质量为").append(airQuality)
-//                                .append("湿度为").append(humidity).append("温度范围为").append(tempRange)
-//                                .append("天气情况为").append(weather).append("风向以及风力情况为").append(wind)
-//                                .append("穿衣指数为").append(prompt);
-
-//                        CalcAction calcAction = new CalcAction(stringBuffer.toString());
-//                        calcAction.start();
-
-                    } else {
-                        if (weatherBean.getAnswer() != null) {
-//                            String str = weatherBean.getAnswer().getText();
-//                            CalcAction calcAction = new CalcAction(str);
-//                            calcAction.start();
-                        }
-                    }
-
-                    break;
-                }
-                case "OPENAPPTEST.music_demo": {  //   艺人跟歌曲 搜索和播放
-                    CustomMusicBean customMusicBean = JsonParser.parseResultCustomMusicBean(text);
-                    if (customMusicBean != null && customMusicBean.getSemantic().size() != 0 && customMusicBean.getSemantic().get(0).getSlots().size() != 0) {
-
-                        baseBean.setContext(customMusicBean.getText());
-                        baseBean.setCustomMusicBean(customMusicBean);
-                        mIGetVoiceToWord.getResult(service, baseBean);
-
+                    if (weatherBean != null && weatherBean.getData().getResult().size() != 0) {
+                        WeatherAction weatherAction = new WeatherAction(service,weatherBean ,text);
+                        weatherAction.start();
                     }
                     break;
                 }
+//                case "OPENAPPTEST.music_demo": {  //   艺人跟歌曲 搜索和播放
+//                    CustomMusicBean customMusicBean = JsonParser.parseResultCustomMusicBean(text);
+//                    if (customMusicBean != null && customMusicBean.getSemantic().size() != 0 && customMusicBean.getSemantic().get(0).getSlots().size() != 0) {
+//                        baseBean.setContext(customMusicBean.getText());
+//                        baseBean.setCustomMusicBean(customMusicBean);
+//                        mIGetVoiceToWord.getResult(service, baseBean);
+//                    }
+//                    break;
+//                }
                 default:
-                    WordsToVoice.startSynthesizer(AppController.R4, "不好意思，我好像没听懂。");
+                    R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                    r4Action.start();
             }
         }
     }

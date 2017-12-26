@@ -19,6 +19,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicResBean;
 import com.zhengpu.iflytekaiui.iflytekutils.JsonParser;
 import com.zhengpu.iflytekaiui.iflytekutils.WordsToVoice;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
+import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayThread;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
@@ -48,13 +49,17 @@ public class PlayMusicxAction {
     private String artist = "", song = "";
     private int PalyMode;
     private  String strRequest;
+    public  KuGuoMuiscPlayListener kuGuoMuiscPlayListener;
 
     public PlayMusicxAction(String service, MusicXBean musicXBean, String strRequest ,Context context) {
         this.service = service;
         this.musicXBean = musicXBean;
         this.context = context;
         this.strRequest = strRequest;
+    }
 
+    public void  setKuGuoMuiscPlayListener(KuGuoMuiscPlayListener kuGuoMuiscPlayListener){
+        this.kuGuoMuiscPlayListener = kuGuoMuiscPlayListener;
     }
 
     public void start() {
@@ -70,9 +75,11 @@ public class PlayMusicxAction {
                             setCurrentVolume(1, context);  // 音量大
                             break;
                         case "pause":  // 暂停
+//                            kuGuoMuiscPlayListener.KuGuoMuiscPlayPause();
 //                            setKuGuoMuiscPlayStart(0);
                             break;
                         case "replay": // 继续播放
+//                            kuGuoMuiscPlayListener.KuGuoMuiscPlayReplay();
 //                            setKuGuoMuiscPlayStart(1);
                             break;
                     }
@@ -139,4 +146,8 @@ public class PlayMusicxAction {
                 }
         }
     }
+
+
+
+
 }

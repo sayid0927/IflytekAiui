@@ -58,6 +58,9 @@ public class CustomBaikeAction {
                 IfCustomBaikeBean ifCustomBaikeBean = JsonParser.parseResultIfCustomBaikeBean(res);
                 if (ifCustomBaikeBean != null && ifCustomBaikeBean.getData() != null && ifCustomBaikeBean.getData().getAnswer() != null) {
                     SpeechRecognizerService.startSpeech(service, ifCustomBaikeBean.getData().getAnswer(),strRequest);
+                }else {
+                    R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                    r4Action.start();
                 }
             }
         });

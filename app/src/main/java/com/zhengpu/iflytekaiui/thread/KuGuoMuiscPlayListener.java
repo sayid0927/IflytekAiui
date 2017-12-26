@@ -8,5 +8,7 @@ package com.zhengpu.iflytekaiui.thread;
 public interface KuGuoMuiscPlayListener {
 
     void KuGuoMuiscPlayPause();
-    void  KuGuoMuiscPlayStop();
+    void  KuGuoMuiscPlayReplay();
+
+
 }
