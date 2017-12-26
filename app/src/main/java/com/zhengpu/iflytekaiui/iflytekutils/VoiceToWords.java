@@ -20,6 +20,7 @@ import com.zhengpu.iflytekaiui.iflytekaction.JokeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.NewsAction;
 import com.zhengpu.iflytekaiui.iflytekaction.OpenAppAction;
 import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
+import com.zhengpu.iflytekaiui.iflytekaction.R4Action;
 import com.zhengpu.iflytekaiui.iflytekaction.StoryAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
@@ -73,16 +74,12 @@ public class VoiceToWords {
      */
     public VoiceToWords(Context context) {
         this.context = context;
-        Logger.d("context >>>" +context);
-        Logger.d("mInitListener >>>" +mInitListener);
         mIat = SpeechUnderstander.createUnderstander(context, mInitListener);
-        Logger.d("mIat >>>" +mIat);
         //设置参数
         setParams();
     }
 
     public static synchronized VoiceToWords getInstance(Context context) {
-        Logger.d("getInstance >>>" +context);
         if (voiceToWords == null)
             voiceToWords = new VoiceToWords(context);
         return voiceToWords;
@@ -91,7 +88,6 @@ public class VoiceToWords {
     public void setmIGetVoiceToWord(IGetVoiceToWord mIGetVoiceToWord) {
         this.mIGetVoiceToWord = mIGetVoiceToWord;
     }
-
 
     /**
      * 初始化监听器
@@ -128,7 +124,7 @@ public class VoiceToWords {
 //    mIat.setParameter(SpeechConstant.NET_TIMEOUT,"30000");
         mIat.setParameter(SpeechConstant.PARAMS, null);
         //设置语音输入超时时间
-        mIat.setParameter(SpeechConstant.KEY_SPEECH_TIMEOUT, "50000");
+        mIat.setParameter(SpeechConstant.KEY_SPEECH_TIMEOUT, "10000");
         mIat.setParameter(SpeechConstant.SAMPLE_RATE, "16000");
         // 设置听写引擎
         mIat.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
@@ -147,7 +143,7 @@ public class VoiceToWords {
             mIat.setParameter(SpeechConstant.ACCENT, "mandarin");
         }
         //应用领域
-        //mIat.setParameter(SpeechConstant.DOMAIN, "iat");
+//        mIat.setParameter(SpeechConstant.DOMAIN, "iat");
 
         // 传入音频源。
         //录音机的录音方式，默认为MIC(MediaRecorder.AudioSource.MIC)
@@ -159,7 +155,7 @@ public class VoiceToWords {
 
         mIat.setParameter(SpeechConstant.VAD_ENABLE, "1");
         // 设置语音前端点:静音超时时间，即用户多长时间不说话则当做超时处理
-        mIat.setParameter(SpeechConstant.VAD_BOS, "200000");
+        mIat.setParameter(SpeechConstant.VAD_BOS, "20000");
 
         // 设置语音后端点:后端点静音检测时间，即用户停止说话多长时间内即认为不再输入， 自动停止录音
         mIat.setParameter(SpeechConstant.VAD_EOS, "1000");
@@ -184,7 +180,6 @@ public class VoiceToWords {
         // 退出时释放连接
         if (mIat != null && mIat.isUnderstanding()) {
             mIat.stopUnderstanding();
-
         }
     }
 
@@ -226,6 +221,8 @@ public class VoiceToWords {
                             baseBean.setContext(r4Bean.getText());
                             baseBean.setR4Bean(r4Bean);
                             mIGetVoiceToWord.getResult("r4", baseBean);
+                            R4Action r4Action = new R4Action("r4",text,context);
+                            r4Action.start();
                         }
                     }
                 } catch (JSONException e) {
@@ -235,6 +232,8 @@ public class VoiceToWords {
                         baseBean.setContext(r4Bean.getText());
                         baseBean.setR4Bean(r4Bean);
                         mIGetVoiceToWord.getResult("r4", baseBean);
+                        R4Action r4Action = new R4Action("r4",text,context);
+                        r4Action.start();
                     }
                     e.printStackTrace();
                 }
@@ -243,7 +242,6 @@ public class VoiceToWords {
 
         @Override
         public void onVolumeChanged(int volume, byte[] data) {
-
             //showTip("当前正在说话，音量大小：" + volume);
             //Log.d(TAG, "返回音频数据：" + data.length);
         }
@@ -256,7 +254,6 @@ public class VoiceToWords {
             if (mIGetVoiceToWord != null) {
                 mIGetVoiceToWord.SpeechOver();
             }
-
         }
 
         @Override
@@ -275,18 +272,6 @@ public class VoiceToWords {
             // showTip(error.getPlainDescription(true));
             if ("您好像没有说话哦.(错误码:10118)".equals(error.getPlainDescription(true))) {
                 String lowVoiceTip = "";
-                int i = new Random().nextInt(3);
-                switch (i) {
-                    case 0:
-                        lowVoiceTip = "声音太小了，听不清呢";
-                        break;
-                    case 1:
-                        lowVoiceTip = "有在说话吗，没听到啊";
-                        break;
-                    case 2:
-                        lowVoiceTip = "您好像没有说话呢";
-                        break;
-                }
                 if (mIGetVoiceToWord != null)
                     mIGetVoiceToWord.showLowVoice(lowVoiceTip);
             }
@@ -300,7 +285,6 @@ public class VoiceToWords {
             //		String sid = obj.getString(SpeechEvent.KEY_EVENT_SESSION_ID);
             //		Log.d(TAG, "session id =" + sid);
             //	}
-
         }
     };
 
@@ -326,7 +310,6 @@ public class VoiceToWords {
                         baikeAction.start();
 
                     }
-
                     break;
                 }
                 case AppController.OPENAPPTEST_CUSTOM_BAIKE: // 自定义百科 对人名 地名进行百科
@@ -402,7 +385,6 @@ public class VoiceToWords {
                         String str = flightBean.getAnswer().getText();
                         CalcAction calcAction = new CalcAction(service, str,text);
                         calcAction.start();
-
 
                     }
                     break;
@@ -483,10 +465,11 @@ public class VoiceToWords {
                         String str = openQABean.getAnswer().getText();
                         CalcAction calcAction = new CalcAction(service,str,text);
                         calcAction.start();
+
                     }
                     break;
                 }
-                case AppController.POETRY: {  //     诗词查询和诗句对答。
+                case AppController.POETRY: {      //诗词查询和诗句对答。
                     PoetryBean poetryBean = JsonParser.parseResultPoetryBean(text);
                     if (poetryBean != null && poetryBean.getData() != null) {
                         if (poetryBean.getData().getResult().size() != 0) {

@@ -39,7 +39,7 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
 public class SpeechRecognizerService extends Service implements IGetVoiceToWord, WakeUpListener, IGetWordToVoice, KuGuoMuiscPlayListener {
 
     private IflytekWakeUp iflytekWakeUp;
-    private VoiceToWords voiceToWords;
+    private static VoiceToWords voiceToWords;
     private static WordsToVoice wordsToVoice;
     private KuGuoMuiscPlayThread kuGuoMuiscPlayThread;
     private String message;
@@ -78,20 +78,20 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         return super.onStartCommand(intent, flags, startId);
     }
 
+    //获取其他进程的消息 让机器人播报其他线程消息内容
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getMainAppEvent(RequestMessage requestMessage) {
+    public void getChildAppEvent(RequestMessage requestMessage) {
         String reqService =  requestMessage.getService();
         String reqMessage = requestMessage.getMessage();
         startSpeech(reqService,reqMessage, reqMessage);
-
     }
 
     /**
      * 语音转文本回调
      */
+
     @Override
     public void getResult(String service, BaseBean result) {
-        Logger.e(result.toString());
         switch (service) {
             case AppController.R4:    //  听不懂说什么
                 wordsToVoice.startSynthesizer(AppController.R4, getResources().getString(R.string.r4_text));
@@ -105,65 +105,90 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     }
 
     /**
-     * 说话声音太小回调
+     * 用户说话声音太小回调
      */
     @Override
     public void showLowVoice(String result) {
-        wordsToVoice.startSynthesizer(AppController.SHOWLOWVOICE_TEXT, getResources().getString(R.string.showLowVoice_text));
-        voiceToWords.mIatDestroy();
+
+//    wordsToVoice.startSynthesizer(AppController.SHOWLOWVOICE_TEXT, getResources().getString(R.string.showLowVoice_text));
+        startSpeech(AppController.SHOWLOWVOICE_TEXT,getResources().getString(R.string.showLowVoice_text),getResources().getString(R.string.showLowVoice_text));
+
     }
 
-
     /**
-     * 结束说话回调
+     * 用户说话结束回调
      */
     @Override
     public void SpeechOver() {
-
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setService(AppController.SPEECH_OVER);
+        sendMessage.setMessage("用户说话结束");
+        HermesEventBus.getDefault().post(sendMessage);
     }
-
+    /**
+     * 用户开始说话回调
+     */
     @Override
     public void SpeechStart() {
-
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setService(AppController.SPEECH_START);
+        sendMessage.setMessage("用户开始说话");
+        HermesEventBus.getDefault().post(sendMessage);
     }
-
+    /**
+     * 用户说话错误回调
+     */
     @Override
     public void SpeechError(String error) {
 
     }
 
     /**
-     * 唤醒成功
+     * 机器人唤醒成功
      */
     @Override
     public void OnWakeUpSuccess() {
-        wordsToVoice.startSynthesizer("ddd", "是的主人");
+        startSpeech(AppController.WAKEUP_TEXT,getResources().getString(R.string.wakeup_text),getResources().getString(R.string.wakeup_text));
         voiceToWords.startRecognizer();
     }
 
     /**
-     * 唤醒失败
+     * 机器人唤醒失败
      */
     @Override
     public void OnWakeUpError() {
 
     }
 
+    /***
+     *
+     * 机器人语音播报结束回调
+     */
     @Override
     public void SpeechEnd(String service) {
-        Logger.e(service);
-        if (service.equals(AppController.SHOWLOWVOICE_TEXT)) {
-            voiceToWords.mIatDestroy();
-        } else
+//        if (service.equals(AppController.SHOWLOWVOICE_TEXT)) {
+//            voiceToWords.mIatDestroy();
+//        } else
             voiceToWords.startRecognizer();
     }
-
+    /***
+     *
+     * 机器人语音播报错误回调
+     */
     @Override
     public void SpeechError() {
 
     }
 
+    /***
+     *   设置机器人语音播报内容
+     * @param service    语义场景
+     * @param text         播报内容
+     * @param request    发送给其他线程的内容
+     */
     public static void startSpeech(String service, String text, String request) {
+
+        voiceToWords.mIatDestroy();
         wordsToVoice.startSynthesizer(service, text);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setService(service);
@@ -181,7 +206,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void KuGuoMuiscPlayStop() {
 
     }
-
 
     @Nullable
     @Override

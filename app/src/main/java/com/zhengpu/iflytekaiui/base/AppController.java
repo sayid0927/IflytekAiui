@@ -20,6 +20,10 @@ public class AppController {
 
     public  static  final  String LAUNCHER_TEXT="launcher_text";
     public  static  final  String SHOWLOWVOICE_TEXT="showLowVoice_text";
+    public  static  final  String WAKEUP_TEXT="wakeup_text";
+    public  static  final  String SPEECH_START="speech_start";
+    public  static  final  String SPEECH_OVER="speech_over";
+
 
     public static final String BAIKE = "baike";  //互动百科词条查询。
     public static final String CALC = "calc";

@@ -17,12 +17,6 @@
             android:layout_height="wrap_content"
             android:text="启动服务" />
 
-        <Button
-            android:id="@+id/stop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="停止服务" />
-
         <EditText
             android:text="今天天气不错"
             android:id="@+id/edit_sendMessage"
@@ -38,6 +32,8 @@
         <TextView
             android:id="@+id/text"
             android:text=""
+            android:scrollbars="vertical"
+            android:fadeScrollbars="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
