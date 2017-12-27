@@ -11,10 +11,26 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            zipAlignEnabled true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    signingConfigs {
+        release{
+            storeFile file("IflytekAiui.jks")
+            storePassword "000000"
+            keyAlias "iflytekAiui"
+            keyPassword "000000"
+        }
+
+        debug{
+        }
+    }
+
 }
 
 dependencies {

@@ -11,6 +11,5 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         HermesEventBus.getDefault().init(this);
-
     }
 }

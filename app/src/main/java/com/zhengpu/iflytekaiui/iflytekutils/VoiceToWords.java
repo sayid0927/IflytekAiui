@@ -483,10 +483,13 @@ public class VoiceToWords {
                     if (videoBean != null && videoBean.getSemantic().size() != 0) {
                         if (videoBean.getSemantic().get(0).getSlots().size() != 0) {
                             if (videoBean.getSemantic().get(0).getSlots().get(0).getValue() != null) {
-//                                ShipingAction shipingAction = new ShipingAction(service,)
-
+                                ShipingAction shipingAction = new ShipingAction(service,videoBean,context,text);
+                                shipingAction.start();
                             }
                         }
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
                     break;
                 }
@@ -496,6 +499,9 @@ public class VoiceToWords {
                     if (weatherBean != null && weatherBean.getData().getResult().size() != 0) {
                         WeatherAction weatherAction = new WeatherAction(service,weatherBean ,text);
                         weatherAction.start();
+                    }else {
+                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        r4Action.start();
                     }
                     break;
                 }

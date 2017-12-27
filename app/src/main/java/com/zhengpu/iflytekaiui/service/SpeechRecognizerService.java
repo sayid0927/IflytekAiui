@@ -3,6 +3,7 @@ package com.zhengpu.iflytekaiui.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.utils.Utils;
@@ -31,6 +32,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
+import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isStartAccessibilityService;
+
 
 /**
  * ....
@@ -49,11 +52,11 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void onCreate() {
         super.onCreate();
 
-//        if (!isStartAccessibilityService(getApplicationContext())) {
-//           Intent intent=  new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(intent);
-//        }
+        if (!isStartAccessibilityService(getApplicationContext())) {
+           Intent intent=  new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
 
         HermesEventBus.getDefault().register(SpeechRecognizerService.this);
         Utils.init(this);

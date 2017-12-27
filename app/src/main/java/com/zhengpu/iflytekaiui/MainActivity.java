@@ -1,21 +1,16 @@
 package com.zhengpu.iflytekaiui;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
-import com.iflytek.cloud.SpeechConstant;
-import com.iflytek.cloud.SpeechUtility;
-import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
+import com.blankj.utilcode.utils.ConstUtils;
+import com.blankj.utilcode.utils.TimeUtils;
+import com.orhanobut.logger.Logger;
+import com.zhengpu.iflytekaiui.utils.PreferUtil;
+
 
 /**
  * Created by Administrator on 2017/12/23 0023.
@@ -23,29 +18,45 @@ import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 
 public class MainActivity extends Activity {
 
+    private Button button;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        PreferUtil.getInstance().init(this);
+        button = (Button) this.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
 
-        Intent intent = new Intent();
-        intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
-                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService"));
-        // 绑定服务
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+            @Override
+            public void onClick(View v) {
 
+                long beTime = PreferUtil.getInstance().getR4SpaceTime(); // 上次的时间戳
+                long nowTime = TimeUtils.getNowTimeMills(); //当前的时间戳
+                long dd = TimeUtils.getTimeSpanByNow(beTime, ConstUtils.TimeUnit.MIN);
+                if(TimeUtils.getTimeSpanByNow(beTime, ConstUtils.TimeUnit.MIN)>1) {
+                    int spCount = PreferUtil.getInstance().getR4SpaceCount();
+                    switch (spCount) {
+                        case 0:
+                            Logger.e("0000000");
+                            break;
+                        case 1:
+                            Logger.e("1111111111");
+                            break;
+                        case 2:
+                            Logger.e("2222222");
+                            break;
+                    }
+                    spCount++;
+                    if(spCount==3)spCount=0;
+                    PreferUtil.getInstance().setR4SpaceTime(nowTime);
+                    PreferUtil.getInstance().setR4SpaceCount(spCount);
+                }else {
+                    Logger.e("0000000");
+                    PreferUtil.getInstance().setR4SpaceTime(nowTime);
+                    PreferUtil.getInstance().setR4SpaceCount(1);
+                }
+            }
+        });
     }
-
-
-    private ServiceConnection mConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            Log.e("TAG", "CCCC");
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            Log.e("TAG", "CVVVV");
-        }
-    };
-
-
 }

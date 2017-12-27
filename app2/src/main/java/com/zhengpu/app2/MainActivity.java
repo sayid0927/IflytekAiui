@@ -23,6 +23,7 @@ import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Date;
 import java.util.List;
 
 import xiaofei.library.hermeseventbus.HermesEventBus;
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        long curTime = (new Date()).getTime();
+
         start = (Button) this.findViewById(R.id.start);
         sendMessage = (Button) this.findViewById(R.id.butn_sendMessage);
         textView = (TextView) this.findViewById(R.id.text);
@@ -59,11 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.start:
-//                Bundle args = new Bundle();
-//                intent = new Intent("com.zhengpu.iflytekaiui.service.SpeechRecognizerService");
-//                intent.putExtras(args);
-//                intent.setPackage(this.getPackageName());
-//                bindService(intent, mConnection, Context.BIND_WAIVE_PRIORITY);
 
                 Intent intent = new Intent();
                 intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
@@ -85,11 +84,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            Log.e("TAG", "CCCC");
+
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            Log.e("TAG", "CVVVV");
+
         }
     };
 

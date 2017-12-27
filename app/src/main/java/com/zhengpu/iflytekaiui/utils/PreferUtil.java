@@ -11,6 +11,8 @@ package com.zhengpu.iflytekaiui.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.blankj.utilcode.utils.TimeUtils;
+
 
 public final class PreferUtil {
 
@@ -20,9 +22,9 @@ public final class PreferUtil {
 
     private static final String PLAY_MUSIC_URL = "play_music_name";
     private static final String PLAY_VIDEO_NAME = "play_video_name";
-
     private static final String PLAY_STORY_URL = "play_story_url";
-
+    private static final String R4_SPACE_TIME = "r4_space_time";
+    private static final String R4_SPACE_COUNT = "r4_space_count";
 
 
     public String getPlayMusicUrl() {
@@ -37,19 +39,32 @@ public final class PreferUtil {
         putString(PLAY_VIDEO_NAME, flag);
     }
 
-
     public String getPlayVideoName() {
         return getString(PLAY_VIDEO_NAME, "");
     }
-
 
     public void setPlayStoryUrl(String flag) {
         putString(PLAY_STORY_URL, flag);
     }
 
-
     public String getPlayStoryUrl() {
         return getString(PLAY_STORY_URL, "");
+    }
+
+    public void setR4SpaceTime(long flag) {
+        putLong(R4_SPACE_TIME, flag);
+    }
+
+    public long getR4SpaceTime() {
+        return getLong(R4_SPACE_TIME, TimeUtils.getNowTimeMills());
+    }
+
+    public void setR4SpaceCount(int flag) {
+        putInt(R4_SPACE_COUNT, flag);
+    }
+
+    public int getR4SpaceCount() {
+        return getInt(R4_SPACE_COUNT, 0);
     }
 
 

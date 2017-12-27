@@ -5,6 +5,9 @@ import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import com.zhengpu.iflytekaiui.base.AppController;
+import com.zhengpu.iflytekaiui.iflytekaction.Qiyi;
+
 /**
  * sayid ....
  * Created by wengmf on 2017/11/29.
@@ -20,25 +23,24 @@ public class MyAccessibilityService extends AccessibilityService  {
 
         //接收事件,如触发了通知栏变化、界面变化等
         String nowPackageName = event.getPackageName().toString();
-        Log.e(TAG, nowPackageName);
         AccessibilityNodeInfo rootNode = this.getRootInActiveWindow();
-//        switch (nowPackageName) {
-//
+        switch (nowPackageName) {
+
 //            case "com.kugou.android":
 //                if (AppController.KuGuoplayClickabl) {
 //                    KuGou kuGou = new KuGou(this, this);
 //                    kuGou.start(rootNode);
 //                }
 //                break;
-//
-//            case "com.qiyi.video":
-//
-//                if(AppController.AiQiPlayClickabl) {
-//                    Qiyi youKu = new Qiyi(this, this);
-//                    youKu.start(rootNode);
-//                }
-//                break;
-//        }
+
+            case "com.qiyi.video":
+
+                if(AppController.AiQiPlayClickabl) {
+                    Qiyi qiyi = new Qiyi(this);
+                    qiyi.start(rootNode);
+                }
+                break;
+        }
     }
 
     @Override
