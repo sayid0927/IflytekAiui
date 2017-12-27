@@ -26,14 +26,14 @@ public class AppController {
 
 
     public static final String BAIKE = "baike";  //互动百科词条查询。
-    public static final String CALC = "calc";
-    public static final String DATETIME = "datetime";
-    public static final String FLIGHT = "flight";
-    public static final String JOKE = "joke";
-    public static final String MUSICX = "musicX";
-    public static final String NEWS = "news";
+    public static final String CALC = "calc";     //  数值计算
+    public static final String DATETIME = "datetime"; // 时间查询
+    public static final String FLIGHT = "flight";   //机票查询
+    public static final String JOKE = "joke";         //  笑话查询
+    public static final String MUSICX = "musicX";   // 音乐查询
+    public static final String NEWS = "news";          // 新闻查询
     public static final String OPENAPPTEST_APP = "OPENAPPTEST.APP";
-    public static final String OPENQA = "openQA";
+    public static final String OPENQA = "openQA";  // 打开一个APp
     public static final String POETRY = "poetry";
     public static final String STORY = "story";
     public static final String OPENAPPTEST_SHIPING = "OPENAPPTEST.shiping";
@@ -43,7 +43,9 @@ public class AppController {
 
     public static final String WEATHER = "weather";
     public static final String POINT = "point";
-    public static final String R4 = "r4";
+    public static final String R4_0 = "r4_0";
+    public static final String R4_1 = "r4_1";
+    public static final String R4_2 = "r4_2";
 
 
 }
