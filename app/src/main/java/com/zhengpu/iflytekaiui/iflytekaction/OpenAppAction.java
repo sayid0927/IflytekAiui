@@ -9,6 +9,7 @@ import android.net.Uri;
 
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekutils.WordsToVoice;
+import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 
 import java.util.List;
 
@@ -49,10 +50,9 @@ public class OpenAppAction {
                     intent.addCategory("android.intent.category.LAUNCHER");
                     context.startActivity(intent);
                 }
-                WordsToVoice.startSynthesizer(AppController.OPENAPPTEST_APP,"正在打开" + mAppName + "...");
                 return;
             }
         }
-        WordsToVoice.startSynthesizer(AppController.OPENAPPTEST_APP,"没有找到你所说的应用哦");
+        SpeechRecognizerService.startSpeech(AppController.OPENAPPTEST_APP, "没有找到你所说的应用哦","没有找到你所说的应用哦");
     }
 }

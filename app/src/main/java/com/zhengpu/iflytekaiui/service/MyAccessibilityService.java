@@ -9,6 +9,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.base.AppController;
+import com.zhengpu.iflytekaiui.iflytekaction.KuGou;
 import com.zhengpu.iflytekaiui.iflytekaction.Qiyi;
 
 /**
@@ -27,12 +28,12 @@ public class MyAccessibilityService extends AccessibilityService  {
         AccessibilityNodeInfo rootNode = this.getRootInActiveWindow();
         switch (nowPackageName) {
 
-//            case "com.kugou.android":
-//                if (AppController.KuGuoplayClickabl) {
-//                    KuGou kuGou = new KuGou(this, this);
-//                    kuGou.start(rootNode);
-//                }
-//                break;
+            case "com.kugou.android":
+                if (AppController.KuGuoplayClickabl) {
+                    KuGou kuGou = new KuGou(this);
+                    kuGou.start(rootNode);
+                }
+                break;
 
             case "com.qiyi.video":
 

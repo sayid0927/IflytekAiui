@@ -1,9 +1,12 @@
 package com.zhengpu.iflytekaiui.iflytekaction;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 
 import com.blankj.utilcode.utils.EncodeUtils;
 import com.zhengpu.iflytekaiui.R;
+import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekbean.AllAudioSongBean;
 import com.zhengpu.iflytekaiui.iflytekbean.MusicXBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicBean;
@@ -22,6 +25,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAppInstalled;
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.scanAllAudioFiles;
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.setCurrentVolume;
 
@@ -111,40 +115,73 @@ public class PlayMusicxAction {
                             }
                         }
                     }
-                    //    网络播放
+                    //    酷狗播放
                     if (PalyMode != 0) {
-                        String url = "http://aiui.xfyun.cn/taste/getAnswer?text=" + EncodeUtils.urlEncode(musicXBean.getText()) + "&uid=1513933005954&appid=all&category=musicX&timestamp=1513933075498";
-                        OkHttpClient okHttpClient = new OkHttpClient();
-                        Request request = new Request.Builder()
-                                .url(url)
-                                .build();
-                        Call call = okHttpClient.newCall(request);
-                        call.enqueue(new Callback() {
-                            @Override
-                            public void onFailure(Call call, IOException e) {
-                                e.printStackTrace();
-                                SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.error_network_text), strRequest);
-                            }
+                            PreferUtil.getInstance().setPlayMusicName(artist+song);
+                            if (isAppInstalled(context, "com.kugou.android")) {
+                                //  打开应用
+                                OpenAppAction openAppAction = new OpenAppAction("酷狗音乐", context);
+                                openAppAction.start();
+                                AppController.KuGuoplayClickabl = true;
+                                AppController.abj = true;
+                                AppController.b2w = true;
+                                SpeechRecognizerService.startSpeech(service, "为你打开酷狗音乐播放" + artist+song, strRequest);
+                                break;
+                            } else {
+//                             没有安装爱奇艺APP  打开浏览器 下载APP
+                                SpeechRecognizerService.startSpeech(service, "你还没安装酷狗音乐APP， 是否去下载该程序", strRequest);
+                                String keywords = "安卓酷狗音乐App";
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                String res = response.body().string();
-                                IfMusicBean ifMusicBean = JsonParser.parseResultIfMusicBean(res);
-                                if (ifMusicBean != null && ifMusicBean.getData() != null && ifMusicBean.getData().getRes() != null) {
-                                    IfMusicResBean ifMusicResBean = JsonParser.parseResultIfMusicResBean(ifMusicBean.getData().getRes());
-                                    if (ifMusicResBean != null && ifMusicResBean.getData() != null && ifMusicResBean.getData().getResult() != null && ifMusicResBean.getData().getResult().get(0).getAudiopath() != null) {
-                                        PreferUtil.getInstance().setPlayMusicUrl(ifMusicResBean.getData().getResult().get(0).getAudiopath());
-                                        SpeechRecognizerService.startSpeech(service, ifMusicResBean.getAnswer().getText(), strRequest);
-                                    }
-                                }
-                            }
-                        });
+
+//                                 String url ="https://m.baidu.com/from=844b/s?word=酷狗音乐&sasub=re_dl_gh_icon20171229&ts=7411662&t_kt=0&ie=utf-8&fm_kl=021394be2f&rsv_iqid=0597588752&rsv_t=8541StZEj%252FbkWLjsANNg2SxJqtmCvhWlFgMuw7tqmBImLS3Ppq%252FPGK%252FtpQ&sa=is_1&ms=1&rsv_pq=0597588752&rsv_sug4=10699&ss=101&inputT=7942&rq=酷&tj=1";
+
+
+
+                                String url ="https://m.baidu.com/from=844b/s?word="+ EncodeUtils.urlEncode(keywords);
+
+                                intent.setData(Uri.parse(url));
+                                context.startActivity(intent);
+                                break;
+                        }
+
+//                        String url = "http://aiui.xfyun.cn/taste/getAnswer?text=" + EncodeUtils.urlEncode(musicXBean.getText()) + "&uid=1513933005954&appid=all&category=musicX&timestamp=1513933075498";
+//                        OkHttpClient okHttpClient = new OkHttpClient();
+//                        Request request = new Request.Builder()
+//                                .url(url)
+//                                .build();
+//                        Call call = okHttpClient.newCall(request);
+//                        call.enqueue(new Callback() {
+//                            @Override
+//                            public void onFailure(Call call, IOException e) {
+//                                e.printStackTrace();
+//                                SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.error_network_text), strRequest);
+//                            }
+//
+//                            @Override
+//                            public void onResponse(Call call, Response response) throws IOException {
+//                                String res = response.body().string();
+//                                IfMusicBean ifMusicBean = JsonParser.parseResultIfMusicBean(res);
+//                                if (ifMusicBean != null && ifMusicBean.getData() != null && ifMusicBean.getData().getRes() != null) {
+//                                    IfMusicResBean ifMusicResBean = JsonParser.parseResultIfMusicResBean(ifMusicBean.getData().getRes());
+//                                    if (ifMusicResBean != null && ifMusicResBean.getData() != null && ifMusicResBean.getData().getResult() != null && ifMusicResBean.getData().getResult().size() != 0) {
+//                                        List<IfMusicResBean.DataBean.ResultBean> resultBean = ifMusicResBean.getData().getResult();
+//
+//                                        if (ifMusicResBean != null && ifMusicResBean.getData() != null && ifMusicResBean.getData().getResult() != null && ifMusicResBean.getData().getResult().get(0).getAudiopath() != null) {
+//                                            PreferUtil.getInstance().setPlayMusicUrl(ifMusicResBean.getData().getResult().get(0).getAudiopath());
+//                                            SpeechRecognizerService.startSpeech(service, ifMusicResBean.getAnswer().getText(), strRequest);
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        });
                     }
                 default:
                     R4Action r4Action = new R4Action(context);
                     r4Action.start();
             }
-        }else {
+        } else {
             R4Action r4Action = new R4Action(context);
             r4Action.start();
         }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
@@ -42,13 +43,15 @@ public class ShipingAction {
                     //  打开应用
                     OpenAppAction openAppAction = new OpenAppAction("爱奇艺", context);
                     openAppAction.start();
+                    AppController.AiQiPlayClickabl =true;
                     SpeechRecognizerService.startSpeech(service, "为你打开爱奇艺搜索" + videoName, request);
 
                 } else {
-//            没有安装爱奇艺APP  打开浏览器 下载APP
+//                没有安装爱奇艺APP  打开浏览器 下载APP
                     SpeechRecognizerService.startSpeech(service, "你还没安装爱奇艺APP， 是否去下载该程序", request);
                     String keywords = "安卓爱奇艺App";
                     Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.setData(Uri.parse("https://www.baidu.com/s?wd=" + keywords + "&tn=SE_PSStatistics_p1d9m0nf"));
                     context.startActivity(intent);
                 }

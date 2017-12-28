@@ -21,13 +21,20 @@ public final class PreferUtil {
     private static final String APP_NAME = "om.zhengpu.zhengpuandroid";
 
     private static final String PLAY_MUSIC_URL = "play_music_name";
+    private static final String PLAY_MUSIC_NAME = "play_music_name";
     private static final String PLAY_VIDEO_NAME = "play_video_name";
     private static final String PLAY_STORY_URL = "play_story_url";
     private static final String R4_SPACE_TIME = "r4_space_time";
     private static final String R4_SPACE_COUNT = "r4_space_count";
-
     private static final String SPEECH_PARAMS = "speech_params";
 
+    public String getPlayMusicName() {
+        return getString(PLAY_MUSIC_NAME, "");
+    }
+
+    public void setPlayMusicName(String flag) {
+        putString(PLAY_MUSIC_NAME, flag);
+    }
 
     public String getPlayMusicUrl() {
         return getString(PLAY_MUSIC_URL, "");
