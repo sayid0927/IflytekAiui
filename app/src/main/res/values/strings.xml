@@ -2,7 +2,7 @@
     <string name="app_name">IflytekAiui</string>
     <string name="accessibility_service_description">该服务用于帮助用户去自动触发应用事件</string>
     <string name="launcher_text">今天天气不错,您有什么吩咐的吗?</string>
-    <string name="showLowVoice_text">您好像没有说话呢...</string>
+    <string name="showLowVoice_text">您好像没有说话呢... 那我去休息了...</string>
     <string name="r4_0_text">我好像没有听明白你说什么</string>
     <string name="r4_1_text">你可以这样和宝宝说：多多讲个故事，我也许就能理解了</string>
     <string name="r4_2_text">宝宝没长大，宝宝心里苦</string>

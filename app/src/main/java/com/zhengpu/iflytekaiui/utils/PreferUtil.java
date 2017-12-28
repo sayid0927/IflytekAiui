@@ -26,6 +26,8 @@ public final class PreferUtil {
     private static final String R4_SPACE_TIME = "r4_space_time";
     private static final String R4_SPACE_COUNT = "r4_space_count";
 
+    private static final String SPEECH_PARAMS = "speech_params";
+
 
     public String getPlayMusicUrl() {
         return getString(PLAY_MUSIC_URL, "");
@@ -69,8 +71,13 @@ public final class PreferUtil {
 
 
 
+    public void setSpeechParams(int flag) {
+        putInt(SPEECH_PARAMS, flag);
+    }
 
-
+    public int getSpeechParams() {
+        return getInt(SPEECH_PARAMS, 0);
+    }
 
     private PreferUtil() {
     }

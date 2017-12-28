@@ -9,8 +9,10 @@ import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
+import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
 import com.orhanobut.logger.Logger;
+import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
 
 /**
@@ -26,7 +28,7 @@ public class WordsToVoice {
     private static String TAG = "WordsToVoice类";
     // 语音合成对象
     public static SpeechSynthesizer mTts;
-    private Context context;
+    private static Context context;
     private static IGetWordToVoice iGetWordToVoice;
 
     // 函数调用返回值,表示返回结果，失败或成功
@@ -42,13 +44,12 @@ public class WordsToVoice {
         this.context = context;
         mTts = SpeechSynthesizer.createSynthesizer(context, mTtsInitListener);
         //设置参数
-        setParams();
+//        setParams();
     }
 
     public void setiGetWordToVoice(IGetWordToVoice iGetWordToVoice) {
         this.iGetWordToVoice = iGetWordToVoice;
     }
-
 
     public static synchronized WordsToVoice getInstance(Context context) {
         if (wordsToVoice == null)
@@ -61,6 +62,7 @@ public class WordsToVoice {
      * 开始语音合成
      */
     public static void startSynthesizer(String service ,String words) {
+        setParams();
         ret = mTts.startSpeaking(words, mTtsListener);
         serviceData = service;
         if (ret != ErrorCode.SUCCESS) {
@@ -75,20 +77,34 @@ public class WordsToVoice {
     /**
      * 参数设置
      */
-    private void setParams() {
+    private static void setParams() {
         //SpeechConstant.SAMPLE_RATE, "16000" 默认的识别采样率支持16000Hz和8000Hz
         // 清空参数
         mTts.setParameter(SpeechConstant.PARAMS, null);
         // 引擎类型
         mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
         // 设置在线合成发音人
-//        mTts.setParameter(SpeechConstant.VOICE_NAME, "nannan");
-        mTts.setParameter(SpeechConstant.VOICE_NAME, "Songbaobao");
-//        mTts.setParameter(SpeechConstant.VOICE_NAME, "lingjiejie");
-        //设置合成语速
-        mTts.setParameter(SpeechConstant.SPEED, "50");
-        //设置合成音调
-        mTts.setParameter(SpeechConstant.PITCH, "50");
+
+        switch (PreferUtil.getInstance().getSpeechParams()){
+            case 0:    //卡通
+                // 设置在线合成发音人
+                mTts.setParameter(SpeechConstant.VOICE_NAME, "nannan");
+                //设置合成语速
+                mTts.setParameter(SpeechConstant.SPEED, "58");
+                //设置合成音调
+                mTts.setParameter(SpeechConstant.PITCH, "62");
+                break;
+            case 1:   // 女声音
+                mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");
+                mTts.setParameter(SpeechConstant.SPEED, "50");
+                mTts.setParameter(SpeechConstant.PITCH, "40");
+                break;
+            case 2:   //  男声音
+                mTts.setParameter(SpeechConstant.VOICE_NAME, "vixf");
+                mTts.setParameter(SpeechConstant.SPEED, "52");
+                mTts.setParameter(SpeechConstant.PITCH, "62");
+                break;
+        }
         //设置合成音量
         mTts.setParameter(SpeechConstant.VOLUME, "75");
         //设置播放器音频流类型,参考系统AudioManager.STREAM_MUSIC

@@ -2,20 +2,11 @@ package com.zhengpu.iflytekaiui.iflytekaction;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
 
-import com.zhengpu.iflytekaiui.MainActivity;
-import com.zhengpu.iflytekaiui.base.AppController;
-import com.zhengpu.iflytekaiui.base.BaseApplication;
-import com.zhengpu.iflytekaiui.dialog.CommonDialog;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
-import com.zhengpu.iflytekaiui.iflytekutils.WordsToVoice;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
-
-import java.util.List;
 
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAppInstalled;
 
