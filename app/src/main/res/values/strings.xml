@@ -8,8 +8,8 @@
     <string name="r4_2_text">宝宝没长大，宝宝心里苦</string>
     <string name="error_network_text">不好意思，网络错误</string>
     <string name="wakeup_text">我在的   主人</string>
-
-
+    <string name="user_Speech_Over">用户说话结束</string>
+    <string name="user_Speech_Start">用户开始说话</string>
 
 
 

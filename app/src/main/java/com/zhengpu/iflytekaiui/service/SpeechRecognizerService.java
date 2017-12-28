@@ -50,7 +50,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void onCreate() {
         super.onCreate();
 
-
         if (!isAccessibilitySettingsOn(this)) {
            Intent intent=  new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -96,6 +95,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 
     @Override
     public void getResult(String service, BaseBean result) {
+
     }
 
     /**
@@ -115,7 +115,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void SpeechOver() {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setService(AppController.SPEECH_OVER);
-        sendMessage.setMessage("用户说话结束");
+        sendMessage.setMessage(getResources().getString(R.string.user_Speech_Over));
         HermesEventBus.getDefault().post(sendMessage);
     }
     /**
@@ -125,7 +125,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void SpeechStart() {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setService(AppController.SPEECH_START);
-        sendMessage.setMessage("用户开始说话");
+        sendMessage.setMessage(getResources().getString(R.string.user_Speech_Start));
         HermesEventBus.getDefault().post(sendMessage);
     }
     /**
@@ -180,7 +180,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
                 voiceToWords.startRecognizer();
                 break;
         }
-
     }
     /***
      *

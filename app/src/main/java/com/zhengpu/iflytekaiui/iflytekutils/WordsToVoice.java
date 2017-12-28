@@ -57,7 +57,6 @@ public class WordsToVoice {
         return wordsToVoice;
     }
 
-
     /**
      * 开始语音合成
      */
@@ -71,7 +70,6 @@ public class WordsToVoice {
         } else {
 //            Logger.e("听写成功");
         }
-
     }
 
     /**
