@@ -62,18 +62,18 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <service android:name=".service.SpeechRecognizerService" />
+        <!--<service android:name=".service.SpeechRecognizerService" />-->
         <service android:name="xiaofei.library.hermes.HermesService$HermesService0" android:exported="true"/>
 
-        <!--<service-->
-            <!--android:name=".service.SpeechRecognizerService"-->
-            <!--android:exported="true"-->
-            <!--android:process=":cccc">-->
+        <service
+            android:name=".service.SpeechRecognizerService"
+            android:exported="true"
+            android:process=":cccc">
 
-            <!--<intent-filter>-->
-                <!--<action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />-->
-            <!--</intent-filter>-->
-        <!--</service>-->
+            <intent-filter>
+                <action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />
+            </intent-filter>
+        </service>
 
         <activity android:name=".MainActivity">
             <intent-filter>

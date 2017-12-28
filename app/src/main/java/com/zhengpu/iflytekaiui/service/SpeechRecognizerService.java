@@ -164,10 +164,10 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
             case AppController.SHOWLOWVOICE_TEXT:
                 voiceToWords.mIatDestroy();
                 break;
-            case AppController.MUSICX:
-                voiceToWords.mIatDestroy();
-                KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());
-                break;
+//            case AppController.MUSICX:
+//                voiceToWords.mIatDestroy();
+//                KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());
+//                break;
             case AppController.NEWS:
                 voiceToWords.mIatDestroy();
                 KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());

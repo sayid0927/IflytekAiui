@@ -23,6 +23,7 @@ public class KuGuoMuiscPlayThread implements MediaPlayer.OnBufferingUpdateListen
                 mediaPlayer.reset();
                 mediaPlayer.setDataSource(musicUrl); // 设置数据源
                 mediaPlayer.prepare();                           // prepare自动播放
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

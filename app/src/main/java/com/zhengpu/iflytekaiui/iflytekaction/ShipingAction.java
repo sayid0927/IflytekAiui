@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.blankj.utilcode.utils.EncodeUtils;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
@@ -52,7 +53,8 @@ public class ShipingAction {
                     String keywords = "安卓爱奇艺App";
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.setData(Uri.parse("https://www.baidu.com/s?wd=" + keywords + "&tn=SE_PSStatistics_p1d9m0nf"));
+                    String url ="https://m.baidu.com/from=844b/s?word="+ EncodeUtils.urlEncode(keywords);
+                    intent.setData(Uri.parse(url));
                     context.startActivity(intent);
                 }
             }
