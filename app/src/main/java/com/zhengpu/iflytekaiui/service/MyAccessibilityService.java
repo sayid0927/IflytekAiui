@@ -26,6 +26,7 @@ public class MyAccessibilityService extends AccessibilityService  {
         //接收事件,如触发了通知栏变化、界面变化等
         String nowPackageName = event.getPackageName().toString();
         AccessibilityNodeInfo rootNode = this.getRootInActiveWindow();
+        Logger.e("nowPackageName  ====  " +nowPackageName);
         switch (nowPackageName) {
 
             case "com.kugou.android":
@@ -36,8 +37,9 @@ public class MyAccessibilityService extends AccessibilityService  {
                 break;
 
             case "com.qiyi.video":
-
+                Logger.e("AiQiPlayClickabl  ====  " +AppController.AiQiPlayClickabl);
                 if(AppController.AiQiPlayClickabl) {
+                    Logger.e("AAAAAA");
                     Qiyi qiyi = new Qiyi(this);
                     qiyi.start(rootNode);
                 }
