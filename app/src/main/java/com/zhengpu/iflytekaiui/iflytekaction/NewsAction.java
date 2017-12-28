@@ -26,9 +26,15 @@ public class NewsAction {
     }
 
     public void start() {
-        if (newsBean != null && newsBean.getData() != null && newsBean.getData().getResult().size() != 0 && newsBean.getData().getResult().get(0).getUrl() != null) {
+        if (newsBean != null && newsBean.getData() != null &&
+                newsBean.getData().getResult()!=null &&newsBean.getData().getResult().size() != 0 &&
+                newsBean.getData().getResult().get(0).getUrl() != null) {
+
             PreferUtil.getInstance().setPlayMusicUrl(newsBean.getData().getResult().get(0).getUrl());
             SpeechRecognizerService.startSpeech(service, newsBean.getAnswer().getText(),strRequest);
+        }else {
+            R4Action r4Action = new R4Action(context);
+            r4Action.start();
         }
     }
 }

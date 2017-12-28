@@ -297,10 +297,7 @@ public static java.lang.String TABLENAME;
 -dontwarn org.apache.http.**
 -dontwarn android.net.http.AndroidHttpClient
 
-
-#-keep class com.zhengpu.iflytekaiui.ipc.entity {*;}
-#-dontwarn com.zhengpu.iflytekaiui.ipc.entity.**
-
+# ProGuard configurations for 讯飞语音
 
 -keep class com.iflytek.**{*;}
 -dontwarn com.iflytek.**

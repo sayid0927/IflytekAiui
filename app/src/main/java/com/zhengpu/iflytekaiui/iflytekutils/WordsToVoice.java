@@ -18,6 +18,7 @@ import com.orhanobut.logger.Logger;
  * Created by wengmf on 2017/11/22.
  * <p>
  * 语音合成，文字转语音
+ *
  */
 
 public class WordsToVoice {
@@ -81,11 +82,13 @@ public class WordsToVoice {
         // 引擎类型
         mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
         // 设置在线合成发音人
-        mTts.setParameter(SpeechConstant.VOICE_NAME, "nannan");
+//        mTts.setParameter(SpeechConstant.VOICE_NAME, "nannan");
+        mTts.setParameter(SpeechConstant.VOICE_NAME, "Songbaobao");
+//        mTts.setParameter(SpeechConstant.VOICE_NAME, "lingjiejie");
         //设置合成语速
-        mTts.setParameter(SpeechConstant.SPEED, "58");
+        mTts.setParameter(SpeechConstant.SPEED, "50");
         //设置合成音调
-        mTts.setParameter(SpeechConstant.PITCH, "62");
+        mTts.setParameter(SpeechConstant.PITCH, "50");
         //设置合成音量
         mTts.setParameter(SpeechConstant.VOLUME, "75");
         //设置播放器音频流类型,参考系统AudioManager.STREAM_MUSIC

@@ -26,6 +26,7 @@ public class PlayVideoAction {
     private String appName;
 
     public PlayVideoAction(String videoName, String appName, Context context) {
+
         this.videoName = videoName;
         this.appName = appName;
         this.context = context;
@@ -67,6 +68,4 @@ public class PlayVideoAction {
         }
         WordsToVoice.startSynthesizer(AppController.OPENAPPTEST_APP,"没有找到优酷视频播放" + videoName + "哦");
     }
-
-
 }

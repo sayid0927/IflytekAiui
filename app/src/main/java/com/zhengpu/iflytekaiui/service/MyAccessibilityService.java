@@ -1,10 +1,13 @@
 package com.zhengpu.iflytekaiui.service;
 
 import android.accessibilityservice.AccessibilityService;
+
+
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekaction.Qiyi;
 
@@ -14,8 +17,6 @@ import com.zhengpu.iflytekaiui.iflytekaction.Qiyi;
  */
 
 public class MyAccessibilityService extends AccessibilityService  {
-
-    private static String TAG = "MyAccessibilityService类 ";
 
 
     @Override
@@ -46,15 +47,14 @@ public class MyAccessibilityService extends AccessibilityService  {
     @Override
     public void onInterrupt() {
         //服务中断，如授权关闭或者将服务杀死
-        Log.i(TAG, "授权中断");
+        Logger.e("授权中断");
 
     }
 
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
-        Log.e(TAG, "AccessibilityService >>>>  授权成功");
-
+        Logger.e("AccessibilityService >>>>  授权成功");
     }
 
 }

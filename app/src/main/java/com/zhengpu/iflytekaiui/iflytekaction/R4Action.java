@@ -19,17 +19,11 @@ import java.util.Date;
 
 public class R4Action {
 
-
-    private String service;
-    private String request;
     private Context context;
     private long spaceTime;
     private int spaceCount;
 
-    public R4Action(String service, String request, Context context) {
-
-        this.service = service;
-        this.request = request;
+    public R4Action(Context context) {
         this.context = context;
         this.spaceTime = PreferUtil.getInstance().getR4SpaceTime(); // 上次的时间戳
         this.spaceCount = PreferUtil.getInstance().getR4SpaceCount();
@@ -37,25 +31,26 @@ public class R4Action {
 
     public void start() {
         long nowTime = TimeUtils.getNowTimeMills(); //当前的时间戳
-        long dd = TimeUtils.getTimeSpanByNow(spaceTime, ConstUtils.TimeUnit.MIN);
-        if(TimeUtils.getTimeSpanByNow(spaceTime, ConstUtils.TimeUnit.MIN)>1) {
+        // 与之前的时间戳对比如果小于5分钟
+        if (TimeUtils.getTimeSpanByNow(spaceTime, ConstUtils.TimeUnit.MIN) < 3) {
             switch (spaceCount) {
                 case 0:
-                    SpeechRecognizerService.startSpeech(AppController.R4_0, context.getResources().getString(R.string.r4_0_text), request);
+                    SpeechRecognizerService.startSpeech(AppController.R4_0, context.getResources().getString(R.string.r4_0_text), context.getResources().getString(R.string.r4_0_text));
                     break;
                 case 1:
-                    SpeechRecognizerService.startSpeech(AppController.R4_1, context.getResources().getString(R.string.r4_1_text), request);
+                    SpeechRecognizerService.startSpeech(AppController.R4_1, context.getResources().getString(R.string.r4_1_text), context.getResources().getString(R.string.r4_1_text));
                     break;
                 case 2:
-                    SpeechRecognizerService.startSpeech(AppController.R4_2, context.getResources().getString(R.string.r4_2_text), request);
+                    SpeechRecognizerService.startSpeech(AppController.R4_2, context.getResources().getString(R.string.r4_2_text), context.getResources().getString(R.string.r4_2_text));
                     break;
+                default:
+                    SpeechRecognizerService.startSpeech(AppController.R4_0, context.getResources().getString(R.string.r4_0_text), context.getResources().getString(R.string.r4_0_text));
             }
             spaceCount++;
-            if(spaceCount==3)spaceCount=0;
-            PreferUtil.getInstance().setR4SpaceTime(nowTime);
+            if (spaceCount == 3) spaceCount = 0;
             PreferUtil.getInstance().setR4SpaceCount(spaceCount);
-        }else {
-            SpeechRecognizerService.startSpeech(AppController.R4_0, context.getResources().getString(R.string.r4_0_text), request);
+        } else {
+            SpeechRecognizerService.startSpeech(AppController.R4_0, context.getResources().getString(R.string.r4_0_text), context.getResources().getString(R.string.r4_0_text));
             PreferUtil.getInstance().setR4SpaceTime(nowTime);
             PreferUtil.getInstance().setR4SpaceCount(1);
         }

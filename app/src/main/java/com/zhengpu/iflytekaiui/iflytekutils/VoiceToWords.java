@@ -17,10 +17,14 @@ import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekaction.BaikeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.CalcAction;
 import com.zhengpu.iflytekaiui.iflytekaction.CustomBaikeAction;
+import com.zhengpu.iflytekaiui.iflytekaction.DateTimeAction;
+import com.zhengpu.iflytekaiui.iflytekaction.FlightAction;
 import com.zhengpu.iflytekaiui.iflytekaction.JokeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.NewsAction;
 import com.zhengpu.iflytekaiui.iflytekaction.OpenAppAction;
+import com.zhengpu.iflytekaiui.iflytekaction.OpenQaAction;
 import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
+import com.zhengpu.iflytekaiui.iflytekaction.PoetryAction;
 import com.zhengpu.iflytekaiui.iflytekaction.R4Action;
 import com.zhengpu.iflytekaiui.iflytekaction.ShipingAction;
 import com.zhengpu.iflytekaiui.iflytekaction.StoryAction;
@@ -71,7 +75,6 @@ public class VoiceToWords {
     //设置回调接口
     private IGetVoiceToWord mIGetVoiceToWord;
     private KuGuoMuiscPlayListener kuGuoMuiscPlayListener;
-    private String operation;
     public static VoiceToWords voiceToWords;
 
     /**
@@ -161,11 +164,9 @@ public class VoiceToWords {
         // 也可以像以下这样直接设置音频文件路径识别（要求设置文件在sdcard上的全路径）：
         // mIat.setParameter(SpeechConstant.AUDIO_SOURCE, "-2");
         // mIat.setParameter(SpeechConstant.ASR_SOURCE_PATH, "sdcard/XXX/XXX.pcm");
-
         mIat.setParameter(SpeechConstant.VAD_ENABLE, "1");
         // 设置语音前端点:静音超时时间，即用户多长时间不说话则当做超时处理
-        mIat.setParameter(SpeechConstant.VAD_BOS, "20000");
-
+        mIat.setParameter(SpeechConstant.VAD_BOS, "30000");
         // 设置语音后端点:后端点静音检测时间，即用户停止说话多长时间内即认为不再输入， 自动停止录音
         mIat.setParameter(SpeechConstant.VAD_EOS, "1000");
         // 设置标点符号,设置为"0"返回结果无标点,设置为"1"返回结果有标点
@@ -176,7 +177,6 @@ public class VoiceToWords {
         mIat.setParameter(SpeechConstant.ASR_AUDIO_PATH, Environment.getExternalStorageDirectory() + "/abcd/iat.wav");
         // 设置返回结果格式
         mIat.setParameter(SpeechConstant.RESULT_TYPE, "json");
-
     }
 
     public boolean isIatListening() {
@@ -224,26 +224,12 @@ public class VoiceToWords {
                     if (service != "" && rc != 4) {
                         judgeService(service, text);
                     } else {
-                        if (mIGetVoiceToWord != null) {
-                            R4Bean r4Bean = JsonParser.parseResultR4Bean(text);
-                            BaseBean baseBean = new BaseBean();
-                            baseBean.setContext(r4Bean.getText());
-                            baseBean.setR4Bean(r4Bean);
-                            mIGetVoiceToWord.getResult("r4", baseBean);
-                            R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                            r4Action.start();
-                        }
-                    }
-                } catch (JSONException e) {
-                    if (mIGetVoiceToWord != null) {
-                        R4Bean r4Bean = JsonParser.parseResultR4Bean(text);
-                        BaseBean baseBean = new BaseBean();
-                        baseBean.setContext(r4Bean.getText());
-                        baseBean.setR4Bean(r4Bean);
-                        mIGetVoiceToWord.getResult("r4", baseBean);
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                        R4Action r4Action = new R4Action(context);
                         r4Action.start();
                     }
+                } catch (JSONException e) {
+                    R4Action r4Action = new R4Action(context);
+                    r4Action.start();
                     e.printStackTrace();
                 }
             }
@@ -303,208 +289,126 @@ public class VoiceToWords {
 
         if (!AppController.service_flag) { //如果不在一项服务中才进行服务的判断
 
-            BaseBean baseBean = new BaseBean();
             switch (service) {
-
-                case AppController.BAIKE: {     //互动百科词条查询。
+                case AppController.BAIKE:      //互动百科词条查询。
 
                     BaikeBean baikeBean = JsonParser.parseResultBaikeBean(text);
-                    if (baikeBean != null && baikeBean.getAnswer().getText() != null) {
-                        BaikeAction baikeAction = new BaikeAction(service, baikeBean.getAnswer().getText(),text);
-                        baikeAction.start();
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                        r4Action.start();
-                    }
+                    BaikeAction baikeAction = new BaikeAction(service, baikeBean, text, context);
+                    baikeAction.start();
+
                     break;
-                }
+
                 case AppController.OPENAPPTEST_CUSTOM_BAIKE: // 自定义百科 对人名 地名进行百科
 
                     CustomBaikeBean customBaikeBean = JsonParser.parseResultCustomBaikeBean(text);
-                    if (customBaikeBean != null && customBaikeBean.getQuery()!=null) {
-                        CustomBaikeAction customBaikeAction = new CustomBaikeAction(service, customBaikeBean.getQuery(), text,context);
-                        customBaikeAction.start();
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                        r4Action.start();
-                    }
+                    CustomBaikeAction customBaikeAction = new CustomBaikeAction(service, customBaikeBean, text, context);
+                    customBaikeAction.start();
 
                     break;
-                case AppController.CALC: {    //  数值计算问答
+                case AppController.CALC:     //  数值计算问答
+
                     CalcBean calcBean = JsonParser.parseResultCalc(text);
-                    operation = calcBean.getOperation();
-                    switch (operation) {
-                        case "ANSWER":
-                            if (calcBean.getAnswer() != null) {
-                                if (calcBean.getAnswer().getText() != null) {
-                                    String str = calcBean.getAnswer().getText();
-                                    CalcAction calcAction = new CalcAction(service, str,text);
-                                    calcAction.start();
-                                }else {
-                                    R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                                    r4Action.start();
-                                }
-                            }
-                            break;
-                    }
+                    CalcAction calcAction = new CalcAction(service, calcBean, text, context);
+                    calcAction.start();
+
                     break;
-                }
-                case AppController.DATETIME: {   //  时间、日期的查询。
+
+                case AppController.DATETIME:    //  时间、日期的查询。
+
                     DatetimeBean datetimeBean = JsonParser.parseResultDatetimeBean(text);
-                    operation = datetimeBean.getOperation();
-                    switch (operation) {
-                        case "ANSWER": {
-                            if (datetimeBean.getAnswer() != null) {
-                                if (datetimeBean.getAnswer().getText() != null) {
-                                    String str = datetimeBean.getAnswer().getText();
-                                    CalcAction calcAction = new CalcAction(service, str,text);
-                                    calcAction.start();
-                                }else {
-                                    R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                                    r4Action.start();
-                                }
-                            }
-                        }
-                        break;
-                    }
+                    DateTimeAction dateTimeAction = new DateTimeAction(service, datetimeBean, text, context);
+                    dateTimeAction.start();
+
                     break;
-                }
-                case AppController.FLIGHT: {  //飞机票、航班信息的查询及订购。
+
+                case AppController.FLIGHT:       //飞机票、航班信息的查询及订购。
 
                     FlightBean flightBean = JsonParser.parseResultFlightoBean(text);
-                    if (flightBean != null && flightBean.getAnswer() != null) {
-                        String str = flightBean.getAnswer().getText();
-                        CalcAction calcAction = new CalcAction(service, str,text);
-                        calcAction.start();
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                        r4Action.start();
-                    }
-                    break;
-                }
+                    FlightAction flightAction = new FlightAction(service, flightBean, text, context);
+                    flightAction.start();
 
-                case AppController.JOKE: {  // 笑话的点播
-                    JokeBean jokeBean = JsonParser.parseResultJokeBean(text);
-                    if (jokeBean != null) {
-                        JokeAction jokeAction = new JokeAction(service,text, context);
-                        jokeAction.start();
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                        r4Action.start();
-                    }
                     break;
-                }
-                case AppController.MUSICX: {  //   音乐的搜索和播放
+
+                case AppController.JOKE:  // 笑话的点播
+
+                    JokeBean jokeBean = JsonParser.parseResultJokeBean(text);
+                    JokeAction jokeAction = new JokeAction(service, jokeBean, text, context);
+                    jokeAction.start();
+
+                    break;
+
+                case AppController.MUSICX:   //   音乐的搜索和播放
 
                     MusicXBean musicXBean = JsonParser.parseResultMusicXBean(text);
-                    if (musicXBean != null && musicXBean.getText() != null) {
-                        PlayMusicxAction playMusicxAction = new PlayMusicxAction(service,musicXBean,text,context);
-                        playMusicxAction.start();
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                        r4Action.start();
-                    }
+                    PlayMusicxAction playMusicxAction = new PlayMusicxAction(service, musicXBean, text, context);
+                    playMusicxAction.start();
                     break;
-                }
-                case AppController.NEWS: {  //  新闻的搜索和点播
+
+                case AppController.NEWS:   //  新闻的搜索和点播
 
                     NewsBean newsBean = JsonParser.parseResultNewsBean(text);
-                    if (newsBean != null && newsBean.getText() != null) {
-                        NewsAction newsAction = new NewsAction(service,newsBean,text ,context);
-                        newsAction.start();
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                        r4Action.start();
-                    }
+                    NewsAction newsAction = new NewsAction(service, newsBean, text, context);
+                    newsAction.start();
+
                     break;
-                }
-                case AppController.OPENAPPTEST_APP: {   //打开App
+
+                case AppController.OPENAPPTEST_APP:    //打开App
 
                     OpenAppBean openAppBean = JsonParser.parseResultOpenAppBean(text);
-                    if (openAppBean != null && openAppBean.getSemantic().size() != 0) {
-                        if (openAppBean.getSemantic().get(0).getSlots().size() != 0) {
-                            if (openAppBean.getSemantic().get(0).getSlots().get(0).getNormValue() != null) {
-                                String appName = openAppBean.getSemantic().get(0).getSlots().get(0).getNormValue();
-                                OpenAppAction openAppAction = new OpenAppAction(appName, context);
-                                openAppAction.start();
-                            }
-                        }
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                    if (openAppBean != null && openAppBean.getSemantic() != null && openAppBean.getSemantic().size() != 0 &&
+                         openAppBean.getSemantic().get(0).getSlots() != null && openAppBean.getSemantic().get(0).getSlots().size() != 0) {
+
+                        String appName = openAppBean.getSemantic().get(0).getSlots().get(0).getNormValue();
+                        OpenAppAction openAppAction = new OpenAppAction(appName, context);
+                        openAppAction.start();
+
+                    } else {
+                        R4Action r4Action = new R4Action(context);
                         r4Action.start();
                     }
+
                     break;
-                }
-                case AppController.OPENQA: {  //     开放问答
+
+                case AppController.OPENQA:   //     开放问答
 
                     OpenQABean openQABean = JsonParser.parseResultOpenQABean(text);
-                    if (openQABean != null && openQABean.getAnswer() != null) {
-                        String str = openQABean.getAnswer().getText();
-                        CalcAction calcAction = new CalcAction(service,str,text);
-                        calcAction.start();
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                        r4Action.start();
-                    }
-                    break;
-                }
-                case AppController.POETRY: {      //诗词查询和诗句对答。
-                    PoetryBean poetryBean = JsonParser.parseResultPoetryBean(text);
-                    if (poetryBean != null && poetryBean.getData() != null) {
-                        if (poetryBean.getData().getResult().size() != 0) {
-                            if (poetryBean.getData().getResult().get(0).getTitle() != null && poetryBean.getData().getResult().get(0).getShowContent() != null) {
-                                String str = poetryBean.getAnswer().getText();
-                                CalcAction calcAction = new CalcAction(service,str,text);
-                                calcAction.start();
+                    OpenQaAction openQaAction = new OpenQaAction(service, openQABean, text, context);
+                    openQaAction.start();
 
-                            }
-                        }
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                        r4Action.start();
-                    }
                     break;
-                }
-                case AppController.STORY: { //     故事的点播
+
+                case AppController.POETRY:       //诗词查询和诗句对答
+
+                    PoetryBean poetryBean = JsonParser.parseResultPoetryBean(text);
+                    PoetryAction poetryAction = new PoetryAction(service, poetryBean, text, context);
+                    poetryAction.start();
+
+                    break;
+
+                case AppController.STORY:  //     故事的点播
 
                     StoryBean storyBean = JsonParser.parseResultStoryBean(text);
-                    if (storyBean != null ) {
-                        StoryAction storyAction = new StoryAction(service,storyBean,text,context);
-                        storyAction.start();
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                        r4Action.start();
-                    }
+                    StoryAction storyAction = new StoryAction(service, storyBean, text, context);
+                    storyAction.start();
+
                     break;
-                }
-                case "OPENAPPTEST.shiping": {//   视频的搜索和播放
+
+                case "OPENAPPTEST.shiping": //   视频的搜索和播放
 
                     VideoBean videoBean = JsonParser.parseResultVideoBean(text);
-                    if (videoBean != null && videoBean.getSemantic().size() != 0) {
-                        if (videoBean.getSemantic().get(0).getSlots().size() != 0) {
-                            if (videoBean.getSemantic().get(0).getSlots().get(0).getValue() != null) {
-                                ShipingAction shipingAction = new ShipingAction(service,videoBean,context,text);
-                                shipingAction.start();
-                            }
-                        }
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                        r4Action.start();
-                    }
+                    ShipingAction shipingAction = new ShipingAction(service, videoBean, context, text);
+                    shipingAction.start();
+
                     break;
-                }
-                case "weather": {  //  天气情况的查询。
+
+                case "weather":   //  天气情况的查询。
 
                     WeatherBean weatherBean = JsonParser.parseResultWeatherBean(text);
-                    if (weatherBean != null && weatherBean.getData().getResult().size() != 0) {
-                        WeatherAction weatherAction = new WeatherAction(service,weatherBean ,text);
-                        weatherAction.start();
-                    }else {
-                        R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
-                        r4Action.start();
-                    }
+                    WeatherAction weatherAction = new WeatherAction(service, weatherBean, text, context);
+                    weatherAction.start();
+
                     break;
-                }
+
 //                case "OPENAPPTEST.music_demo": {  //   艺人跟歌曲 搜索和播放
 //                    CustomMusicBean customMusicBean = JsonParser.parseResultCustomMusicBean(text);
 //                    if (customMusicBean != null && customMusicBean.getSemantic().size() != 0 && customMusicBean.getSemantic().get(0).getSlots().size() != 0) {
@@ -514,9 +418,11 @@ public class VoiceToWords {
 //                    }
 //                    break;
 //                }
+
                 default:
-                    R4Action r4Action = new R4Action("r4",context.getResources().getString(R.string.r4_text),context);
+                    R4Action r4Action = new R4Action(context);
                     r4Action.start();
+                    break;
             }
         }
     }

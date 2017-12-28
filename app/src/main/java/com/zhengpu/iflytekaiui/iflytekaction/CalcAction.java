@@ -1,7 +1,10 @@
 package com.zhengpu.iflytekaiui.iflytekaction;
 
 
+import android.content.Context;
+
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
+import com.zhengpu.iflytekaiui.iflytekbean.CalcBean;
 import com.zhengpu.iflytekaiui.iflytekutils.WordsToVoice;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 
@@ -13,15 +16,32 @@ import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 public class CalcAction {
 
     private String text;
-    private  String service;
-    private String  request;
-    public CalcAction(String service, String text, String  request) {
-        this.text = text;
+    private String service;
+    private String request;
+    private CalcBean calcBean;
+    private Context context;
+
+    public CalcAction(String service, CalcBean calcBean, String request, Context context) {
+
+        this.calcBean = calcBean;
         this.service = service;
         this.request = request;
+        this.context = context;
+
     }
 
     public void start() {
-        SpeechRecognizerService.startSpeech(service,text,request);
+
+        if (calcBean != null && calcBean.getAnswer() != null && calcBean.getAnswer().getText() != null) {
+            String operation = calcBean.getOperation();
+            switch (operation) {
+                case "ANSWER":
+                    SpeechRecognizerService.startSpeech(service, calcBean.getAnswer().getText(), request);
+                    break;
+            }
+        }else {
+            R4Action r4Action = new R4Action(context);
+            r4Action.start();
+        }
     }
 }

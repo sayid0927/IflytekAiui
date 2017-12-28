@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.zhengpu.iflytekaiui.iflytekbean.BaikeBean;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 
 /**
@@ -12,17 +13,24 @@ import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 
 public class BaikeAction {
 
-    private String text;
     private String service;
     private  String request;
+    private BaikeBean baikeBean;
+    private Context context;
 
-    public BaikeAction(String service, String text ,String request) {
-        this.text = text;
+    public BaikeAction(String service,BaikeBean baikeBean,String request,Context context) {
+        this.baikeBean = baikeBean;
         this.service = service;
         this.request = request;
+        this.context = context;
     }
 
     public void start() {
-        SpeechRecognizerService.startSpeech(service, text,request);
+        if (baikeBean != null && baikeBean.getAnswer()!=null && baikeBean.getAnswer().getText() != null) {
+            SpeechRecognizerService.startSpeech(service, baikeBean.getAnswer().getText() ,request);
+        }else {
+            R4Action r4Action = new R4Action(context);
+            r4Action.start();
+        }
     }
 }

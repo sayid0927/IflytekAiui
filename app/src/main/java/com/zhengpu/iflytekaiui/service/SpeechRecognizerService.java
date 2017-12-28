@@ -9,10 +9,8 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.utils.Utils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
-import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.base.AppController;
-import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetVoiceToWord;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetWordToVoice;
@@ -32,7 +30,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
-import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isStartAccessibilityService;
+import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAccessibilitySettingsOn;
 
 
 /**
@@ -52,7 +50,8 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void onCreate() {
         super.onCreate();
 
-        if (!isStartAccessibilityService(getApplicationContext())) {
+
+        if (!isAccessibilitySettingsOn(this)) {
            Intent intent=  new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -161,19 +160,25 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void SpeechEnd(String service) {
-        if(service.equals(AppController.SHOWLOWVOICE_TEXT)){
-            voiceToWords.mIatDestroy();
-        }else if(service.equals(AppController.MUSICX)){
-            voiceToWords.mIatDestroy();
-            KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());
-        }else  if(service.equals(AppController.NEWS)){
-            voiceToWords.mIatDestroy();
-            KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());
-        }else if(service.equals(AppController.STORY)){
-            voiceToWords.mIatDestroy();
-            KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayStoryUrl());
-        }else {
-            voiceToWords.startRecognizer();
+        switch (service) {
+            case AppController.SHOWLOWVOICE_TEXT:
+                voiceToWords.mIatDestroy();
+                break;
+            case AppController.MUSICX:
+                voiceToWords.mIatDestroy();
+                KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());
+                break;
+            case AppController.NEWS:
+                voiceToWords.mIatDestroy();
+                KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());
+                break;
+            case AppController.STORY:
+                voiceToWords.mIatDestroy();
+                KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayStoryUrl());
+                break;
+            default:
+                voiceToWords.startRecognizer();
+                break;
         }
 
     }
