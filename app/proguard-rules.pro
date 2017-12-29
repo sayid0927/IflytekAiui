@@ -238,7 +238,7 @@ public static java.lang.String TABLENAME;
 # 将下面替换成自己的实体类
 -keep class com.zhengpu.iflytekaiui.iflytekbean.** { *; }
 -keep class com.zhengpu.iflytekaiui.service.** { *; }
--keep class com.zhengpu.iflytekaiui.ipc.entity.** { *; }
+-keep class com.zhengpu.iflytekaiui.ipc.** { *; }
 
 
 # OkHttp

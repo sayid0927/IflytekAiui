@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.blankj.utilcode.utils.EncodeUtils;
+import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekbean.AllAudioSongBean;
@@ -12,6 +13,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.MusicXBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicResBean;
 import com.zhengpu.iflytekaiui.iflytekutils.JsonParser;
+import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
@@ -24,10 +26,12 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAppInstalled;
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.scanAllAudioFiles;
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.setCurrentVolume;
+import static com.zhengpu.iflytekaiui.utils.DeviceUtils.updateKUGuoClick;
 
 /**
  * sayid ....
@@ -120,11 +124,18 @@ public class PlayMusicxAction {
                             PreferUtil.getInstance().setPlayMusicName(artist+song);
                             if (isAppInstalled(context, "com.kugou.android")) {
                                 //  打开应用
+
+
+                                updateKUGuoClick(context);
+
                                 OpenAppAction openAppAction = new OpenAppAction("酷狗音乐", context);
                                 openAppAction.start();
-                                AppController.KuGuoplayClickabl = true;
-                                AppController.abj = true;
-                                AppController.b2w = true;
+//                                AppController.KuGuoplayClickabl = true;
+//                                AppController.abj = true;
+//                                AppController.b2w = true;
+
+
+
                                 SpeechRecognizerService.startSpeech(service, "为你打开酷狗音乐播放" + artist+song, strRequest);
                                 break;
                             } else {

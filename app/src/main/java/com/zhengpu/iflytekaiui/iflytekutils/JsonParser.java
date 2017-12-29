@@ -103,7 +103,7 @@ public class JsonParser {
     }
 
 
-    static MusicXBean parseResultMusicXBean(String json) {
+   public static MusicXBean parseResultMusicXBean(String json) {
         MusicXBean musicXBean = new MusicXBean();
         try {
             Type type = new TypeToken<MusicXBean>() {

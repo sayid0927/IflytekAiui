@@ -1,18 +1,19 @@
 package com.zhengpu.iflytekaiui.utils;
 
-import android.accessibilityservice.AccessibilityServiceInfo;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.accessibility.AccessibilityManager;
-
-
+import com.orhanobut.logger.Logger;
+import com.zhengpu.iflytekaiui.content.Book;
+import com.zhengpu.iflytekaiui.content.BookProvider;
 import com.zhengpu.iflytekaiui.iflytekbean.AllAudioSongBean;
 import com.zhengpu.iflytekaiui.service.MyAccessibilityService;
 
@@ -76,15 +77,12 @@ public class DeviceUtils {
             accessibilityEnabled = Settings.Secure.getInt(
                     mContext.getApplicationContext().getContentResolver(),
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
-            Log.v(TAG, "accessibilityEnabled = " + accessibilityEnabled);
         } catch (Settings.SettingNotFoundException e) {
-            Log.e(TAG, "Error finding setting, default accessibility to not found: "
-                    + e.getMessage());
+
         }
         TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
 
         if (accessibilityEnabled == 1) {
-            Log.v(TAG, "***ACCESSIBILIY IS ENABLED*** -----------------");
             String settingValue = Settings.Secure.getString(
                     mContext.getApplicationContext().getContentResolver(),
                     Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
@@ -93,15 +91,13 @@ public class DeviceUtils {
                 splitter.setString(settingValue);
                 while (splitter.hasNext()) {
                     String accessabilityService = splitter.next();
-                    Log.v(TAG, "-------------- > accessabilityService :: " + accessabilityService);
                     if (accessabilityService.equalsIgnoreCase(service)) {
-                        Log.v(TAG, "We've found the correct setting - accessibility is switched on!");
                         return true;
                     }
                 }
             }
         } else {
-            Log.v(TAG, "***ACCESSIBILIY IS DISABLED***");
+
         }
         return accessibilityFound;
     }
@@ -184,6 +180,38 @@ public class DeviceUtils {
             mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);  //调高声音
         }
     }
+
+
+    public static String getKUGuoClick(Context context) {
+        String str = "";
+        Uri bookUri = BookProvider.BOOK_CONTENT_URI;
+        Cursor bookCursor =  context.getContentResolver().query(bookUri, new String[]{"_id", "name"}, null, null, null);
+
+        if (bookCursor != null) {
+            while (bookCursor.moveToNext()) {
+                Book book = new Book();
+                book.bookId = bookCursor.getInt(0);
+                book.bookName = bookCursor.getString(1);
+                str += book.toString() + "\n";
+            }
+            bookCursor.close();
+        }
+        return  str;
+    }
+
+    public static void updateKUGuoClick(Context context) {
+        Uri bookUri = BookProvider.BOOK_CONTENT_URI;
+        ContentValues values = new ContentValues();
+        values.put("bookName", "LLLLLLLLL");
+        String where = "bookId="+1;
+        context.getContentResolver().update(bookUri, values,"bookId=1", null);
+    }
+
+
+
+
+
+
 }
 
 

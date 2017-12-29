@@ -7,6 +7,7 @@ import android.os.Build;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 
+import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
@@ -43,9 +44,11 @@ public class KuGou {
                         parent = parent.getParent();
                     }
 
-                } else if (AppController.abj && FindNodeInfosById(info, "com.kugou.android:id/abj")) {
+
+                } else if (PreferUtil.getInstance().getKuGuoplayabj() && FindNodeInfosById(info, "com.kugou.android:id/abj")) {
                     // 模拟输入歌曲名
-                    AppController.abj = false;
+                    PreferUtil.getInstance().setKuGuoplayabj(false);
+//                    AppController.abj = false;
                     ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
                     ClipData clipData = ClipData.newPlainText("scb", songName);
                     clipboardManager.setPrimaryClip(clipData);
@@ -63,11 +66,15 @@ public class KuGou {
                         }
                         parent = parent.getParent();
                     }
-                } else if (AppController.b2w && FindNodeInfosById(info, "com.kugou.android:id/b2w")) {
+
+                } else if (PreferUtil.getInstance().getKuGuoplayb2w() && FindNodeInfosById(info, "com.kugou.android:id/b2w")) {
                     //  模拟点击播放歌曲button
-                    AppController.KuGuoplayClickabl=false;
-                    AppController.abj = true;
-                    AppController.b2w=false;
+                    PreferUtil.getInstance().setKuGuoplayClickabl(false);
+                    PreferUtil.getInstance().setKuGuoplayabj(false);
+                    PreferUtil.getInstance().setKuGuoplayb2w(false);
+//                    AppController.KuGuoplayClickabl=false;
+//                    AppController.abj = true;
+//                    AppController.b2w=false;
 
                     AccessibilityNodeInfo parent = info;
                     while (parent != null) {

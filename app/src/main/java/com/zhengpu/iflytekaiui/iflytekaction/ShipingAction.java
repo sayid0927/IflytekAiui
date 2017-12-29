@@ -44,7 +44,8 @@ public class ShipingAction {
                     //  打开应用
                     OpenAppAction openAppAction = new OpenAppAction("爱奇艺", context);
                     openAppAction.start();
-                    AppController.AiQiPlayClickabl =true;
+//                    AppController.AiQiPlayClickabl =true;
+                    PreferUtil.getInstance().setAiQiPlayClickabl(true);
                     SpeechRecognizerService.startSpeech(service, "为你打开爱奇艺搜索" + videoName, request);
 
                 } else {

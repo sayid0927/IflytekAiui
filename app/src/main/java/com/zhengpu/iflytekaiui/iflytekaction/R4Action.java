@@ -30,9 +30,8 @@ public class R4Action {
     }
 
     public void start() {
-        long nowTime = TimeUtils.getNowTimeMills(); //当前的时间戳
         // 与之前的时间戳对比如果小于5分钟
-        if (TimeUtils.getTimeSpanByNow(spaceTime, ConstUtils.TimeUnit.MIN) < 3) {
+        if (TimeUtils.getTimeSpanByNow(spaceTime, ConstUtils.TimeUnit.MIN) < 5) {
             switch (spaceCount) {
                 case 0:
                     SpeechRecognizerService.startSpeech(AppController.R4_0, context.getResources().getString(R.string.r4_0_text), context.getResources().getString(R.string.r4_0_text));
@@ -51,7 +50,7 @@ public class R4Action {
             PreferUtil.getInstance().setR4SpaceCount(spaceCount);
         } else {
             SpeechRecognizerService.startSpeech(AppController.R4_0, context.getResources().getString(R.string.r4_0_text), context.getResources().getString(R.string.r4_0_text));
-            PreferUtil.getInstance().setR4SpaceTime(nowTime);
+            PreferUtil.getInstance().setR4SpaceTime(TimeUtils.getNowTimeMills());
             PreferUtil.getInstance().setR4SpaceCount(1);
         }
     }

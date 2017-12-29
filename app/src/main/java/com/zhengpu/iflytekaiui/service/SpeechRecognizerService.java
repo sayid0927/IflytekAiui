@@ -9,16 +9,22 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.utils.Utils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
+import com.orhanobut.logger.Logger;
+import com.zhengpu.iflytekaiui.MainActivity;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.base.AppController;
+import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
+import com.zhengpu.iflytekaiui.iflytekbean.MusicXBean;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetVoiceToWord;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetWordToVoice;
 import com.zhengpu.iflytekaiui.iflytekutils.IflytekWakeUp;
+import com.zhengpu.iflytekaiui.iflytekutils.JsonParser;
 import com.zhengpu.iflytekaiui.iflytekutils.MyWakeuperListener;
 import com.zhengpu.iflytekaiui.iflytekutils.VoiceToWords;
 import com.zhengpu.iflytekaiui.iflytekutils.WakeUpListener;
 import com.zhengpu.iflytekaiui.iflytekutils.WordsToVoice;
+
 import com.zhengpu.iflytekaiui.ipc.entity.RequestMessage;
 import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
@@ -45,6 +51,44 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     private static WordsToVoice wordsToVoice;
     private KuGuoMuiscPlayThread kuGuoMuiscPlayThread;
     private String message;
+
+    private String json ="{\n" +
+            "  \"save_history\": true,\n" +
+            "  \"rc\": 0,\n" +
+            "  \"semantic\": [\n" +
+            "    {\n" +
+            "      \"intent\": \"PLAY\",\n" +
+            "      \"slots\": [\n" +
+            "        {\n" +
+            "          \"name\": \"song\",\n" +
+            "          \"value\": \"我的地盘\"\n" +
+            "        }\n" +
+            "      ]\n" +
+            "    }\n" +
+            "  ],\n" +
+            "  \"service\": \"musicX\",\n" +
+            "  \"uuid\": \"atn00002424@ch52290da0e8d16f2001\",\n" +
+            "  \"text\": \"播放我的地盘\",\n" +
+            "  \"state\": {\n" +
+            "    \"fg::musicX::default::playing\": {\n" +
+            "      \"song\": \"1\",\n" +
+            "      \"state\": \"playing\"\n" +
+            "    }\n" +
+            "  },\n" +
+            "  \"used_state\": {\n" +
+            "    \"song\": \"1\",\n" +
+            "    \"state\": \"playing\",\n" +
+            "    \"state_key\": \"fg::musicX::default::playing\"\n" +
+            "  },\n" +
+            "  \"answer\": {\n" +
+            "    \"text\": \"请欣赏周杰伦的歌曲我的地盘\"\n" +
+            "  },\n" +
+            "  \"dialog_stat\": \"DataValid\",\n" +
+            "  \"sid\": \"atn00002424@ch52290da0e8d16f2001\"\n" +
+            "}";
+
+
+
 
     @Override
     public void onCreate() {
@@ -87,6 +131,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         String reqService =  requestMessage.getService();
         String reqMessage = requestMessage.getMessage();
         startSpeech(reqService,reqMessage, reqMessage);
+
     }
 
     /**
@@ -161,6 +206,13 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     @Override
     public void SpeechEnd(String service) {
         switch (service) {
+            case AppController.LAUNCHER_TEXT:
+
+                MusicXBean musicXBean = JsonParser.parseResultMusicXBean(json);
+                PlayMusicxAction playMusicxAction = new PlayMusicxAction("musicX", musicXBean, json, SpeechRecognizerService.this);
+                playMusicxAction.start();
+
+                break;
             case AppController.SHOWLOWVOICE_TEXT:
                 voiceToWords.mIatDestroy();
                 break;
@@ -181,6 +233,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
                 break;
         }
     }
+
     /***
      *
      * 机器人语音播报错误回调
