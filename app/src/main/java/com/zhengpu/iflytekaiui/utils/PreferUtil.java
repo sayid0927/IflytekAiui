@@ -27,10 +27,9 @@ public final class PreferUtil {
     private static final String R4_SPACE_TIME = "r4_space_time";
     private static final String R4_SPACE_COUNT = "r4_space_count";
     private static final String SPEECH_PARAMS = "speech_params";
+
     private static final String KUGUO_PLAY_CLICKABL = "kuguo_play_clickabl";
-
     private static final String KUGUO_PLAY_CLICKABLS = "kuguo_play_clickabls";
-
     private static final String AIQIYI_PLAY_CLICKABL = "aiqiyi_play_clickabl";
     private static final String KUGUO_PLAY_ABJ = "kuguo_play_abj";
     private static final String KUGUO_PLAY_B2W  = "kuguo_play_b2w";

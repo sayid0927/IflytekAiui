@@ -202,16 +202,12 @@ public class DeviceUtils {
     public static void updateKUGuoClick(Context context) {
         Uri bookUri = BookProvider.BOOK_CONTENT_URI;
         ContentValues values = new ContentValues();
-        values.put("bookName", "LLLLLLLLL");
-        String where = "bookId="+1;
-        context.getContentResolver().update(bookUri, values,"bookId=1", null);
+        values.put("name", "LLLLLLLLL");
+//        context.getContentResolver().update(bookUri, values,"bookId =?",new String[] {"1"});
+
+        int c =  context.getContentResolver().update(bookUri, values, "name=?", new String[] {"Android" });
+
     }
-
-
-
-
-
-
 }
 
 

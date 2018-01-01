@@ -1,1 +1,1 @@
-include ':app', ':app2', ':watch'
+include ':app', ':app2'

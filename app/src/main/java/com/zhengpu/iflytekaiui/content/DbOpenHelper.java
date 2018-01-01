@@ -13,6 +13,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "book_provider.db";
     public static final String BOOK_TABLE_NAME = "book";
     public static final String USER_TABLE_NAME = "user";
+    public static final String TABLE_PLAYCONTROLLER = "playcontroller";
 
     private static final int DB_VERSION = 1;
 
@@ -21,6 +22,11 @@ public class DbOpenHelper extends SQLiteOpenHelper {
 
     private String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS "
             + USER_TABLE_NAME + "(_id INTEGER PRIMARY KEY, name TEXT, sex INT)";
+
+
+    private String CREATE_USER_PLAYCONTROLLER= "CREATE TABLE IF NOT EXISTS "
+            + TABLE_PLAYCONTROLLER + "(_id INTEGER PRIMARY KEY, TYPE TEXT, sex INT)";
+
 
     public DbOpenHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
