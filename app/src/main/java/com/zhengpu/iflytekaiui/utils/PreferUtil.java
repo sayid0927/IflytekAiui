@@ -28,12 +28,6 @@ public final class PreferUtil {
     private static final String R4_SPACE_COUNT = "r4_space_count";
     private static final String SPEECH_PARAMS = "speech_params";
 
-    private static final String KUGUO_PLAY_CLICKABL = "kuguo_play_clickabl";
-    private static final String KUGUO_PLAY_CLICKABLS = "kuguo_play_clickabls";
-    private static final String AIQIYI_PLAY_CLICKABL = "aiqiyi_play_clickabl";
-    private static final String KUGUO_PLAY_ABJ = "kuguo_play_abj";
-    private static final String KUGUO_PLAY_B2W  = "kuguo_play_b2w";
-    private static final String AIQIYI_PLAY_SEARCHKEYWORD = "aiqiyi_play_searchkeyword";
 
 
     public String getPlayMusicName() {
@@ -83,65 +77,6 @@ public final class PreferUtil {
     public int getR4SpaceCount() {
         return getInt(R4_SPACE_COUNT, 0);
     }
-
-
-
-    public void setKuGuoplayClickabls(String flag) {
-        putString(KUGUO_PLAY_CLICKABLS, flag);
-    }
-
-    public String getKuGuoplayClickabls() {
-        return getString(KUGUO_PLAY_CLICKABLS, "false");
-    }
-
-
-
-    public void setKuGuoplayClickabl(boolean flag) {
-        putBoolean(KUGUO_PLAY_CLICKABL, flag);
-    }
-
-    public boolean getKuGuoplayClickabl() {
-        return getBoolean(KUGUO_PLAY_CLICKABL, false);
-    }
-
-
-
-    public void setAiQiPlayClickabl(boolean flag) {
-        putBoolean(AIQIYI_PLAY_CLICKABL, flag);
-    }
-
-    public boolean getAiQiPlayClickabl() {
-        return getBoolean(AIQIYI_PLAY_CLICKABL, false);
-    }
-
-
-
-
-    public void setKuGuoplayabj(boolean flag) {
-        putBoolean(KUGUO_PLAY_ABJ, flag);
-    }
-
-    public boolean getKuGuoplayabj() {
-        return getBoolean(KUGUO_PLAY_ABJ, true);
-    }
-
-    public void setKuGuoplayb2w(boolean flag) {
-        putBoolean(KUGUO_PLAY_B2W, flag);
-    }
-
-    public boolean getKuGuoplayb2w() {
-        return getBoolean(KUGUO_PLAY_B2W, true);
-    }
-
-    public void setAiQiYiplaySearchKeyword(boolean flag) {
-        putBoolean(AIQIYI_PLAY_SEARCHKEYWORD, flag);
-    }
-
-    public boolean getAiQiYiplaySearchKeyword() {
-        return getBoolean(AIQIYI_PLAY_SEARCHKEYWORD, true);
-    }
-
-
 
     public void setSpeechParams(int flag) {
         putInt(SPEECH_PARAMS, flag);

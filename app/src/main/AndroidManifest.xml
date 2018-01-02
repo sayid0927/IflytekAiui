@@ -81,8 +81,14 @@
             </intent-filter>
         </activity>
 
+        <!--<provider-->
+            <!--android:name=".content.BookProvider"-->
+            <!--android:authorities="com.zhengpu.iflytekaiui.provider"-->
+            <!--android:permission="com.zhengpu.iflytekaiui.BOOK_PROVIDER"-->
+            <!--android:process=":provider"/>-->
+
         <provider
-            android:name=".content.BookProvider"
+            android:name=".contentprovider.PlayProvider"
             android:authorities="com.zhengpu.iflytekaiui.provider"
             android:permission="com.zhengpu.iflytekaiui.BOOK_PROVIDER"
             android:process=":provider"/>

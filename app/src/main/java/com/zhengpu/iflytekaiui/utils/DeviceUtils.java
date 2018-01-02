@@ -1,6 +1,5 @@
 package com.zhengpu.iflytekaiui.utils;
 
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -11,16 +10,15 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
-import com.orhanobut.logger.Logger;
-import com.zhengpu.iflytekaiui.content.Book;
-import com.zhengpu.iflytekaiui.content.BookProvider;
+
+import com.zhengpu.iflytekaiui.contentprovider.PlayController;
+import com.zhengpu.iflytekaiui.contentprovider.PlayProvider;
 import com.zhengpu.iflytekaiui.iflytekbean.AllAudioSongBean;
 import com.zhengpu.iflytekaiui.service.MyAccessibilityService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
 import static android.content.Context.AUDIO_SERVICE;
 
 /**
@@ -122,11 +120,11 @@ public class DeviceUtils {
      * 获取手机中所有音乐文件
      */
     public static List<AllAudioSongBean> scanAllAudioFiles(Context context) {
-          //生成动态集合，用于存储数据
+        //生成动态集合，用于存储数据
         List<AllAudioSongBean> allAudioSongBeanList = new ArrayList<>();
-          //查询媒体数据库
+        //查询媒体数据库
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
-          //遍历媒体数据库
+        //遍历媒体数据库
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 //歌曲编号
@@ -148,7 +146,7 @@ public class DeviceUtils {
                     allAudioSongBean.setMusicId(id);
                     allAudioSongBean.setMusicTitle(tilte);
                     allAudioSongBean.setMusicFileUrl(url);
-                     allAudioSongBean.setMusic_file_name(tilte);
+                    allAudioSongBean.setMusic_file_name(tilte);
                     allAudioSongBean.setMusic_author(author);
                     allAudioSongBean.setMusic_url(url);
                     allAudioSongBean.setMusic_duration(duration);
@@ -168,7 +166,7 @@ public class DeviceUtils {
 
     public static void setCurrentVolume(int Type, Context context) {
         //初始化音频管理器
-        AudioManager mAudioManager = (AudioManager)context.getSystemService(AUDIO_SERVICE);
+        AudioManager mAudioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
         //获取系统最大音量
         int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         // 获取设备当前音量
@@ -182,31 +180,34 @@ public class DeviceUtils {
     }
 
 
-    public static String getKUGuoClick(Context context) {
-        String str = "";
-        Uri bookUri = BookProvider.BOOK_CONTENT_URI;
-        Cursor bookCursor =  context.getContentResolver().query(bookUri, new String[]{"_id", "name"}, null, null, null);
+    public static PlayController getPlayStart(Context context, int id) {
 
-        if (bookCursor != null) {
-            while (bookCursor.moveToNext()) {
-                Book book = new Book();
-                book.bookId = bookCursor.getInt(0);
-                book.bookName = bookCursor.getString(1);
-                str += book.toString() + "\n";
+        PlayController playController = new PlayController();
+        Uri playUri = PlayProvider.PLAY_CONTENT_URI;
+        Cursor playCursor = context.getContentResolver().query(playUri, new String[]{"_id", "type", "isPlay"}, null, null, null);
+
+        if (playCursor != null) {
+            while (playCursor.moveToNext()) {
+                if (playCursor.getInt(0) == id) {
+                    playController.Id = playCursor.getInt(0);
+                    playController.type = playCursor.getString(1);
+                    playController.isPlay = playCursor.getString(2);
+                }
             }
-            bookCursor.close();
+            playCursor.close();
         }
-        return  str;
+        return playController;
     }
 
-    public static void updateKUGuoClick(Context context) {
-        Uri bookUri = BookProvider.BOOK_CONTENT_URI;
+    public static void updatePlayStart(Context context, int id,String falg) {
+        Uri bookUri = PlayProvider.PLAY_CONTENT_URI;
         ContentValues values = new ContentValues();
-        values.put("name", "LLLLLLLLL");
-//        context.getContentResolver().update(bookUri, values,"bookId =?",new String[] {"1"});
-
-        int c =  context.getContentResolver().update(bookUri, values, "name=?", new String[] {"Android" });
-
+        values.put("isPlay", falg);
+        try {
+            int c = context.getContentResolver().update(bookUri, values, "_id=?", new String[]{String.valueOf(id)});
+        } catch (Exception e) {
+            e.toString();
+        }
     }
 }
 

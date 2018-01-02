@@ -5,18 +5,12 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.orhanobut.logger.Logger;
-import com.zhengpu.iflytekaiui.base.AppController;
+import com.zhengpu.iflytekaiui.contentprovider.PlayController;
 import com.zhengpu.iflytekaiui.iflytekaction.KuGou;
 import com.zhengpu.iflytekaiui.iflytekaction.Qiyi;
-import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
-import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import static com.zhengpu.iflytekaiui.utils.DeviceUtils.getPlayStart;
 
-import xiaofei.library.hermeseventbus.HermesEventBus;
-
-import static com.zhengpu.iflytekaiui.utils.DeviceUtils.getKUGuoClick;
 
 /**
  * sayid ....
@@ -25,6 +19,7 @@ import static com.zhengpu.iflytekaiui.utils.DeviceUtils.getKUGuoClick;
 
 public class MyAccessibilityService extends AccessibilityService {
 
+    private PlayController playController;
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -33,25 +28,21 @@ public class MyAccessibilityService extends AccessibilityService {
         String nowPackageName = event.getPackageName().toString();
         AccessibilityNodeInfo rootNode = this.getRootInActiveWindow();
 
-      String gg = getKUGuoClick(MyAccessibilityService.this);
-      Logger.e(gg);
-
         switch (nowPackageName) {
             case "com.kugou.android":
-
-                if (PreferUtil.getInstance().getKuGuoplayClickabl()) {
+                playController = getPlayStart(MyAccessibilityService.this, 1);
+                if (playController.isPlay.equals("true")) {
                     KuGou kuGou = new KuGou(this);
                     kuGou.start(rootNode);
                 }
                 break;
 
             case "com.qiyi.video":
-
-                if (PreferUtil.getInstance().getAiQiPlayClickabl()) {
+                playController = getPlayStart(MyAccessibilityService.this, 4);
+                if (playController.isPlay.equals("true")) {
                     Qiyi qiyi = new Qiyi(this);
                     qiyi.start(rootNode);
                 }
-
                 break;
         }
     }
@@ -61,13 +52,11 @@ public class MyAccessibilityService extends AccessibilityService {
     public void onInterrupt() {
         //服务中断，如授权关闭或者将服务杀死
         Logger.e("授权中断");
-
     }
 
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
         Logger.e("AccessibilityService >>>>  授权成功");
-
     }
 }

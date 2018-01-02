@@ -7,13 +7,14 @@ import android.os.Build;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 
-import com.orhanobut.logger.Logger;
-import com.zhengpu.iflytekaiui.base.AppController;
+import com.zhengpu.iflytekaiui.contentprovider.PlayController;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
 import java.util.List;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
+import static com.zhengpu.iflytekaiui.utils.DeviceUtils.getPlayStart;
+import static com.zhengpu.iflytekaiui.utils.DeviceUtils.updatePlayStart;
 
 /**
  * sayid ....
@@ -33,7 +34,7 @@ public class KuGou {
     public void start(AccessibilityNodeInfo info) {
         if (info != null) {
             if (info.getChildCount() == 0) {
-                if ( FindNodeInfosById(info, "com.kugou.android:id/y5")) {
+                if (FindNodeInfosById(info, "com.kugou.android:id/y5")) {
                     // 模拟点击搜索button
                     AccessibilityNodeInfo parent = info;
                     while (parent != null) {
@@ -44,17 +45,17 @@ public class KuGou {
                         parent = parent.getParent();
                     }
 
+                } else if (FindNodeInfosById(info, "com.kugou.android:id/abj")) {
+                    PlayController playController = getPlayStart(context, 2);
+                    if (playController.isPlay.equals("true")) {
+                        // 模拟输入歌曲名
+                        updatePlayStart(context,2,"false");
+                        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+                        ClipData clipData = ClipData.newPlainText("scb", songName);
+                        clipboardManager.setPrimaryClip(clipData);
+                        info.performAction(AccessibilityNodeInfo.ACTION_PASTE);
 
-                } else if (PreferUtil.getInstance().getKuGuoplayabj() && FindNodeInfosById(info, "com.kugou.android:id/abj")) {
-                    // 模拟输入歌曲名
-                    PreferUtil.getInstance().setKuGuoplayabj(false);
-//                    AppController.abj = false;
-                    ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
-                    ClipData clipData = ClipData.newPlainText("scb", songName);
-                    clipboardManager.setPrimaryClip(clipData);
-                    info.performAction(AccessibilityNodeInfo.ACTION_PASTE);
-
-
+                    }
                 } else if (FindNodeInfosById(info, "com.kugou.android:id/chy")) {
                     // 模拟点击 搜索歌曲 button
 
@@ -67,25 +68,24 @@ public class KuGou {
                         parent = parent.getParent();
                     }
 
-                } else if (PreferUtil.getInstance().getKuGuoplayb2w() && FindNodeInfosById(info, "com.kugou.android:id/b2w")) {
-                    //  模拟点击播放歌曲button
-                    PreferUtil.getInstance().setKuGuoplayClickabl(false);
-                    PreferUtil.getInstance().setKuGuoplayabj(false);
-                    PreferUtil.getInstance().setKuGuoplayb2w(false);
-//                    AppController.KuGuoplayClickabl=false;
-//                    AppController.abj = true;
-//                    AppController.b2w=false;
+                } else if (FindNodeInfosById(info, "com.kugou.android:id/b2w")) {
+                    PlayController playController = getPlayStart(context, 3);
+                    if(playController.isPlay.equals("true")){
+                        //  模拟点击播放歌曲button
+                        updatePlayStart(context,1,"false");
+                        updatePlayStart(context,2,"true");
+                        updatePlayStart(context,3,"false");
 
-                    AccessibilityNodeInfo parent = info;
-                    while (parent != null) {
-                        if (parent.isClickable()) {
-                            parent.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                            break;
+                        AccessibilityNodeInfo parent = info;
+                        while (parent != null) {
+                            if (parent.isClickable()) {
+                                parent.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                                break;
+                            }
+                            parent = parent.getParent();
                         }
-                        parent = parent.getParent();
                     }
                 }
-
             } else {
                 for (int i = 0; i < info.getChildCount(); i++) {
                     if (info.getChild(i) != null) {

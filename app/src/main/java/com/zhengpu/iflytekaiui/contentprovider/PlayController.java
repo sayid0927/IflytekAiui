@@ -1,4 +1,4 @@
-package com.zhengpu.iflytekaiui.content;
+package com.zhengpu.iflytekaiui.contentprovider;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -10,18 +10,17 @@ import android.os.Parcelable;
 public class PlayController {
 
     public int Id;
-    public String ;
-    public boolean isMale;
-
+    public String type;
+    public String isPlay;
 
 
     public PlayController() {
     }
 
-    public PlayController(int PlayControllerId, String PlayControllerName, boolean isMale) {
-        this.PlayControllerId = PlayControllerId;
-        this.PlayControllerName = PlayControllerName;
-        this.isMale = isMale;
+    public PlayController(int Id, String type, String isPlay) {
+        this.Id = Id;
+        this.type = type;
+        this.isPlay = isPlay;
     }
 
     public int describeContents() {
@@ -29,10 +28,9 @@ public class PlayController {
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        out.writeInt(PlayControllerId);
-        out.writeString(PlayControllerName);
-        out.writeInt(isMale ? 1 : 0);
-
+        out.writeInt(Id);
+        out.writeString(type);
+        out.writeString(isPlay);
     }
 
     public static final Parcelable.Creator<PlayController> CREATOR = new Parcelable.Creator<PlayController>() {
@@ -46,15 +44,15 @@ public class PlayController {
     };
 
     private PlayController(Parcel in) {
-        PlayControllerId = in.readInt();
-        PlayControllerName = in.readString();
-        isMale = in.readInt() == 1;
+        Id = in.readInt();
+        type = in.readString();
+        isPlay = in.readString();
     }
 
     @Override
     public String toString() {
         return String.format(
-                "[PlayControllerId:%s, PlayControllerName:%s, isMale:%s]",
-                PlayControllerId, PlayControllerName, isMale);
+                "[Id:%s, type:%s, isPlay:%s]",
+                Id, type, isPlay);
     }
 }

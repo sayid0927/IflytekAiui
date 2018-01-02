@@ -11,6 +11,7 @@ import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAppInstalled;
+import static com.zhengpu.iflytekaiui.utils.DeviceUtils.updatePlayStart;
 
 /**
  * Created by Administrator on 2017/12/27 0027.
@@ -42,10 +43,12 @@ public class ShipingAction {
                 PreferUtil.getInstance().setPlayVideoName(videoName);
                 if (isAppInstalled(context, "com.qiyi.video")) {
                     //  打开应用
+
+                    updatePlayStart(context,4,"true");
+
                     OpenAppAction openAppAction = new OpenAppAction("爱奇艺", context);
                     openAppAction.start();
-//                    AppController.AiQiPlayClickabl =true;
-                    PreferUtil.getInstance().setAiQiPlayClickabl(true);
+
                     SpeechRecognizerService.startSpeech(service, "为你打开爱奇艺搜索" + videoName, request);
 
                 } else {

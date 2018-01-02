@@ -31,7 +31,8 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAppInstalled;
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.scanAllAudioFiles;
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.setCurrentVolume;
-import static com.zhengpu.iflytekaiui.utils.DeviceUtils.updateKUGuoClick;
+import static com.zhengpu.iflytekaiui.utils.DeviceUtils.updatePlayStart;
+
 
 /**
  * sayid ....
@@ -126,16 +127,11 @@ public class PlayMusicxAction {
                                 //  打开应用
 
 
-                                updateKUGuoClick(context);
+                                updatePlayStart(context,1,"true");
+                                updatePlayStart(context,3,"true");
 
                                 OpenAppAction openAppAction = new OpenAppAction("酷狗音乐", context);
                                 openAppAction.start();
-//                                AppController.KuGuoplayClickabl = true;
-//                                AppController.abj = true;
-//                                AppController.b2w = true;
-
-
-
                                 SpeechRecognizerService.startSpeech(service, "为你打开酷狗音乐播放" + artist+song, strRequest);
                                 break;
                             } else {

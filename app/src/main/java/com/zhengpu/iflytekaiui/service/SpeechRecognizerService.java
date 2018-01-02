@@ -14,8 +14,10 @@ import com.zhengpu.iflytekaiui.MainActivity;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
+import com.zhengpu.iflytekaiui.iflytekaction.ShipingAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
 import com.zhengpu.iflytekaiui.iflytekbean.MusicXBean;
+import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetVoiceToWord;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetWordToVoice;
 import com.zhengpu.iflytekaiui.iflytekutils.IflytekWakeUp;
@@ -52,44 +54,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     private KuGuoMuiscPlayThread kuGuoMuiscPlayThread;
     private String message;
 
-    private String json ="{\n" +
-            "  \"save_history\": true,\n" +
-            "  \"rc\": 0,\n" +
-            "  \"semantic\": [\n" +
-            "    {\n" +
-            "      \"intent\": \"PLAY\",\n" +
-            "      \"slots\": [\n" +
-            "        {\n" +
-            "          \"name\": \"song\",\n" +
-            "          \"value\": \"我的地盘\"\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    }\n" +
-            "  ],\n" +
-            "  \"service\": \"musicX\",\n" +
-            "  \"uuid\": \"atn00002424@ch52290da0e8d16f2001\",\n" +
-            "  \"text\": \"播放我的地盘\",\n" +
-            "  \"state\": {\n" +
-            "    \"fg::musicX::default::playing\": {\n" +
-            "      \"song\": \"1\",\n" +
-            "      \"state\": \"playing\"\n" +
-            "    }\n" +
-            "  },\n" +
-            "  \"used_state\": {\n" +
-            "    \"song\": \"1\",\n" +
-            "    \"state\": \"playing\",\n" +
-            "    \"state_key\": \"fg::musicX::default::playing\"\n" +
-            "  },\n" +
-            "  \"answer\": {\n" +
-            "    \"text\": \"请欣赏周杰伦的歌曲我的地盘\"\n" +
-            "  },\n" +
-            "  \"dialog_stat\": \"DataValid\",\n" +
-            "  \"sid\": \"atn00002424@ch52290da0e8d16f2001\"\n" +
-            "}";
-
-
-
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -115,9 +79,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         iflytekWakeUp = new IflytekWakeUp(this, new MyWakeuperListener(this, this));
         iflytekWakeUp.startWakeuper();
         kuGuoMuiscPlayThread = KuGuoMuiscPlayThread.getInstance(this);
-
         startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
-
     }
 
     @Override
@@ -206,20 +168,13 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     @Override
     public void SpeechEnd(String service) {
         switch (service) {
-            case AppController.LAUNCHER_TEXT:
-
-                MusicXBean musicXBean = JsonParser.parseResultMusicXBean(json);
-                PlayMusicxAction playMusicxAction = new PlayMusicxAction("musicX", musicXBean, json, SpeechRecognizerService.this);
-                playMusicxAction.start();
-
-                break;
             case AppController.SHOWLOWVOICE_TEXT:
                 voiceToWords.mIatDestroy();
                 break;
-//            case AppController.MUSICX:
-//                voiceToWords.mIatDestroy();
-//                KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());
-//                break;
+            case AppController.MUSICX:
+                voiceToWords.mIatDestroy();
+//             KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());
+                break;
             case AppController.NEWS:
                 voiceToWords.mIatDestroy();
                 KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());
@@ -227,6 +182,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
             case AppController.STORY:
                 voiceToWords.mIatDestroy();
                 KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayStoryUrl());
+                break;
+            case  AppController.OPENAPPTEST_SHIPING:
+                voiceToWords.mIatDestroy();
                 break;
             default:
                 voiceToWords.startRecognizer();
