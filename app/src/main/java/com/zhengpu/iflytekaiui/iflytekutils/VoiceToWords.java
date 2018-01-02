@@ -26,6 +26,7 @@ import com.zhengpu.iflytekaiui.iflytekaction.OpenQaAction;
 import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
 import com.zhengpu.iflytekaiui.iflytekaction.PoetryAction;
 import com.zhengpu.iflytekaiui.iflytekaction.R4Action;
+import com.zhengpu.iflytekaiui.iflytekaction.RobotCommandAction;
 import com.zhengpu.iflytekaiui.iflytekaction.ShipingAction;
 import com.zhengpu.iflytekaiui.iflytekaction.StoryAction;
 import com.zhengpu.iflytekaiui.iflytekaction.WeatherAction;
@@ -42,6 +43,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.OpenAppBean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenQABean;
 import com.zhengpu.iflytekaiui.iflytekbean.PoetryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.R4Bean;
+import com.zhengpu.iflytekaiui.iflytekbean.RobotCommandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.StoryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
@@ -409,6 +411,16 @@ public class VoiceToWords {
                     weatherAction.start();
 
                     break;
+
+                case AppController.OPENAPPTEST_ROBOTCOMMAND:   //  机器人指令
+
+                    RobotCommandBean robotCommandBean = JsonParser.parseResultRobotCommandBean(text);
+                    RobotCommandAction robotCommandAction = new RobotCommandAction(service,robotCommandBean,text,context);
+                    robotCommandAction.start();
+
+                    break;
+
+
 
 //                case "OPENAPPTEST.music_demo": {  //   艺人跟歌曲 搜索和播放
 //                    CustomMusicBean customMusicBean = JsonParser.parseResultCustomMusicBean(text);
