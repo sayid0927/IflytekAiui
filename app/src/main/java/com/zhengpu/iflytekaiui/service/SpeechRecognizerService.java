@@ -9,24 +9,19 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.utils.Utils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
-import com.orhanobut.logger.Logger;
-import com.zhengpu.iflytekaiui.MainActivity;
 import com.zhengpu.iflytekaiui.R;
+import com.zhengpu.iflytekaiui.SerialPort.OpenSerialPortListener;
+import com.zhengpu.iflytekaiui.SerialPort.SerialUtils;
 import com.zhengpu.iflytekaiui.base.AppController;
-import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
-import com.zhengpu.iflytekaiui.iflytekaction.ShipingAction;
+import com.zhengpu.iflytekaiui.iflytekaction.ReceivedSerialPortDataAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
-import com.zhengpu.iflytekaiui.iflytekbean.MusicXBean;
-import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetVoiceToWord;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetWordToVoice;
 import com.zhengpu.iflytekaiui.iflytekutils.IflytekWakeUp;
-import com.zhengpu.iflytekaiui.iflytekutils.JsonParser;
 import com.zhengpu.iflytekaiui.iflytekutils.MyWakeuperListener;
 import com.zhengpu.iflytekaiui.iflytekutils.VoiceToWords;
 import com.zhengpu.iflytekaiui.iflytekutils.WakeUpListener;
 import com.zhengpu.iflytekaiui.iflytekutils.WordsToVoice;
-
 import com.zhengpu.iflytekaiui.ipc.entity.RequestMessage;
 import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
@@ -46,20 +41,22 @@ import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAccessibilitySettingsO
  * Created by wengmf on 2017/11/21
  */
 
-public class SpeechRecognizerService extends Service implements IGetVoiceToWord, WakeUpListener, IGetWordToVoice, KuGuoMuiscPlayListener {
+public class SpeechRecognizerService extends Service implements IGetVoiceToWord, WakeUpListener, IGetWordToVoice, KuGuoMuiscPlayListener, OpenSerialPortListener {
 
     private IflytekWakeUp iflytekWakeUp;
     private static VoiceToWords voiceToWords;
     private static WordsToVoice wordsToVoice;
+    private static SerialUtils serialUtils;
     private KuGuoMuiscPlayThread kuGuoMuiscPlayThread;
     private String message;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         if (!isAccessibilitySettingsOn(this)) {
-           Intent intent=  new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+            Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
@@ -80,6 +77,11 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         iflytekWakeUp.startWakeuper();
         kuGuoMuiscPlayThread = KuGuoMuiscPlayThread.getInstance(this);
         startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
+
+        //初始化串口
+        serialUtils = SerialUtils.getInstance(this);
+        serialUtils.setSerialPortListener(this);
+
     }
 
     @Override
@@ -90,9 +92,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     //获取其他进程的消息 让机器人播报其他线程消息内容
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getChildAppEvent(RequestMessage requestMessage) {
-        String reqService =  requestMessage.getService();
+        String reqService = requestMessage.getService();
         String reqMessage = requestMessage.getMessage();
-        startSpeech(reqService,reqMessage, reqMessage);
+        startSpeech(reqService, reqMessage, reqMessage);
 
     }
 
@@ -111,7 +113,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     @Override
     public void showLowVoice(String result) {
 
-     startSpeech(AppController.SHOWLOWVOICE_TEXT,getResources().getString(R.string.showLowVoice_text),getResources().getString(R.string.showLowVoice_text));
+        startSpeech(AppController.SHOWLOWVOICE_TEXT, getResources().getString(R.string.showLowVoice_text), getResources().getString(R.string.showLowVoice_text));
 
     }
 
@@ -125,6 +127,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         sendMessage.setMessage(getResources().getString(R.string.user_Speech_Over));
         HermesEventBus.getDefault().post(sendMessage);
     }
+
     /**
      * 用户开始说话回调
      */
@@ -135,6 +138,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         sendMessage.setMessage(getResources().getString(R.string.user_Speech_Start));
         HermesEventBus.getDefault().post(sendMessage);
     }
+
     /**
      * 用户说话错误回调
      */
@@ -148,9 +152,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void OnWakeUpSuccess() {
-        if(kuGuoMuiscPlayThread.isPlay())
+        if (kuGuoMuiscPlayThread.isPlay())
             kuGuoMuiscPlayThread.pause();
-        startSpeech(AppController.WAKEUP_TEXT,getResources().getString(R.string.wakeup_text),getResources().getString(R.string.wakeup_text));
+        startSpeech(AppController.WAKEUP_TEXT, getResources().getString(R.string.wakeup_text), getResources().getString(R.string.wakeup_text));
     }
 
     /**
@@ -183,7 +187,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
                 voiceToWords.mIatDestroy();
                 KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayStoryUrl());
                 break;
-            case  AppController.OPENAPPTEST_SHIPING:
+            case AppController.OPENAPPTEST_SHIPING:
                 voiceToWords.mIatDestroy();
                 break;
             default:
@@ -235,7 +239,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     }
 
 
-
     // 播放音乐暂停、继续和停止
     private void setKuGuoMuiscPlayStart(int Type) {
         if (Type == 0) {     //暂停
@@ -244,5 +247,54 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         } else {                 // 继续
             kuGuoMuiscPlayThread.start();
         }
+    }
+
+
+    /**
+     * 发送串口消息
+     */
+    public static  void    sendSerialMessageBytes(byte[] bytes){
+        serialUtils.sendContentBytes(bytes);
+    }
+
+    /**
+     * 串口打开成功
+     */
+    @Override
+    public void onOPenSerialSuccess() {
+
+    }
+
+    /**
+     * 串口打开失败
+     */
+    @Override
+    public void onOPenSerialFail() {
+
+    }
+
+    /**
+     * 发送串口消息成功
+     */
+    @Override
+    public void onDataSentSuccess() {
+
+    }
+
+    /**
+     * 发送串口消息失败
+     */
+    @Override
+    public void onDataSentFail() {
+
+    }
+
+    /**
+     * 接收串口消息成功
+     */
+    @Override
+    public void onDataReceivedSuccess(byte[] bytes) {
+        ReceivedSerialPortDataAction receivedSerialPortDataAction = new ReceivedSerialPortDataAction(bytes,this);
+        receivedSerialPortDataAction.start();
     }
 }

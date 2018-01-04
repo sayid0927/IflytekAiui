@@ -11,6 +11,20 @@
     <string name="user_Speech_Over">用户说话结束</string>
     <string name="user_Speech_Start">用户开始说话</string>
 
+    <!--体感触摸：-->
+    <string name="Touch_Head_text_0">为什么摸我的头</string>
+    <string name="Touch_Head_text_1">为什么老是摸我的头</string>
+    <string name="Touch_Head_text_2">宝宝很生气，后果很严重</string>
 
+    <string name="Touch_Face_text_0">你的手好温暖啊</string>
+    <string name="Touch_Face_text_1">在摸我的脸，我就要生气了</string>
+    <string name="Touch_Face_text_2">我真的生气了</string>
+
+    <string name="Touch_Hand_text_0">你的手好温暖啊</string>
+    <string name="Touch_Hand_text_1">你要带我去环游世界吗？</string>
+    <string name="Touch_Hand_text_2">我想跳舞给您看</string>
+
+    <string name="Touch_Front_text">请不要推我前面，我害怕摔倒</string>
+    <string name="Touch_Back_text">请不要推我，我害怕摔倒</string>
 
 </resources>

@@ -19,6 +19,7 @@ import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
 public class MainActivity extends Activity {
 
+
     private Button button;
 
     @Override

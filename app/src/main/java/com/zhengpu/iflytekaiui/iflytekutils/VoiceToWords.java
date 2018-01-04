@@ -420,8 +420,6 @@ public class VoiceToWords {
 
                     break;
 
-
-
 //                case "OPENAPPTEST.music_demo": {  //   艺人跟歌曲 搜索和播放
 //                    CustomMusicBean customMusicBean = JsonParser.parseResultCustomMusicBean(text);
 //                    if (customMusicBean != null && customMusicBean.getSemantic().size() != 0 && customMusicBean.getSemantic().get(0).getSlots().size() != 0) {

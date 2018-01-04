@@ -256,7 +256,7 @@ public class JsonParser {
 
 
 
-     static IfCustomBaikeBean parseResultIfCustomBaikeBean(String json) {
+    public   static IfCustomBaikeBean parseResultIfCustomBaikeBean(String json) {
         IfCustomBaikeBean ifCustomBaikeBean = new IfCustomBaikeBean();
         try {
             Type type = new TypeToken<IfCustomBaikeBean>() {
@@ -292,7 +292,7 @@ public class JsonParser {
         return ifMusicResBean;
     }
 
-     static TianJokeBean parseResultTianJokeBean(String json) {
+     public    static TianJokeBean parseResultTianJokeBean(String json) {
         TianJokeBean tianJokeBean = new TianJokeBean();
         try {
             Type type = new TypeToken<TianJokeBean>() {

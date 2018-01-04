@@ -48,6 +48,8 @@ dependencies {
     compile 'com.bugtags.library:bugtags-lib:2.2.3'
     compile 'com.bugtags.library:bugtags-lib:latest.integration'
 
+    compile 'com.github.kongqw:AndroidSerialPort:1.0.1'
+
     implementation files('libs/Msc.jar')
 
 }
