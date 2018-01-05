@@ -48,19 +48,23 @@ public class SerialUtils implements OnOpenSerialPortListener {
                    .setOnSerialPortDataListener(new OnSerialPortDataListener() {
                        @Override
                        public void onDataReceived(byte[] bytes) {
-                           Logger.e("onDataReceived [ byte[] ]: " + Arrays.toString(bytes));
+                           Logger.e("onDataReceived  [ byte[] ]: " + Arrays.toString(bytes));
                            Logger.e( "onDataReceived [ String ]: " + new String(bytes));
+
                            //  接收成功
                            if(serialPortListener!=null )
                                serialPortListener.onDataReceivedSuccess(bytes);
+
                        }
                        @Override
                        public void onDataSent(byte[] bytes) {
                            Logger.e("onDataSent [ byte[] ]: " + Arrays.toString(bytes));
                            Logger.e("onDataSent [ String ]: " + new String(bytes));
+
                            // 发送成功
                            if(serialPortListener!=null )
                                serialPortListener.onDataSentSuccess();
+
                        }
                    })
                    .openSerialPort(device.getFile(), 115200);

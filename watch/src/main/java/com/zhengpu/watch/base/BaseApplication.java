@@ -12,6 +12,8 @@ import com.zhengpu.watch.module.AppModule;
 import com.zhengpu.watch.utils.AppUtils;
 import com.zhengpu.watch.utils.PreferUtil;
 
+import xiaofei.library.hermeseventbus.HermesEventBus;
+
 import static com.bugtags.library.Bugtags.BTGInvocationEventNone;
 
 @SuppressWarnings("unused")
@@ -30,6 +32,7 @@ public class BaseApplication extends Application {
         //将我们自己的MyApplication中的所有逻辑放在这里，例如初始化一些第三方
 
         initCompoent();
+        HermesEventBus.getDefault().connectApp(this, "com.zhengpu.iflytekaiui");
         PreferUtil.getInstance().init(this);
         AppUtils.init(this);
         Bugtags.start("beb9b4f14e72470fe0ad088b715ec421", this, BTGInvocationEventNone);
@@ -60,6 +63,5 @@ public class BaseApplication extends Application {
     public static AppComponent getAppComponent() {
         return appComponent;
     }
-
 
 }

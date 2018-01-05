@@ -19,7 +19,6 @@ import com.zhengpu.watch.iflytekbean.BaseBean;
 import com.zhengpu.watch.iflytekbean.UserChatBean;
 import com.zhengpu.watch.presenter.contract.MainContract;
 import com.zhengpu.watch.presenter.impl.MainActivityPresenter;
-import com.zhengpu.watch.thread.KuGuoMuiscPlayThread;
 import com.zhengpu.watch.ui.adapter.HelpFragmentAdapter;
 import com.zhengpu.watch.ui.adapter.TalkApadtep;
 import com.zhengpu.watch.ui.fragment.FragmentHelp_1;
@@ -117,8 +116,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         rvSpeech.setAdapter(mAdapter);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
 
-//        UmengUtil.onEvent(MainActivity.this, "MainActivity", null);
+//    UmengUtil.onEvent(MainActivity.this, "MainActivity", null);
         mainActivity = this;
+
     }
 
     @Override

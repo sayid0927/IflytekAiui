@@ -11,7 +11,7 @@
         layout="@layout/common_toolbar" />
 
 
-    <com.zhengpu.aiui.ui.view.HelpViewPager
+    <com.zhengpu.watch.ui.view.HelpViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

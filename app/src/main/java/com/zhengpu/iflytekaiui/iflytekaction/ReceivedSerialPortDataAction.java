@@ -57,6 +57,7 @@ public class ReceivedSerialPortDataAction {
                     case 0x04:  //主动上报   如体感触摸，温度超过上限，有火警，盗警，烟雾报警等。
 
                         ParserByte();
+
                         break;
 
                     case 0x05:  //升级    数据域为XMODEM协议所发内容。
