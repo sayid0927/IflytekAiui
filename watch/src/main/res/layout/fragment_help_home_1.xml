@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="你可以这样对我说"
+            android:textColor="@color/color_0082ff"
+            android:textSize="36sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="......"
+            android:textColor="@color/color_0082ff"
+            android:textSize="25sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="你是谁？"
+            android:textColor="@color/color_666666"
+            android:layout_marginTop="29dp"
+            android:textSize="25sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="给我讲个故事"
+            android:textColor="@color/color_666666"
+            android:layout_marginTop="29dp"
+            android:textSize="25sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="给我讲个笑话"
+            android:textColor="@color/color_666666"
+            android:layout_marginTop="29dp"
+            android:textSize="25sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="你会做什么？"
+            android:textColor="@color/color_666666"
+            android:layout_marginTop="29dp"
+            android:textSize="25sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="你多大了？"
+            android:textColor="@color/color_666666"
+            android:layout_marginTop="29dp"
+            android:textSize="25sp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/chatlist_image_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/aiui" />
+
+
+    <com.zhengpu.aiui.ui.view.bubbleview.BubbleLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/chatlist_image_other"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/chatlist_image_other"
+        android:orientation="vertical"
+        android:paddingTop="8dip"
+        app:arrowCenter="true"
+        app:arrowHeight="5dp"
+        app:arrowLocation="left"
+        app:arrowPosition="40dp"
+        app:arrowWidth="15dp"
+        app:bubbleColor="@color/white"
+        app:strokeColor="#CCCCCC">
+
+        <RelativeLayout
+            android:id="@+id/rl_joke_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:maxWidth="500dp"
+                android:text="" />
+
+            <TextView
+                android:maxWidth="500dp"
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_title"
+                android:layout_centerInParent="true"
+                android:text="" />
+
+        </RelativeLayout>
+
+    </com.zhengpu.aiui.ui.view.bubbleview.BubbleLinearLayout>
+
+</RelativeLayout>

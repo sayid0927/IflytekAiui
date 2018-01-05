@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <ImageView
+        android:layout_centerInParent="true"
+        android:id="@+id/chatlist_image_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="23dp"
+        android:layout_marginTop="29dp"
+        android:src="@drawable/user_chat" />
+
+
+    <com.zhengpu.aiui.ui.view.bubbleview.BubbleTextVew
+        android:id="@+id/chatlist_text_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/chatlist_image_me"
+        android:padding="10dp"
+        android:textSize="8sp"
+        android:text=""
+        android:layout_centerInParent="true"
+        android:layout_marginRight="10dp"
+        android:textColor="#0082ff"
+        app:angle="5dp"
+        app:arrowCenter="true"
+        app:arrowHeight="10dp"
+        app:arrowLocation="right"
+        app:arrowPosition="10dp"
+        app:arrowWidth="15dp"
+        app:strokeColor= "#27AFED"
+        app:bubbleColor="#F4FAFC" />
+
+
+</RelativeLayout>

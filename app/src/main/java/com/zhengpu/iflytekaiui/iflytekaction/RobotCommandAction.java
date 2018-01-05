@@ -103,22 +103,11 @@ public class RobotCommandAction {
                     R4Action r4Action = new R4Action(context);
                     r4Action.start();
                     break;
+
             }
         }else {
           R4Action r4Action = new R4Action(context);
           r4Action.start();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

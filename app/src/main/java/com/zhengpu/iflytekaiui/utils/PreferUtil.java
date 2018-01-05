@@ -27,8 +27,14 @@ public final class PreferUtil {
     private static final String R4_SPACE_TIME = "r4_space_time";
     private static final String R4_SPACE_COUNT = "r4_space_count";
     private static final String SPEECH_PARAMS = "speech_params";
+    private static final String TOUCH_HEAD_TIME = "touch_head_time";
+    private static final String TOUCH_HEAD_COUNT = "touch_head_count";
 
+    private static final String TOUCH_FACE_TIME  = "touch_face_time";
+    private static final String TOUCH_FACE_COUNT = "touch_face_count";
 
+    private static final String TOUCH_HAND_TIME  = "touch_hand_time";
+    private static final String TOUCH_HAND_COUNT = "touch_hand_count";
 
     public String getPlayMusicName() {
         return getString(PLAY_MUSIC_NAME, "");
@@ -68,6 +74,55 @@ public final class PreferUtil {
 
     public long getR4SpaceTime() {
         return getLong(R4_SPACE_TIME, TimeUtils.getNowTimeMills());
+    }
+
+    public void setTouchHeadTime(long flag) {
+        putLong(TOUCH_HEAD_TIME, flag);
+    }
+
+    public long getTouchHeadTime() {
+        return getLong(TOUCH_HEAD_TIME, TimeUtils.getNowTimeMills());
+    }
+
+    public void setTouchHeadCount(int flag) {
+        putInt(TOUCH_HEAD_COUNT, flag);
+    }
+
+    public int getTouchHeadCount() {
+        return getInt(TOUCH_HEAD_COUNT, 0);
+    }
+
+
+    public void setTouchFaceTime(long flag) {
+        putLong(TOUCH_FACE_TIME, flag);
+    }
+
+    public long getTouchFaceTime() {
+        return getLong(TOUCH_FACE_TIME, TimeUtils.getNowTimeMills());
+    }
+
+    public void setTouchFaceCount(int flag) {
+        putInt(TOUCH_FACE_COUNT, flag);
+    }
+
+    public int getTouchFaceCount() {
+        return getInt(TOUCH_FACE_COUNT, 0);
+    }
+
+    public void setTouchHandTime(long flag) {
+        putLong(TOUCH_HAND_TIME, flag);
+    }
+
+    public long getTouchHandTime() {
+        return getLong(TOUCH_HAND_TIME, TimeUtils.getNowTimeMills());
+    }
+
+    public void setTouchHandCount(int flag) {
+        putInt(TOUCH_HAND_COUNT, flag);
+    }
+
+    public int getTouchHandCount() {
+        return getInt(TOUCH_HAND_COUNT, 0);
     }
 
     public void setR4SpaceCount(int flag) {
