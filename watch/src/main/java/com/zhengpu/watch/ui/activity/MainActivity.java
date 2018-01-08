@@ -10,13 +10,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.orhanobut.logger.Logger;
 import com.skyfishjy.library.RippleBackground;
+import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 import com.zhengpu.watch.R;
 import com.zhengpu.watch.base.BaseActivity;
 import com.zhengpu.watch.component.AppComponent;
 import com.zhengpu.watch.component.DaggerMainComponent;
 import com.zhengpu.watch.iflytekbean.BaseBean;
+import com.zhengpu.watch.iflytekbean.CalcBean;
+import com.zhengpu.watch.iflytekbean.DatetimeBean;
+import com.zhengpu.watch.iflytekbean.OpenQABean;
+import com.zhengpu.watch.iflytekbean.PoetryBean;
+import com.zhengpu.watch.iflytekbean.R4Bean;
 import com.zhengpu.watch.iflytekbean.UserChatBean;
+import com.zhengpu.watch.iflytekbean.WeatherBean;
+import com.zhengpu.watch.iflytekbean.request.RobotCommandRequest;
 import com.zhengpu.watch.presenter.contract.MainContract;
 import com.zhengpu.watch.presenter.impl.MainActivityPresenter;
 import com.zhengpu.watch.ui.adapter.HelpFragmentAdapter;
@@ -24,6 +34,10 @@ import com.zhengpu.watch.ui.adapter.TalkApadtep;
 import com.zhengpu.watch.ui.fragment.FragmentHelp_1;
 import com.zhengpu.watch.ui.fragment.FragmentHelp_Home_2;
 import com.zhengpu.watch.ui.view.HelpViewPager;
+import com.zhengpu.watch.utils.JsonParser;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +46,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 
 public class MainActivity extends BaseActivity implements MainContract.View {
@@ -70,7 +85,6 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     private TalkApadtep mAdapter;
     private BaseBean data;
-    private List<BaseBean> datas;
     private boolean isFist = true;
     private boolean isClickHelp = true;
     private UserChatBean userChatBean;
@@ -78,6 +92,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private List<Fragment> fragmentList;
     private HelpFragmentAdapter helpFragmentAdapter;
 
+    private List<MultiItemEntity> mData;
+    private R4Bean r4Bean;
+    private RobotCommandRequest robotCommandRequest;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -109,15 +126,166 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
         helpFragmentAdapter = new HelpFragmentAdapter(fragmentList, getSupportFragmentManager());
         viewpager.setAdapter(helpFragmentAdapter);
-        datas = new ArrayList<>();
 
-        mAdapter = new TalkApadtep(this, datas);
+        mData = new ArrayList<>();
+
+        mAdapter = new TalkApadtep(this, mData);
         rvSpeech.setLayoutManager(new LinearLayoutManager(this));
         rvSpeech.setAdapter(mAdapter);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
 
 //    UmengUtil.onEvent(MainActivity.this, "MainActivity", null);
         mainActivity = this;
+
+        HermesEventBus.getDefault().register(this);
+
+
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getMainAppEvent(SendMessage message) {
+        Logger.e(message.getMessage() + " \n" + message.getService());
+
+        String service = message.getService();
+        String Message = message.getMessage();
+
+
+        isFist = false;
+        isClickHelp = true;
+
+        if (llCentet.getVisibility() == View.VISIBLE)
+            llCentet.setVisibility(View.INVISIBLE);
+
+        if (rvSpeech.getVisibility() == View.GONE)
+            rvSpeech.setVisibility(View.VISIBLE);
+
+        if (RippleVoice_N.getVisibility() == View.GONE)
+            RippleVoice_N.setVisibility(View.VISIBLE);
+
+        if (viewpager.getVisibility() == View.VISIBLE)
+            viewpager.setVisibility(View.GONE);
+
+        switch (message.getService()) {
+            case "speech_start":  //用户开始说话
+                if (isFist)
+                    RippleVoice.startRippleAnimation();
+                else
+                    RippleVoice_N.startRippleAnimation();
+
+                break;
+
+            case "speech_over": //用户说话结束
+
+                if (RippleVoice.isRippleAnimationRunning())
+                    RippleVoice.stopRippleAnimation();
+                if (RippleVoice_N.isRippleAnimationRunning())
+                    RippleVoice_N.stopRippleAnimation();
+
+                break;
+
+            case "r4_0":  //听不懂一次
+                r4Bean = JsonParser.parseResultR4Bean(Message);
+                if (r4Bean != null && r4Bean.getText() != null) {
+
+                    userChatBean = new UserChatBean();
+                    userChatBean.setText(r4Bean.getText());
+                    mData.add(userChatBean);
+
+                    robotCommandRequest = new RobotCommandRequest();
+                    robotCommandRequest.setText(getResources().getString(R.string.r4_0_text));
+                    mData.add(robotCommandRequest);
+
+                }
+                break;
+            case "r4_1":// 听不懂二次
+                r4Bean = JsonParser.parseResultR4Bean(Message);
+                if (r4Bean != null && r4Bean.getText() != null) {
+
+                    userChatBean = new UserChatBean();
+                    userChatBean.setText(r4Bean.getText());
+                    mData.add(userChatBean);
+
+                    robotCommandRequest = new RobotCommandRequest();
+                    robotCommandRequest.setText(getResources().getString(R.string.r4_1_text));
+                    mData.add(robotCommandRequest);
+
+                }
+                break;
+            case "r4_2": // 听不懂三次
+                r4Bean = JsonParser.parseResultR4Bean(Message);
+                if (r4Bean != null && r4Bean.getText() != null) {
+
+                    userChatBean = new UserChatBean();
+                    userChatBean.setText(r4Bean.getText());
+                    mData.add(userChatBean);
+
+                    robotCommandRequest = new RobotCommandRequest();
+                    robotCommandRequest.setText(getResources().getString(R.string.r4_2_text));
+                    mData.add(robotCommandRequest);
+
+                }
+                break;
+
+            case "openQA":  //开放问答
+                OpenQABean openQABean = JsonParser.parseResultOpenQABean(Message);
+                if (openQABean != null && openQABean.getText() != null) {
+
+                    userChatBean = new UserChatBean();
+                    userChatBean.setText(openQABean.getText());
+                    mData.add(userChatBean);
+                    mData.add(openQABean);
+
+                }
+                break;
+
+            case "poetry"://诗词问答
+                PoetryBean poetryBean = JsonParser.parseResultPoetryBean(Message);
+                if (poetryBean != null && poetryBean.getText() != null) {
+
+                    userChatBean = new UserChatBean();
+                    userChatBean.setText(poetryBean.getText());
+                    mData.add(userChatBean);
+                    mData.add(poetryBean);
+
+                }
+                break;
+
+            case "datetime"://时间问答
+                DatetimeBean datetimeBean = JsonParser.parseResultDatetimeBean(Message);
+                if (datetimeBean != null && datetimeBean.getText() != null) {
+                    userChatBean = new UserChatBean();
+                    userChatBean.setText(datetimeBean.getText());
+                    mData.add(userChatBean);
+                    mData.add(datetimeBean);
+                }
+                break;
+
+            case "calc":// 数值问答
+                CalcBean calcBean = JsonParser.parseResultCalcBean(Message);
+                if (calcBean != null && calcBean.getText() != null) {
+                    userChatBean = new UserChatBean();
+                    userChatBean.setText(calcBean.getText());
+                    mData.add(userChatBean);
+                    mData.add(calcBean);
+                }
+                break;
+
+            case "weather"://天气问答
+                WeatherBean weatherBean = JsonParser.parseResultWeatherBean(Message);
+                if (weatherBean != null && weatherBean.getText() != null) {
+                    userChatBean = new UserChatBean();
+                    userChatBean.setText(weatherBean.getText());
+                    mData.add(userChatBean);
+                    mData.add(weatherBean);
+
+                }
+                break;
+
+        }
+
+        mAdapter.notifyDataSetChanged();
+        rvSpeech.scrollToPosition(mAdapter.getItemCount() - 1);
 
     }
 
@@ -140,7 +308,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                         isClickHelp = true;
                         if (viewpager.getVisibility() == View.VISIBLE)
                             viewpager.setVisibility(View.GONE);
-                        if (datas.size() == 0) {
+                        if (mData.size() == 0) {
                             if (rvSpeech.getVisibility() == View.VISIBLE)
                                 rvSpeech.setVisibility(View.GONE);
                             if (RippleVoice_N.getVisibility() == View.VISIBLE)
@@ -157,7 +325,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                 break;
 
             case R.id.video_n:
+
+
                 break;
+
             case R.id.iv_phone:
 
                 break;
@@ -177,11 +348,12 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
                     isClickHelp = false;
                     break;
+
                 } else {
                     isClickHelp = true;
                     if (viewpager.getVisibility() == View.VISIBLE)
                         viewpager.setVisibility(View.GONE);
-                    if (datas.size() == 0) {
+                    if (mData.size() == 0) {
                         if (rvSpeech.getVisibility() == View.VISIBLE)
                             rvSpeech.setVisibility(View.GONE);
                         if (RippleVoice_N.getVisibility() == View.VISIBLE)
@@ -189,10 +361,12 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                         if (llCentet.getVisibility() == View.INVISIBLE)
                             llCentet.setVisibility(View.VISIBLE);
                         break;
+
                     } else {
                         if (rvSpeech.getVisibility() == View.GONE)
                             rvSpeech.setVisibility(View.VISIBLE);
                         break;
+
                     }
                 }
         }

@@ -74,13 +74,13 @@ private  JokeBean jokeBean;
 
                         SpeechRecognizerService.startSpeech(service, "请欣赏笑话" + tianJokeBean.getNewslist().get(0).getTitle() + tianJokeBean.getNewslist().get(0).getContent(), strRequest);
                     } else {
-                        R4Action r4Action = new R4Action(context);
+                        R4Action r4Action = new R4Action(context,strRequest);
                         r4Action.start();
                     }
                 }
             });
         }else {
-            R4Action r4Action = new R4Action(context);
+            R4Action r4Action = new R4Action(context,strRequest);
             r4Action.start();
         }
     }

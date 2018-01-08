@@ -45,7 +45,7 @@ public class WeatherAction {
             SpeechRecognizerService.startSpeech(service, stringBuffer.toString(), request);
 
         }else {
-            R4Action r4Action = new R4Action(context);
+            R4Action r4Action = new R4Action(context,request);
             r4Action.start();
         }
     }

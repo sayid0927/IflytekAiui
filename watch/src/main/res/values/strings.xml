@@ -3,4 +3,9 @@
     <string name="keda_id">5a127875</string>
     <string name="launcher_text">今天天气不错,您有什么吩咐的吗?</string>
 
+
+    <string name="r4_0_text">我好像没有听明白你说什么</string>
+    <string name="r4_1_text">你可以这样和宝宝说：多多讲个故事，我也许就能理解了</string>
+    <string name="r4_2_text">宝宝没长大，宝宝心里苦</string>
+
 </resources>

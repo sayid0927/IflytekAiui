@@ -17,7 +17,7 @@
         android:src="@drawable/aiui" />
 
 
-    <com.zhengpu.aiui.ui.view.bubbleview.BubbleTextVew
+    <com.zhengpu.watch.ui.view.bubbleview.BubbleTextVew
         android:id="@+id/chatlist_text_other"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,21 +36,5 @@
         app:arrowWidth="15dp"
         app:bubbleColor="@color/white"
         app:strokeColor="#CCCCCC" />
-
-
-    <!--<TextView-->
-    <!--android:id="@+id/chatlist_text_other"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignTop="@id/chatlist_image_other"-->
-    <!--android:layout_margin="10dp"-->
-    <!--android:layout_marginLeft="10dp"-->
-    <!--android:layout_toEndOf="@id/chatlist_image_other"-->
-    <!--android:background="@mipmap/chatfrom_bg_normal"-->
-    <!--android:maxWidth="200dp"-->
-    <!--android:paddingBottom="18dip"-->
-    <!--android:paddingTop="13dip"-->
-    <!--android:text="hewdfb" />-->
-
 
 </RelativeLayout>

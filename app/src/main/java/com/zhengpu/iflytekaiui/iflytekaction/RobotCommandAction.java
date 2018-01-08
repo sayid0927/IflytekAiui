@@ -100,13 +100,13 @@ public class RobotCommandAction {
                     SpeechRecognizerService.sendSerialMessageBytes(AppController.byteAutoReset);
                     break;
                 default:
-                    R4Action r4Action = new R4Action(context);
+                    R4Action r4Action = new R4Action(context,request);
                     r4Action.start();
                     break;
 
             }
         }else {
-          R4Action r4Action = new R4Action(context);
+          R4Action r4Action = new R4Action(context,request);
           r4Action.start();
         }
     }

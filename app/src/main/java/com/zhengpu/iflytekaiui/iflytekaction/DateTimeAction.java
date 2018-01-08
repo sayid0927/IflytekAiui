@@ -30,7 +30,7 @@ public class DateTimeAction {
         if(datetimeBean!=null && datetimeBean.getAnswer()!=null && datetimeBean.getAnswer().getText()!=null){
             SpeechRecognizerService.startSpeech(service, datetimeBean.getAnswer().getText(), request);
         }else {
-            R4Action r4Action = new R4Action(context);
+            R4Action r4Action = new R4Action(context,request);
             r4Action.start();
         }
     }

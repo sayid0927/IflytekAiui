@@ -85,7 +85,7 @@ public class PlayMusicxAction {
 //                                break;
 
                             default:
-                                R4Action r4Action = new R4Action(context);
+                                R4Action r4Action = new R4Action(context,strRequest);
                                 r4Action.start();
                         }
                     }
@@ -178,11 +178,11 @@ public class PlayMusicxAction {
 //                        });
                     }
                 default:
-                    R4Action r4Action = new R4Action(context);
+                    R4Action r4Action = new R4Action(context,strRequest);
                     r4Action.start();
             }
         } else {
-            R4Action r4Action = new R4Action(context);
+            R4Action r4Action = new R4Action(context,strRequest);
             r4Action.start();
         }
     }

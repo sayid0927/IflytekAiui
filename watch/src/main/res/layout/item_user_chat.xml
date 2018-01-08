@@ -17,7 +17,7 @@
         android:src="@drawable/user_chat" />
 
 
-    <com.zhengpu.aiui.ui.view.bubbleview.BubbleTextVew
+    <com.zhengpu.watch.ui.view.bubbleview.BubbleTextVew
         android:id="@+id/chatlist_text_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

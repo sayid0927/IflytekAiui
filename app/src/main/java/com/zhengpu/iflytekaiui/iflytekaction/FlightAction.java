@@ -31,7 +31,7 @@ public class FlightAction {
         if(flightBean!=null && flightBean.getAnswer()!=null && flightBean.getAnswer().getText()!=null){
             SpeechRecognizerService.startSpeech(service, flightBean.getAnswer().getText(), request);
         }else {
-            R4Action r4Action = new R4Action(context);
+            R4Action r4Action = new R4Action(context,request);
             r4Action.start();
         }
     }

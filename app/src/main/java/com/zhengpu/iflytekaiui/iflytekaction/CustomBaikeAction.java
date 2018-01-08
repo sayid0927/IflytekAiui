@@ -63,13 +63,13 @@ public class CustomBaikeAction {
                     if (ifCustomBaikeBean != null && ifCustomBaikeBean.getData() != null && ifCustomBaikeBean.getData().getAnswer() != null) {
                         SpeechRecognizerService.startSpeech(service, ifCustomBaikeBean.getData().getAnswer(), strRequest);
                     } else {
-                        R4Action r4Action = new R4Action(context);
+                        R4Action r4Action = new R4Action(context,strRequest);
                         r4Action.start();
                     }
                 }
             });
         } else {
-            R4Action r4Action = new R4Action(context);
+            R4Action r4Action = new R4Action(context,strRequest);
             r4Action.start();
         }
     }

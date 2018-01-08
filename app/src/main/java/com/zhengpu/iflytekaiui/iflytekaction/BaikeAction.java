@@ -29,7 +29,7 @@ public class BaikeAction {
         if (baikeBean != null && baikeBean.getAnswer()!=null && baikeBean.getAnswer().getText() != null) {
             SpeechRecognizerService.startSpeech(service, baikeBean.getAnswer().getText() ,request);
         }else {
-            R4Action r4Action = new R4Action(context);
+            R4Action r4Action = new R4Action(context,request);
             r4Action.start();
         }
     }

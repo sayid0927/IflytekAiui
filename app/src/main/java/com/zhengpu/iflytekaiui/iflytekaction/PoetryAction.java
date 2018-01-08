@@ -38,7 +38,7 @@ public class PoetryAction {
         if (poetryBean != null && poetryBean.getAnswer() != null && poetryBean.getAnswer().getText() != null) {
             SpeechRecognizerService.startSpeech(service, poetryBean.getAnswer().getText(), request);
         } else {
-            R4Action r4Action = new R4Action(context);
+            R4Action r4Action = new R4Action(context,request);
             r4Action.start();
         }
     }

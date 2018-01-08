@@ -227,11 +227,11 @@ public class VoiceToWords {
                     if (service != "" && rc != 4) {
                         judgeService(service, text);
                     } else {
-                        R4Action r4Action = new R4Action(context);
+                        R4Action r4Action = new R4Action(context,text);
                         r4Action.start();
                     }
                 } catch (JSONException e) {
-                    R4Action r4Action = new R4Action(context);
+                    R4Action r4Action = new R4Action(context,text);
                     r4Action.start();
                     e.printStackTrace();
                 }
@@ -366,7 +366,7 @@ public class VoiceToWords {
                         openAppAction.start();
 
                     } else {
-                        R4Action r4Action = new R4Action(context);
+                        R4Action r4Action = new R4Action(context,text);
                         r4Action.start();
                     }
 
@@ -431,7 +431,7 @@ public class VoiceToWords {
 //                }
 
                 default:
-                    R4Action r4Action = new R4Action(context);
+                    R4Action r4Action = new R4Action(context,text);
                     r4Action.start();
                     break;
             }

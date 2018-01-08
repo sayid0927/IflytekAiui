@@ -33,7 +33,7 @@ public class NewsAction {
             PreferUtil.getInstance().setPlayMusicUrl(newsBean.getData().getResult().get(0).getUrl());
             SpeechRecognizerService.startSpeech(service, newsBean.getAnswer().getText(),strRequest);
         }else {
-            R4Action r4Action = new R4Action(context);
+            R4Action r4Action = new R4Action(context,strRequest);
             r4Action.start();
         }
     }

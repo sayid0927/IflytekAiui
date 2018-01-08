@@ -40,7 +40,7 @@ public class CalcAction {
                     break;
             }
         }else {
-            R4Action r4Action = new R4Action(context);
+            R4Action r4Action = new R4Action(context,request);
             r4Action.start();
         }
     }
