@@ -63,7 +63,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 
         HermesEventBus.getDefault().register(SpeechRecognizerService.this);
         Utils.init(this);
-        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5a3ca6a9," + SpeechConstant.FORCE_LOGIN + "=true");// 传递科大讯飞appid
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5a541d0c," + SpeechConstant.FORCE_LOGIN + "=true");// 传递科大讯飞appid
         PreferUtil.getInstance().init(this);
 
         //初始化讯飞语音识别

@@ -35,7 +35,7 @@ public class IflytekWakeUp {
             // 清空参数
             mIvw.setParameter(SpeechConstant.PARAMS, null);
             // 唤醒门限值，根据资源携带的唤醒词个数按照“id:门限;id:门限”的格式传入
-            int curThresh = 6;
+            int curThresh = 10;
             mIvw.setParameter(SpeechConstant.IVW_THRESHOLD, "0:" + curThresh);
             // 设置唤醒模式
             mIvw.setParameter(SpeechConstant.IVW_SST, "wakeup");
@@ -79,7 +79,7 @@ public class IflytekWakeUp {
      * @return 返回文件位置
      */
     private String getResource() {
-        return ResourceUtil.generateResourcePath(mContext, ResourceUtil.RESOURCE_TYPE.assets, "ivw/" + "5a3ca6a9" + ".jet");
+        return ResourceUtil.generateResourcePath(mContext, ResourceUtil.RESOURCE_TYPE.assets, "ivw/" + "5a541d0c" + ".jet");
     }
 
     /**
