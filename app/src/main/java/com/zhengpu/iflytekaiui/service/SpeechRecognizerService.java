@@ -27,6 +27,7 @@ import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayThread;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
+import com.zhengpu.iflytekaiui.utils.ValueUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -92,10 +93,15 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     //获取其他进程的消息 让机器人播报其他线程消息内容
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getChildAppEvent(RequestMessage requestMessage) {
+
         String reqService = requestMessage.getService();
         String reqMessage = requestMessage.getMessage();
-        startSpeech(reqService, reqMessage, reqMessage);
-
+        if (reqService.equals("PlayUrl")) {
+            voiceToWords.mIatDestroy();
+            KuGuoMuiscPlayThread.getInstance(this).playUrl(reqMessage);
+        } else {
+            startSpeech(reqService, reqMessage, reqMessage);
+        }
     }
 
     /**
@@ -253,7 +259,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     /**
      * 发送串口消息
      */
-    public static  void    sendSerialMessageBytes(byte[] bytes){
+    public static void sendSerialMessageBytes(byte[] bytes) {
         serialUtils.sendContentBytes(bytes);
     }
 
@@ -294,7 +300,10 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void onDataReceivedSuccess(byte[] bytes) {
-        ReceivedSerialPortDataAction receivedSerialPortDataAction = new ReceivedSerialPortDataAction(bytes,this);
+
+        String value = ValueUtil.getInstance().bytesToHexStr(bytes);
+        ReceivedSerialPortDataAction receivedSerialPortDataAction = new ReceivedSerialPortDataAction(value.split(" "), this);
         receivedSerialPortDataAction.start();
+
     }
 }

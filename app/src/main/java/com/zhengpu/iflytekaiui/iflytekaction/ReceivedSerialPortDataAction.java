@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.blankj.utilcode.utils.ConstUtils;
 import com.blankj.utilcode.utils.TimeUtils;
+import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
@@ -17,7 +18,7 @@ import com.zhengpu.iflytekaiui.utils.PreferUtil;
 public class ReceivedSerialPortDataAction {
 
     private Context context;
-    private byte[] bytes;
+    private String[] bytes;
     private long TouchHeadTime;
     private int TouchHeadCount;
     private long TouchFaceTime;
@@ -25,7 +26,7 @@ public class ReceivedSerialPortDataAction {
     private long TouchHandTime;
     private int TouchHandCount;
 
-    public ReceivedSerialPortDataAction(byte[] bytes, Context context) {
+    public ReceivedSerialPortDataAction(String[] bytes, Context context) {
 
         this.context = context;
         this.bytes = bytes;
@@ -42,25 +43,31 @@ public class ReceivedSerialPortDataAction {
     }
 
     public void start() {
-        if (bytes != null && bytes.length < 9) {
-            if (bytes[0] == 0x5A && bytes[1] == 0x50) {
+        if (bytes != null ) {
+            if (bytes[0].equals("5A")  && bytes[1] .equals("50") ) {
                 switch (bytes[4]) {
-                    case 0x01:     //设置    PAD发起，控制设备动作或设置参数。
+                    case "01":     //设置    PAD发起，控制设备动作或设置参数。
 
                         break;
-                    case 0x02:   //查询    对实时性不作要求的，通过心跳报上来。PAD下发查询命令，立马回。
+                    case "02":   //查询    对实时性不作要求的，通过心跳报上来。PAD下发查询命令，立马回。
 
                         break;
-                    case 0x03:    //心跳   心跳为设备发起，时间间隔默认为10s,(PAD可以根据设置命令来改变心跳时间间隔)。
+                    case "03":    //心跳   心跳为设备发起，时间间隔默认为10s,(PAD可以根据设置命令来改变心跳时间间隔)。
+
+                        byte b=Byte.valueOf(bytes[3]) ;
+                        int b1=b<<4&0xf0; //左移4位和 11110000与运算 低位变高位
+                        int b2=b>>>4&0x0f;//右移4位和 00001111与运算 高位变低位
+                        int c=b1+b2; //高位低位相加得到高地位互换
+                        Logger.e("高四位与低四位交换   >>>   "+String.valueOf(c));
 
                         break;
-                    case 0x04:  //主动上报   如体感触摸，温度超过上限，有火警，盗警，烟雾报警等。
+                    case "04":  //主动上报   如体感触摸，温度超过上限，有火警，盗警，烟雾报警等。
 
                         ParserByte();
 
                         break;
 
-                    case 0x05:  //升级    数据域为XMODEM协议所发内容。
+                    case "05":  //升级    数据域为XMODEM协议所发内容。
 
                         break;
 
@@ -71,7 +78,7 @@ public class ReceivedSerialPortDataAction {
 
     private void ParserByte() {
 
-        if (bytes[6] == 0x01) {  //头顶
+        if (bytes[6].equals("01") ) {  //头顶
 
             if (TimeUtils.getTimeSpanByNow(TouchHeadTime, ConstUtils.TimeUnit.MIN) < 5) {
                 switch (TouchHeadCount) {
@@ -97,7 +104,7 @@ public class ReceivedSerialPortDataAction {
             }
 
 
-        } else if (bytes[6] == 0x02 || bytes[6] == 0x03) {  //脸
+        } else if (bytes[6].equals("02")  || bytes[6] .equals("03") ) {  //脸
 
             if (TimeUtils.getTimeSpanByNow(TouchFaceTime, ConstUtils.TimeUnit.MIN) < 5) {
                 switch (TouchFaceCount) {
@@ -122,7 +129,7 @@ public class ReceivedSerialPortDataAction {
                 PreferUtil.getInstance().setTouchFaceCount(1);
             }
 
-        } else if (bytes[6] == 0x04 || bytes[6] == 0x05) {  //手
+        } else if (bytes[6] .equals("04")  || bytes[6] .equals("05") ) {  //手
 
             if (TimeUtils.getTimeSpanByNow(TouchHandTime, ConstUtils.TimeUnit.MIN) < 5) {
                 switch (TouchHandCount) {
@@ -146,9 +153,9 @@ public class ReceivedSerialPortDataAction {
                 PreferUtil.getInstance().setTouchHandTime(TimeUtils.getNowTimeMills());
                 PreferUtil.getInstance().setTouchHandCount(1);
             }
-        } else if (bytes[6] == 0x06) {   //前胸
+        } else if (bytes[6] .equals("06") ) {   //前胸
             SpeechRecognizerService.startSpeech(AppController.TouchFront, context.getResources().getString(R.string.Touch_Front_text), context.getResources().getString(R.string.Touch_Front_text));
-        } else if (bytes[6] == 0x07) {   //后背
+        } else if (bytes[6] .equals("07")) {   //后背
             SpeechRecognizerService.startSpeech(AppController.TouchBack, context.getResources().getString(R.string.Touch_Back_text), context.getResources().getString(R.string.Touch_Back_text));
         }
 
