@@ -6,9 +6,12 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 
+import com.blankj.utilcode.utils.ConstUtils;
+import com.blankj.utilcode.utils.TimeUtils;
 import com.blankj.utilcode.utils.Utils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
+import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.SerialPort.OpenSerialPortListener;
 import com.zhengpu.iflytekaiui.SerialPort.SerialUtils;
@@ -50,6 +53,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     private static SerialUtils serialUtils;
     private KuGuoMuiscPlayThread kuGuoMuiscPlayThread;
     private String message;
+    private String SpeechType = "0";
 
 
     @Override
@@ -99,6 +103,11 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         if (reqService.equals("PlayUrl")) {
             voiceToWords.mIatDestroy();
             KuGuoMuiscPlayThread.getInstance(this).playUrl(reqMessage);
+        } else if (reqService.equals("SpeechStart")) {
+            if (reqMessage.equals("1")) {
+                voiceToWords.startRecognizer();
+                startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
+            }
         } else {
             startSpeech(reqService, reqMessage, reqMessage);
         }
@@ -118,9 +127,24 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void showLowVoice(String result) {
-        voiceToWords.startRecognizer();
-//        startSpeech(AppController.SHOWLOWVOICE_TEXT, getResources().getString(R.string.showLowVoice_text), getResources().getString(R.string.showLowVoice_text));
 
+        Long showLowVoiceTime = PreferUtil.getInstance().getShowLowVoiceTime();
+        int showLowVoiceCount = PreferUtil.getInstance().getShowLowVoiceCount();
+
+        if (TimeUtils.getTimeSpanByNow(showLowVoiceTime, ConstUtils.TimeUnit.MIN) < 2) {
+            if (showLowVoiceCount == 2) {
+                showLowVoiceCount = 0;
+                startSpeech(AppController.SHOWLOWVOICE_TEXT, getResources().getString(R.string.showLowVoice_text), getResources().getString(R.string.showLowVoice_text));
+            }else {
+                voiceToWords.startRecognizer();
+                showLowVoiceCount++;
+                PreferUtil.getInstance().setShowLowVoiceCount(showLowVoiceCount);
+            }
+        }else {
+            voiceToWords.startRecognizer();
+            PreferUtil.getInstance().setShowLowVoiceTime(TimeUtils.getNowTimeMills());
+            PreferUtil.getInstance().setShowLowVoiceCount(1);
+        }
     }
 
     /**
@@ -217,6 +241,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      * @param text         播报内容
      * @param request    发送给其他线程的内容
      */
+
     public static void startSpeech(String service, String text, String request) {
 
         voiceToWords.mIatDestroy();
@@ -302,6 +327,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void onDataReceivedSuccess(byte[] bytes) {
 
         String value = ValueUtil.getInstance().bytesToHexStr(bytes);
+        com.orhanobut.logger.Logger.e("心跳       >>>   " + value);
         ReceivedSerialPortDataAction receivedSerialPortDataAction = new ReceivedSerialPortDataAction(value.split(" "), this);
         receivedSerialPortDataAction.start();
 

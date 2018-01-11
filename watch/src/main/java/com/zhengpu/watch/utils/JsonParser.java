@@ -40,7 +40,7 @@ public class JsonParser {
     }
 
 
-     static BaikeBean parseResultBaikeBean(String json) {
+     public   static BaikeBean parseResultBaikeBean(String json) {
         BaikeBean baikeBean = new BaikeBean();
         try {
             Type type = new TypeToken<BaikeBean>() {
@@ -117,7 +117,7 @@ public class JsonParser {
         return openQABean;
     }
 
-    static NewsBean parseResultNewsBean(String json) {
+   public   static NewsBean parseResultNewsBean(String json) {
         NewsBean newsBean = new NewsBean();
         try {
             Type type = new TypeToken<NewsBean>() {
@@ -130,7 +130,7 @@ public class JsonParser {
     }
 
 
-    static StoryBean parseResultStoryBean(String json) {
+    public   static StoryBean parseResultStoryBean(String json) {
         StoryBean storyBean = new StoryBean();
         try {
             Type type = new TypeToken<StoryBean>() {
@@ -142,7 +142,7 @@ public class JsonParser {
         return storyBean;
     }
 
-    static JokeBean parseResultJokeBean(String json) {
+    public static JokeBean parseResultJokeBean(String json) {
         JokeBean jokeBean = new JokeBean();
         try {
             Type type = new TypeToken<JokeBean>() {
@@ -181,7 +181,7 @@ public class JsonParser {
     }
 
 
-    static FlightBean parseResultFlightoBean(String json) {
+   public   static FlightBean parseResultFlightoBean(String json) {
         FlightBean flightBean = new FlightBean();
         try {
             Type type = new TypeToken<FlightBean>() {
@@ -221,7 +221,7 @@ public class JsonParser {
     }
 
 
-    static CustomBaikeBean parseResultCustomBaikeBean(String json) {
+   public   static CustomBaikeBean parseResultCustomBaikeBean(String json) {
         CustomBaikeBean customBaikeBean = new CustomBaikeBean();
         try {
             Type type = new TypeToken<CustomBaikeBean>() {

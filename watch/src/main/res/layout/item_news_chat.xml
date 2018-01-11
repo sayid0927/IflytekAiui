@@ -16,7 +16,7 @@
         android:layout_marginTop="20dp"
         android:src="@drawable/aiui" />
 
-    <com.zhengpu.aiui.ui.view.bubbleview.BubbleLinearLayout
+    <com.zhengpu.watch.ui.view.bubbleview.BubbleLinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/chatlist_image_other"
@@ -271,6 +271,6 @@
         </RelativeLayout>
 
 
-    </com.zhengpu.aiui.ui.view.bubbleview.BubbleLinearLayout>
+    </com.zhengpu.watch.ui.view.bubbleview.BubbleLinearLayout>
 
 </RelativeLayout>

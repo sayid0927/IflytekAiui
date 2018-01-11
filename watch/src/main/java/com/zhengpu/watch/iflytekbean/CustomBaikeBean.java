@@ -1,10 +1,13 @@
 package com.zhengpu.watch.iflytekbean;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.zhengpu.watch.base.AppContract;
+
 /**
  * Created by Administrator on 2017/12/24 0024.
  */
 
-public class CustomBaikeBean {
+public class CustomBaikeBean   implements MultiItemEntity {
 
 
     /**
@@ -131,5 +134,10 @@ public class CustomBaikeBean {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public int getItemType() {
+        return AppContract.CustomBaikeBean;
     }
 }

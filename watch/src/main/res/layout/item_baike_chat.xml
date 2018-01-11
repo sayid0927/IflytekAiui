@@ -22,7 +22,6 @@
         android:layout_alignTop="@id/chatlist_image_other"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/chatlist_image_other"
-        android:background="@drawable/chatfrom_bg_normal"
         android:orientation="vertical"
         android:paddingBottom="18dip"
         android:paddingTop="8dip">

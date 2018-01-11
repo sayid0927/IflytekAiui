@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="400dp"
     android:layout_height="wrap_content"
     android:background="@color/white">
 
@@ -16,7 +16,7 @@
         android:layout_marginTop="20dp"
         android:src="@drawable/aiui" />
 
-    <com.zhengpu.aiui.ui.view.bubbleview.BubbleLinearLayout
+    <com.zhengpu.watch.ui.view.bubbleview.BubbleLinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/chatlist_image_other"
@@ -42,6 +42,7 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
                 android:layout_weight="1">
 
                 <TextView
@@ -60,6 +61,7 @@
                     android:text="℃"
                     android:textColor="@color/color_4c4c4c"
                     android:textSize="18sp" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -197,6 +199,6 @@
 
         </LinearLayout>
 
-    </com.zhengpu.aiui.ui.view.bubbleview.BubbleLinearLayout>
+    </com.zhengpu.watch.ui.view.bubbleview.BubbleLinearLayout>
 
 </RelativeLayout>

@@ -1,12 +1,15 @@
 package com.zhengpu.watch.iflytekbean;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.zhengpu.watch.base.AppContract;
+
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/11/23 0023.
  */
 
-public class BaikeBean {
+public class BaikeBean  implements MultiItemEntity {
 
 
     /**
@@ -35,6 +38,11 @@ public class BaikeBean {
     private AnswerBean answer;
 
     private List<SemanticBean> semantic;
+
+    @Override
+    public int getItemType() {
+        return AppContract.BaikeBean;
+    }
 
 
     public static class SemanticBean {

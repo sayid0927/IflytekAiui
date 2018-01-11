@@ -27,14 +27,19 @@ public final class PreferUtil {
     private static final String R4_SPACE_TIME = "r4_space_time";
     private static final String R4_SPACE_COUNT = "r4_space_count";
     private static final String SPEECH_PARAMS = "speech_params";
+
     private static final String TOUCH_HEAD_TIME = "touch_head_time";
     private static final String TOUCH_HEAD_COUNT = "touch_head_count";
 
-    private static final String TOUCH_FACE_TIME  = "touch_face_time";
+    private static final String TOUCH_FACE_TIME = "touch_face_time";
     private static final String TOUCH_FACE_COUNT = "touch_face_count";
 
-    private static final String TOUCH_HAND_TIME  = "touch_hand_time";
+    private static final String TOUCH_HAND_TIME = "touch_hand_time";
     private static final String TOUCH_HAND_COUNT = "touch_hand_count";
+
+    private static final String SHOW_LOW_VOICE_TIME = "show_low_voice_time";
+    private static final String SHOW_LOW_VOICE_COUNT = "show_low_voice_count";
+
 
     public String getPlayMusicName() {
         return getString(PLAY_MUSIC_NAME, "");
@@ -133,6 +138,23 @@ public final class PreferUtil {
         return getInt(R4_SPACE_COUNT, 0);
     }
 
+    public void setShowLowVoiceTime(Long flag) {
+        putLong(SHOW_LOW_VOICE_TIME, flag);
+    }
+
+    public long getShowLowVoiceTime() {
+        return getLong(SHOW_LOW_VOICE_TIME, TimeUtils.getNowTimeMills());
+    }
+
+
+    public void setShowLowVoiceCount(int flag) {
+        putInt(SHOW_LOW_VOICE_COUNT, flag);
+    }
+
+    public int getShowLowVoiceCount() {
+        return getInt(SHOW_LOW_VOICE_COUNT, 0);
+    }
+
     public void setSpeechParams(int flag) {
         putInt(SPEECH_PARAMS, flag);
     }
@@ -140,6 +162,7 @@ public final class PreferUtil {
     public int getSpeechParams() {
         return getInt(SPEECH_PARAMS, 0);
     }
+
 
     private PreferUtil() {
     }

@@ -1,5 +1,8 @@
 package com.zhengpu.watch.iflytekbean;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.zhengpu.watch.base.AppContract;
+
 import java.util.List;
 
 /**
@@ -7,7 +10,7 @@ import java.util.List;
  * Created by wengmf on 2017/11/24.
  */
 
-public class NewsBean extends BaseBean {
+public class NewsBean  implements MultiItemEntity {
 
 
     /**
@@ -105,6 +108,11 @@ public class NewsBean extends BaseBean {
 
     public void setSid(String sid) {
         this.sid = sid;
+    }
+
+    @Override
+    public int getItemType() {
+        return AppContract.NewsBean;
     }
 
     public static class DataBean {

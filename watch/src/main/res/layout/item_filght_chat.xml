@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="500dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/chatlist_image_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/aiui" />
+
+
+    <com.zhengpu.watch.ui.view.bubbleview.BubbleLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/chatlist_image_other"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/chatlist_image_other"
+        android:maxWidth="200dp"
+        android:orientation="vertical"
+        android:paddingTop="8dip"
+        app:arrowCenter="true"
+        app:arrowHeight="10dp"
+        app:arrowLocation="left"
+        app:arrowPosition="40dp"
+        app:arrowWidth="15dp"
+        app:bubbleColor="@color/white"
+        app:strokeColor="#CCCCCC">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/filght_tiop_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/filght_tiop_text" />
+
+            <TextView
+                android:id="@+id/filght_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/filght_text" />
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/filght" />
+
+        </LinearLayout>
+
+    </com.zhengpu.watch.ui.view.bubbleview.BubbleLinearLayout>
+
+</LinearLayout>
