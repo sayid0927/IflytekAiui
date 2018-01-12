@@ -227,11 +227,11 @@ public class VoiceToWords {
                     if (service != "" && rc != 4) {
                         judgeService(service, text);
                     } else {
-                        R4Action r4Action = new R4Action(context,text);
+                        R4Action r4Action = new R4Action(context, text);
                         r4Action.start();
                     }
                 } catch (JSONException e) {
-                    R4Action r4Action = new R4Action(context,text);
+                    R4Action r4Action = new R4Action(context, text);
                     r4Action.start();
                     e.printStackTrace();
                 }
@@ -359,14 +359,14 @@ public class VoiceToWords {
 
                     OpenAppBean openAppBean = JsonParser.parseResultOpenAppBean(text);
                     if (openAppBean != null && openAppBean.getSemantic() != null && openAppBean.getSemantic().size() != 0 &&
-                         openAppBean.getSemantic().get(0).getSlots() != null && openAppBean.getSemantic().get(0).getSlots().size() != 0) {
+                            openAppBean.getSemantic().get(0).getSlots() != null && openAppBean.getSemantic().get(0).getSlots().size() != 0) {
 
                         String appName = openAppBean.getSemantic().get(0).getSlots().get(0).getNormValue();
                         OpenAppAction openAppAction = new OpenAppAction(appName, context);
                         openAppAction.start();
 
                     } else {
-                        R4Action r4Action = new R4Action(context,text);
+                        R4Action r4Action = new R4Action(context, text);
                         r4Action.start();
                     }
 
@@ -396,9 +396,10 @@ public class VoiceToWords {
 
                     break;
 
-                case "OPENAPPTEST.shiping": //   视频的搜索和播放
+                case AppController.VIDEO: //   视频的搜索和播放
 
                     VideoBean videoBean = JsonParser.parseResultVideoBean(text);
+
                     ShipingAction shipingAction = new ShipingAction(service, videoBean, context, text);
                     shipingAction.start();
 
@@ -415,7 +416,7 @@ public class VoiceToWords {
                 case AppController.OPENAPPTEST_ROBOTCOMMAND:   //  机器人指令
 
                     RobotCommandBean robotCommandBean = JsonParser.parseResultRobotCommandBean(text);
-                    RobotCommandAction robotCommandAction = new RobotCommandAction(service,robotCommandBean,text,context);
+                    RobotCommandAction robotCommandAction = new RobotCommandAction(service, robotCommandBean, text, context);
                     robotCommandAction.start();
 
                     break;
@@ -431,7 +432,7 @@ public class VoiceToWords {
 //                }
 
                 default:
-                    R4Action r4Action = new R4Action(context,text);
+                    R4Action r4Action = new R4Action(context, text);
                     r4Action.start();
                     break;
             }

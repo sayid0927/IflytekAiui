@@ -16,6 +16,7 @@ import com.zhengpu.iflytekaiui.iflytekutils.JsonParser;
 import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
+import com.zhengpu.iflytekaiui.utils.CommDialog;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
 import java.io.IOException;
@@ -126,56 +127,20 @@ public class PlayMusicxAction {
                             if (isAppInstalled(context, "com.kugou.android")) {
                                 //  打开应用
 
-
                                 updatePlayStart(context,1,"true");
                                 updatePlayStart(context,3,"true");
 
                                 OpenAppAction openAppAction = new OpenAppAction("酷狗音乐", context);
                                 openAppAction.start();
                                 SpeechRecognizerService.startSpeech(service, "为你打开酷狗音乐播放" + artist+song, strRequest);
+
                                 break;
                             } else {
 //                             没有安装爱奇艺APP  打开浏览器 下载APP
-                                SpeechRecognizerService.startSpeech(service, "你还没安装酷狗音乐APP， 是否去下载该程序", strRequest);
-                                String keywords = "安卓酷狗音乐App";
-                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                String url ="https://m.baidu.com/from=844b/s?word="+ EncodeUtils.urlEncode(keywords);
-                                intent.setData(Uri.parse(url));
-                                context.startActivity(intent);
+                                SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.kuguo_tip), strRequest);
+                                showDialog();
                                 break;
                         }
-
-//                        String url = "http://aiui.xfyun.cn/taste/getAnswer?text=" + EncodeUtils.urlEncode(musicXBean.getText()) + "&uid=1513933005954&appid=all&category=musicX&timestamp=1513933075498";
-//                        OkHttpClient okHttpClient = new OkHttpClient();
-//                        Request request = new Request.Builder()
-//                                .url(url)
-//                                .build();
-//                        Call call = okHttpClient.newCall(request);
-//                        call.enqueue(new Callback() {
-//                            @Override
-//                            public void onFailure(Call call, IOException e) {
-//                                e.printStackTrace();
-//                                SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.error_network_text), strRequest);
-//                            }
-//
-//                            @Override
-//                            public void onResponse(Call call, Response response) throws IOException {
-//                                String res = response.body().string();
-//                                IfMusicBean ifMusicBean = JsonParser.parseResultIfMusicBean(res);
-//                                if (ifMusicBean != null && ifMusicBean.getData() != null && ifMusicBean.getData().getRes() != null) {
-//                                    IfMusicResBean ifMusicResBean = JsonParser.parseResultIfMusicResBean(ifMusicBean.getData().getRes());
-//                                    if (ifMusicResBean != null && ifMusicResBean.getData() != null && ifMusicResBean.getData().getResult() != null && ifMusicResBean.getData().getResult().size() != 0) {
-//                                        List<IfMusicResBean.DataBean.ResultBean> resultBean = ifMusicResBean.getData().getResult();
-//
-//                                        if (ifMusicResBean != null && ifMusicResBean.getData() != null && ifMusicResBean.getData().getResult() != null && ifMusicResBean.getData().getResult().get(0).getAudiopath() != null) {
-//                                            PreferUtil.getInstance().setPlayMusicUrl(ifMusicResBean.getData().getResult().get(0).getAudiopath());
-//                                            SpeechRecognizerService.startSpeech(service, ifMusicResBean.getAnswer().getText(), strRequest);
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        });
                     }
                 default:
                     R4Action r4Action = new R4Action(context,strRequest);
@@ -185,5 +150,27 @@ public class PlayMusicxAction {
             R4Action r4Action = new R4Action(context,strRequest);
             r4Action.start();
         }
+    }
+
+
+    public void showDialog() {
+        final CommDialog commDialog = new CommDialog(context,context.getResources().getString(R.string.kuguo_tip));
+        commDialog.setOnClickListener(new CommDialog.OnClickListener() {
+            @Override
+            public void onButtonOKClick() {
+                String keywords = "安卓酷狗音乐App";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                String url ="https://m.baidu.com/from=844b/s?word="+ EncodeUtils.urlEncode(keywords);
+                intent.setData(Uri.parse(url));
+                context.startActivity(intent);
+                commDialog.dismiss();
+            }
+            @Override
+            public void onButtonCanelClick() {
+                commDialog.dismiss();
+            }
+        });
+        commDialog.show();
     }
 }

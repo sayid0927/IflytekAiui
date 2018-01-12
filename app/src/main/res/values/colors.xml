@@ -13,5 +13,7 @@
     <color name="transparent">#00000000</color>
 
 
-
+    <color name="color_333333">#333333</color>
+    <color name="color_353535">#353535</color>
+    <color name="color_4d4d4d">#4d4d4d</color>
 </resources>

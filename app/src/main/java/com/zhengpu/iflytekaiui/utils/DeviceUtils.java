@@ -18,6 +18,7 @@ import com.zhengpu.iflytekaiui.service.MyAccessibilityService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static android.content.Context.AUDIO_SERVICE;
 
@@ -180,6 +181,14 @@ public class DeviceUtils {
     }
 
 
+    /***
+     * 判断是不是MP3格式
+     */
+    public static boolean isMp3Url(String url) {
+        Pattern exp = Pattern.compile("^https://[\\w-\\.]+(?:/|(?:/[\\w\\.\\-]+)*(?:/[\\w\\.\\-]+\\.mp3))?$", Pattern.CASE_INSENSITIVE);
+        return exp.matcher(url).matches();
+    }
+
     public static PlayController getPlayStart(Context context, int id) {
 
         PlayController playController = new PlayController();
@@ -199,7 +208,7 @@ public class DeviceUtils {
         return playController;
     }
 
-    public static void updatePlayStart(Context context, int id,String falg) {
+    public static void updatePlayStart(Context context, int id, String falg) {
         Uri bookUri = PlayProvider.PLAY_CONTENT_URI;
         ContentValues values = new ContentValues();
         values.put("isPlay", falg);

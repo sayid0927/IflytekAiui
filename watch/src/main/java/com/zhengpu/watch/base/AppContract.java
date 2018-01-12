@@ -6,6 +6,7 @@ import com.zhengpu.watch.iflytekbean.DatetimeBean;
 import com.zhengpu.watch.iflytekbean.FlightBean;
 import com.zhengpu.watch.iflytekbean.NewsBean;
 import com.zhengpu.watch.iflytekbean.PoetryBean;
+import com.zhengpu.watch.iflytekbean.VideoBean;
 import com.zhengpu.watch.iflytekbean.WeatherBean;
 
 /**
@@ -27,6 +28,8 @@ public class AppContract {
     public static final int FlightBean = 10009;
     public static final int BaikeBean = 10010;
     public static final int CustomBaikeBean = 10011;
+    public static final int VideoBean = 10012;
+
 
 
 }

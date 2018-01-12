@@ -8,6 +8,7 @@ import com.kongqw.serialportlibrary.SerialPortManager;
 import com.kongqw.serialportlibrary.listener.OnOpenSerialPortListener;
 import com.kongqw.serialportlibrary.listener.OnSerialPortDataListener;
 import com.orhanobut.logger.Logger;
+import com.zhengpu.iflytekaiui.utils.ValueUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,8 +49,13 @@ public class SerialUtils implements OnOpenSerialPortListener {
                    .setOnSerialPortDataListener(new OnSerialPortDataListener() {
                        @Override
                        public void onDataReceived(byte[] bytes) {
-                           Logger.e("onDataReceived  [ byte[] ]: " + Arrays.toString(bytes));
-                           Logger.e( "onDataReceived [ String ]: " + new String(bytes));
+//                           Logger.e("onDataReceived  [ byte[] ]: " + Arrays.toString(bytes));
+//                           Logger.e( "onDataReceived [ String ]: " + new String(bytes));
+
+
+
+                           String value = ValueUtil.getInstance().bytesToHexStr(bytes);
+                           Logger.e("接收成功 >>>   " + value);
 
                            //  接收成功
                            if(serialPortListener!=null )
@@ -58,8 +64,13 @@ public class SerialUtils implements OnOpenSerialPortListener {
                        }
                        @Override
                        public void onDataSent(byte[] bytes) {
-                           Logger.e("onDataSent [ byte[] ]: " + Arrays.toString(bytes));
-                           Logger.e("onDataSent [ String ]: " + new String(bytes));
+//                           Logger.e("onDataSent [ byte[] ]: " + Arrays.toString(bytes));
+//                           Logger.e("onDataSent [ String ]: " + new String(bytes));
+
+
+                           String value = ValueUtil.getInstance().bytesToHexStr(bytes);
+                           Logger.e("发送成功 >>>   " + value);
+
 
                            // 发送成功
                            if(serialPortListener!=null )

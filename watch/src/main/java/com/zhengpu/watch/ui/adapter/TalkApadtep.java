@@ -57,6 +57,7 @@ public class TalkApadtep extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
         addItemType(AppContract.NewsBean, R.layout.item_news);
         addItemType(AppContract.FlightBean, R.layout.item_filght_chat);
         addItemType(AppContract.BaikeBean, R.layout.item_calc_chat);
+        addItemType(AppContract.VideoBean, R.layout.item_calc_chat);
     }
 
 
@@ -129,6 +130,12 @@ public class TalkApadtep extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
                            talkNewsItemLiserten.onTalkNewsItemClick(url);
                     }
                 });
+
+                break;
+
+            case  AppContract.VideoBean:
+
+
 
                 break;
 

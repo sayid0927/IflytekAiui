@@ -168,7 +168,7 @@ public class JsonParser {
     }
 
 
-    static VideoBean parseResultVideoBean(String json) {
+     public   static VideoBean parseResultVideoBean(String json) {
         VideoBean videoBean = new VideoBean();
         try {
             Type type = new TypeToken<VideoBean>() {

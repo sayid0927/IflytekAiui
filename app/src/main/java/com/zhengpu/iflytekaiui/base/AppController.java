@@ -28,7 +28,8 @@ public class AppController {
     public static final String OPENQA = "openQA";    // 打开一个APp
     public static final String POETRY = "poetry";       // 诗词对答
     public static final String STORY = "story";          // 故事
-    public static final String OPENAPPTEST_SHIPING = "OPENAPPTEST.shiping";   // 视频
+    public static final String VIDEO = "video";   // 视频
+    public static final String VIDEO_1 = "video_1";   // 多轮视频对话
     public static final String OPENAPPTEST_MUSIC_DEMO = "OPENAPPTEST.music_demo";
     public static final String OPENAPPTEST_CUSTOM_BAIKE = "OPENAPPTEST.custom_baike";     //自定义百科
     public static final String OPENAPPTEST_ROBOTCOMMAND = "OPENAPPTEST.RobotCommand";// 机器人指令

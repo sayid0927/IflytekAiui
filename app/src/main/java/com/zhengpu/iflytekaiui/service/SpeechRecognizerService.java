@@ -11,7 +11,6 @@ import com.blankj.utilcode.utils.TimeUtils;
 import com.blankj.utilcode.utils.Utils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
-import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.SerialPort.OpenSerialPortListener;
 import com.zhengpu.iflytekaiui.SerialPort.SerialUtils;
@@ -87,6 +86,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         serialUtils = SerialUtils.getInstance(this);
         serialUtils.setSerialPortListener(this);
 
+//        byte[] byteAutoReset = new byte[]{0x5A, 0x50, 0x03, 0x02, 0x02, 0x01, 0x05, 0x0D, 0x0A}; //复位
+//        sendSerialMessageBytes(byteAutoReset);
+
     }
 
     @Override
@@ -135,12 +137,12 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
             if (showLowVoiceCount == 2) {
                 showLowVoiceCount = 0;
                 startSpeech(AppController.SHOWLOWVOICE_TEXT, getResources().getString(R.string.showLowVoice_text), getResources().getString(R.string.showLowVoice_text));
-            }else {
+            } else {
                 voiceToWords.startRecognizer();
                 showLowVoiceCount++;
                 PreferUtil.getInstance().setShowLowVoiceCount(showLowVoiceCount);
             }
-        }else {
+        } else {
             voiceToWords.startRecognizer();
             PreferUtil.getInstance().setShowLowVoiceTime(TimeUtils.getNowTimeMills());
             PreferUtil.getInstance().setShowLowVoiceCount(1);
@@ -205,6 +207,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
             case AppController.SHOWLOWVOICE_TEXT:
                 voiceToWords.mIatDestroy();
                 break;
+            case AppController.JOKE:
+                voiceToWords.mIatDestroy();
+                break;
             case AppController.MUSICX:
                 voiceToWords.mIatDestroy();
 //             KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayMusicUrl());
@@ -217,7 +222,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
                 voiceToWords.mIatDestroy();
                 KuGuoMuiscPlayThread.getInstance(this).playUrl(PreferUtil.getInstance().getPlayStoryUrl());
                 break;
-            case AppController.OPENAPPTEST_SHIPING:
+            case AppController.VIDEO:
                 voiceToWords.mIatDestroy();
                 break;
             default:
