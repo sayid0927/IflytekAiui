@@ -49,6 +49,8 @@ public class PlayProvider  extends ContentProvider {
         mDb.execSQL("insert into start values(3, 'kuguo_play_b2w','true');");
         mDb.execSQL("insert into start values(4, 'aiqiyi_play_clickabl','false');");
         mDb.execSQL("insert into start values(5, 'aiqiyi_play_searchkeyword','true');");
+        mDb.execSQL("insert into start values(6, 'videoName','false');");
+        mDb.execSQL("insert into start values(7, 'videoName','false');");
     }
 
     @Nullable

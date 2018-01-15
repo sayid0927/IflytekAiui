@@ -33,6 +33,8 @@ import org.json.JSONTokener;
 
 import java.lang.reflect.Type;
 
+import retrofit2.http.PUT;
+
 public class JsonParser {
 
 
@@ -178,7 +180,7 @@ public class JsonParser {
     }
 
 
-    static VideoBean parseResultVideoBean(String json) {
+    public static VideoBean parseResultVideoBean(String json) {
         VideoBean videoBean = new VideoBean();
         try {
             Type type = new TypeToken<VideoBean>() {

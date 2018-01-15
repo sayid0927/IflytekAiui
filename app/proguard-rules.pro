@@ -239,6 +239,8 @@ public static java.lang.String TABLENAME;
 -keep class com.zhengpu.iflytekaiui.iflytekbean.** { *; }
 -keep class com.zhengpu.iflytekaiui.service.** { *; }
 -keep class com.zhengpu.iflytekaiui.ipc.** { *; }
+-keep class com.zhengpu.iflytekaiui.contentprovider.** { *; }
+-keep class com.zhengpu.iflytekaiui.SerialPort.** { *; }
 
 
 # OkHttp

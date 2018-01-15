@@ -44,9 +44,11 @@ public class PlayController {
     };
 
     private PlayController(Parcel in) {
+
         Id = in.readInt();
         type = in.readString();
         isPlay = in.readString();
+
     }
 
     @Override

@@ -46,11 +46,14 @@ public class ShipingAction {
 
             } else {
                 String videoName = videoBean.getData().getResult().get(0).getName();
-                com.orhanobut.logger.Logger.e(videoName);
-                PreferUtil.getInstance().setPlayVideoName(videoName);
+
+//                PreferUtil.getInstance().setPlayVideoName(videoName);
+                updatePlayStart(context,6,videoName);
+
                 if (isAppInstalled(context, "com.qiyi.video")) {
                     //  打开应用
                     updatePlayStart(context, 4, "true");
+                    updatePlayStart(context,5,"true");
                     OpenAppAction openAppAction = new OpenAppAction("爱奇艺", context);
                     openAppAction.start();
                     SpeechRecognizerService.startSpeech(service, "为你打开爱奇艺搜索" + videoName, request);

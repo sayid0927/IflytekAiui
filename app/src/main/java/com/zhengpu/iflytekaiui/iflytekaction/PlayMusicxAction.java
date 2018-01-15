@@ -86,7 +86,7 @@ public class PlayMusicxAction {
 //                                break;
 
                             default:
-                                R4Action r4Action = new R4Action(context,strRequest);
+                                R4Action r4Action = new R4Action(context, strRequest);
                                 r4Action.start();
                         }
                     }
@@ -123,49 +123,51 @@ public class PlayMusicxAction {
                     }
                     //    酷狗播放
                     if (PalyMode != 0) {
-                            PreferUtil.getInstance().setPlayMusicName(artist+song);
-                            if (isAppInstalled(context, "com.kugou.android")) {
-                                //  打开应用
+//                            PreferUtil.getInstance().setPlayMusicName(artist+song);
 
-                                updatePlayStart(context,1,"true");
-                                updatePlayStart(context,3,"true");
+                        if (isAppInstalled(context, "com.kugou.android")) {
+                            //  打开应用
+                            updatePlayStart(context, 7, artist + song);
+                            updatePlayStart(context, 1, "true");
+                            updatePlayStart(context, 3, "true");
 
-                                OpenAppAction openAppAction = new OpenAppAction("酷狗音乐", context);
-                                openAppAction.start();
-                                SpeechRecognizerService.startSpeech(service, "为你打开酷狗音乐播放" + artist+song, strRequest);
+                            OpenAppAction openAppAction = new OpenAppAction("酷狗音乐", context);
+                            openAppAction.start();
+                            SpeechRecognizerService.startSpeech(service, "为你打开酷狗音乐播放" + artist + song, strRequest);
 
-                                break;
-                            } else {
+                            break;
+                        } else {
 //                             没有安装爱奇艺APP  打开浏览器 下载APP
-                                SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.kuguo_tip), strRequest);
-                                showDialog();
-                                break;
+                            SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.kuguo_tip), strRequest);
+                            showDialog();
+                            break;
                         }
                     }
                 default:
-                    R4Action r4Action = new R4Action(context,strRequest);
+                    R4Action r4Action = new R4Action(context, strRequest);
                     r4Action.start();
             }
         } else {
-            R4Action r4Action = new R4Action(context,strRequest);
+            R4Action r4Action = new R4Action(context, strRequest);
             r4Action.start();
         }
     }
 
 
     public void showDialog() {
-        final CommDialog commDialog = new CommDialog(context,context.getResources().getString(R.string.kuguo_tip));
+        final CommDialog commDialog = new CommDialog(context, context.getResources().getString(R.string.kuguo_tip));
         commDialog.setOnClickListener(new CommDialog.OnClickListener() {
             @Override
             public void onButtonOKClick() {
                 String keywords = "安卓酷狗音乐App";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                String url ="https://m.baidu.com/from=844b/s?word="+ EncodeUtils.urlEncode(keywords);
+                String url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keywords);
                 intent.setData(Uri.parse(url));
                 context.startActivity(intent);
                 commDialog.dismiss();
             }
+
             @Override
             public void onButtonCanelClick() {
                 commDialog.dismiss();

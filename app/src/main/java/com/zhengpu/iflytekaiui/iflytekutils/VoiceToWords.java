@@ -20,6 +20,7 @@ import com.zhengpu.iflytekaiui.iflytekaction.CustomBaikeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.DateTimeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.FlightAction;
 import com.zhengpu.iflytekaiui.iflytekaction.JokeAction;
+import com.zhengpu.iflytekaiui.iflytekaction.MoreMusicXAction;
 import com.zhengpu.iflytekaiui.iflytekaction.NewsAction;
 import com.zhengpu.iflytekaiui.iflytekaction.OpenAppAction;
 import com.zhengpu.iflytekaiui.iflytekaction.OpenQaAction;
@@ -399,10 +400,19 @@ public class VoiceToWords {
                 case AppController.VIDEO: //   视频的搜索和播放
 
                     VideoBean videoBean = JsonParser.parseResultVideoBean(text);
-
-                    ShipingAction shipingAction = new ShipingAction(service, videoBean, context, text);
-                    shipingAction.start();
-
+                    if (videoBean.getMoreResults() != null) {
+                       String ser = videoBean.getMoreResults().get(0).getService();
+                        if(ser.equals("musicX")){   //如果在更多的选项中有音乐
+                            MoreMusicXAction moreMusicXAction = new MoreMusicXAction(service,videoBean.getMoreResults().get(0),text,context);
+                            moreMusicXAction.start();
+                        }else {
+                            ShipingAction shipingAction = new ShipingAction(service, videoBean, context, text);
+                            shipingAction.start();
+                        }
+                    }else {
+                        ShipingAction shipingAction = new ShipingAction(service, videoBean, context, text);
+                        shipingAction.start();
+                    }
                     break;
 
                 case "weather":   //  天气情况的查询。

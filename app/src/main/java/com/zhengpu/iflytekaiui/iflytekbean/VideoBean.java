@@ -11,52 +11,31 @@ public class VideoBean {
 
 
     /**
-     * data : {"result":[{"actor":[{"name":"邓超","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"王宝强","roleName":""},{"name":"陈赫","roleName":""},{"name":"郑恺","roleName":""},{"name":"杨颖","roleName":""},{"name":"李晨","roleName":""},{"name":"王心凌","roleName":""}],"aliasName":["跑男","奔跑吧!兄弟","跑起来!好兄弟","Running Man"],"area":["中国大陆"],"award":[{"ceremony":"第1届豆瓣电影年度榜单","title":"最受关注的大陆综艺(提名)"}],"category":"综艺","company":"","director":["岑俊义","陆浩"],"episode":[],"hot":"23794","img":"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/douban_video/25899362/0f3c259311fb102be3dec50e84302118.jpg","language":"国语","leadActor":[{"name":"邓超","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"王宝强","roleName":""},{"name":"陈赫","roleName":""},{"name":"郑恺","roleName":""}],"name":"奔跑吧兄弟 第一季","publishTime":"2014-10-10","score":"8.3","screenWriter":["俞杭英"],"season":"第一季","source":"iflytek","tags":["电视剧","真人秀"]},{"actor":[{"name":"邓超","roleName":""},{"name":"鹿晗","roleName":""},{"name":"杨颖","roleName":""},{"name":"郑恺","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"李晨","roleName":""},{"name":"陈赫","roleName":""}],"aliasName":["跑男3","Running Man season 3"],"area":["中国大陆"],"award":[],"category":"综艺","company":"","director":["岑俊义","陆皓"],"episode":[],"hot":"11563","img":"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/douban_video/26438888/5d263aa80ad468d74f02f2c7abc23905.jpg","language":"国语","leadActor":[{"name":"邓超","roleName":""},{"name":"鹿晗","roleName":""},{"name":"杨颖","roleName":""},{"name":"郑恺","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"李晨","roleName":""},{"name":"陈赫","roleName":""}],"name":"奔跑吧兄弟 第三季","publishTime":"2015-10-30","score":"6.3","screenWriter":[],"season":"第三季","source":"iflytek","tags":["电视剧","真人秀","综艺"]},{"actor":[{"name":"邓超","roleName":""},{"name":"李晨","roleName":""},{"name":"陈赫","roleName":""},{"name":"郑恺","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"鹿晗","roleName":""},{"name":"迪丽热巴","roleName":""},{"name":"杨颖","roleName":""}],"aliasName":["奔跑吧兄弟第五季","跑男5","Keep Running"],"area":["中国大陆"],"award":[],"category":"综艺","company":"","director":[],"episode":[],"hot":"10505","img":"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/douban_video/26830085/0f923ec3a1d79652be1ff3f266944420.jpg","language":"国语","leadActor":[{"name":"邓超","roleName":""},{"name":"李晨","roleName":""},{"name":"陈赫","roleName":""},{"name":"郑恺","roleName":""},{"name":"王祖蓝","roleName":""}],"name":"奔跑吧","publishTime":"2017-04-14","score":"6.4","screenWriter":[],"season":"","source":"iflytek","tags":["电视剧","真人秀"]},{"actor":[{"name":"邓超","roleName":""},{"name":"杨颖","roleName":""},{"name":"李晨","roleName":""},{"name":"郑恺","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"陈赫","roleName":""},{"name":"鹿晗","roleName":""},{"name":"代乐乐","roleName":""},{"name":"姜超","roleName":""}],"aliasName":["跑男4","Running Man Season 4"],"area":["中国大陆"],"award":[],"category":"综艺","company":"","director":["蒋敏昊"],"episode":[],"hot":"8730","img":"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/douban_video/26710402/8dcaccfbea4438bdd19290f57eab09da.jpg","language":"国语","leadActor":[{"name":"邓超","roleName":""},{"name":"杨颖","roleName":""},{"name":"李晨","roleName":""},{"name":"郑恺","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"陈赫","roleName":""}],"name":"奔跑吧兄弟 第四季","publishTime":"2016-04-15","score":"5.8","screenWriter":[],"season":"第四季","source":"iflytek","tags":["电视剧","真人秀","综艺"]},{"actor":[{"name":"邓超","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"王宝强","roleName":""},{"name":"李晨","roleName":""},{"name":"陈赫","roleName":""},{"name":"郑恺","roleName":""},{"name":"杨颖","roleName":""}],"aliasName":["Chinese Running Man","奔跑吧!兄弟","奔跑吧","兄弟","奔跑吧兄弟"],"area":["中国大陆"],"award":[],"category":"综艺","company":"","director":[],"episode":[],"hot":"194","img":"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/mtime_video/217596/360c8d0d15e08bddfe1ac73daa9a1f5e.jpg","language":"国语","leadActor":[{"name":"邓超","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"王宝强","roleName":""},{"name":"李晨","roleName":""}],"name":"奔跑吧兄弟","publishTime":"2014-10-10","score":"7.1","screenWriter":[],"season":"","source":"iflytek","tags":["电视剧","真人秀","综艺"]},{"actor":[{"name":"陈赫","roleName":""},{"name":"郑恺","roleName":""},{"name":"杨颖","roleName":""},{"name":"邓超","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"王宝强","roleName":""},{"name":"李晨","roleName":""}],"aliasName":["Chinese Running Man"],"area":["中国大陆"],"award":[],"category":"综艺","company":"","director":[],"episode":[],"hot":"42","img":"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/maoyan_video/368767/2c90c84543fde459015c55e4d5691dbc.jpg","language":"","leadActor":[{"name":"陈赫","roleName":""},{"name":"郑恺","roleName":""},{"name":"杨颖","roleName":""},{"name":"邓超","roleName":""}],"name":"奔跑吧兄弟 第一季","publishTime":"2014-10-10","score":"6.2","screenWriter":[],"season":"第一季","source":"iflytek","tags":["综艺","真人秀"]},{"actor":[{"name":"杨颖","roleName":""},{"name":"陈赫","roleName":""},{"name":"王宝强","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"郑恺","roleName":""},{"name":"李晨","roleName":""},{"name":"熊黛林","roleName":""},{"name":"谢依霖","roleName":""},{"name":"伊一","roleName":""},{"name":"郭京飞","roleName":""},{"name":"张爱钦","roleName":""},{"name":"金钟国","roleName":""},{"name":"邓超","roleName":""},{"name":"包贝尔","roleName":""},{"name":"范冰冰","roleName":"第一期嘉宾"},{"name":"韩庚","roleName":"第一期嘉宾"},{"name":"黄晓明","roleName":"第二期嘉宾"},{"name":"欧弟","roleName":"第三期嘉宾"},{"name":"宋佳","roleName":"第三期嘉宾"},{"name":"林更新","roleName":"第四期嘉宾"},{"name":"张艺兴","roleName":"第四期嘉宾"},{"name":"叶祖新","roleName":"第四期嘉宾"},{"name":"李治廷","roleName":"第四期嘉宾"},{"name":"蒋劲夫","roleName":"第四期嘉宾"},{"name":"吴奇隆","roleName":"第五期嘉宾"},{"name":"陈乔恩","roleName":"第五期嘉宾"},{"name":"杜淳","roleName":"第五期嘉宾"},{"name":"姚晨","roleName":"第六期嘉宾"},{"name":"萧敬腾","roleName":"第六期嘉宾"},{"name":"信","roleName":"第六期嘉宾"},{"name":"吉克隽逸","roleName":"第六期嘉宾"},{"name":"大鹏","roleName":"第六期嘉宾"},{"name":"刘涛","roleName":"第七期嘉宾"},{"name":"蔡少芬","roleName":"第九期嘉宾"},{"name":"霍思燕","roleName":"第九期嘉宾"},{"name":"李彩桦","roleName":"第九期嘉宾"},{"name":"蒋欣","roleName":"第九期嘉宾"},{"name":"江一燕","roleName":"第九期嘉宾"},{"name":"苏见信","roleName":"第六期嘉宾"}],"aliasName":["奔跑吧!兄弟","Running Man","奔跑吧兄弟","奔跑吧","兄弟","跑男","奔跑吧兄弟第二季","奔跑吧兄弟 第二季","跑男2","Running Man Season 2"],"area":["中国大陆"],"award":[{"ceremony":"第7届金扫帚奖","title":"最令人失望中小成本电影"},{"ceremony":"第6届豆瓣电影鑫像奖","title":"豆渣单元 最渣影片(华语)"},{"ceremony":"第2届豆瓣电影年度榜单","title":"1月最受关注电影(提名) ,评分最低的华语电影(提名)"},{"ceremony":"第2届豆瓣电影年度榜单","title":"最受关注的大陆综艺(提名)"}],"category":"综艺","company":"万达影视传媒有限公司","director":["胡笳","岑俊义","陆浩"],"episode":[],"hot":"0","img":"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/maoyan_video/246316/d24fafbab399042eed3e8f44fcd1b669.jpg","language":"国语","leadActor":[{"name":"杨颖","roleName":""},{"name":"陈赫","roleName":""},{"name":"王宝强","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"李晨","roleName":""},{"name":"郑恺","roleName":""},{"name":"邓超","roleName":""},{"name":"包贝尔","roleName":""},{"name":"叶祖新","roleName":""},{"name":"蒋劲夫","roleName":""},{"name":"信","roleName":""},{"name":"吉克隽逸","roleName":""}],"name":"奔跑吧!兄弟","publishTime":"2015-01-30","score":"7.8","screenWriter":["胡笳","岑俊义","李雅弢","杨琳","俞杭英"],"season":"第二季","source":"iflytek","tags":["综艺","喜剧","动作","冒险","电视剧","真人秀"]}]}
-     * rc : 0
-     * semantic : [{"intent":"QUERY","slots":[{"name":"name","value":"奔跑吧兄弟"}]}]
-     * service : video
-     * state : {"fg::video::default::default":{"name":"1"}}
-     * text : 奔跑吧兄弟
-     * uuid : atn00166083@ch11710db360446f2001
-     * answer : {"text":"不好意思，没有为您找到您想看的影片，为您推荐\"奔跑吧兄弟 第一季\""}
-     * dialog_stat : dataInvalid
+     * data : {"result":[{"actor":[{"name":"达米安·勃纳尔","roleName":""},{"name":"克里斯蒂安·布耶特","roleName":""},{"name":"劳尔·卡拉米","roleName":""},{"name":"英迪亚·海尔","roleName":""},{"name":"拉斐尔·蒂里","roleName":""},{"name":"Basile Meilleurat","roleName":"Yoann"},{"name":"Sébastien Novac","roleName":"Kibor"},{"name":"茵蒂雅·海尔","roleName":"Marie 玛丽"},{"name":"Christian Bouillette","roleName":""},{"name":"Raphal Thierry","roleName":""},{"name":"Baptiste Roques","roleName":"Lucas"},{"name":"Adrien Marsal","roleName":"Enzo"},{"name":"Tangi Belbeoc'h","roleName":"Le clochard"},{"name":"Jakez André","roleName":""},{"name":"Mathieu Milella","roleName":"Gendarme 1"},{"name":"Charles Bénéat","roleName":""},{"name":"Mathieu Philibert","roleName":"Gendarme 2"},{"name":"Clet Beyer","roleName":""},{"name":"Erwan Chapel","roleName":""},{"name":"Johan Floch","roleName":""},{"name":"Grégory Hairon","roleName":""},{"name":"Joan Jacq","roleName":""},{"name":"Stéphane Leucart","roleName":""},{"name":"Thierry Machard","roleName":""},{"name":"Estelle Bourget","roleName":""},{"name":"Jean-Michel Gerbeau","roleName":""},{"name":"Stéphanie Finot","roleName":""},{"name":"Emmanuel Vergnault","roleName":""},{"name":"Fernando Jesus de Abreu","roleName":""},{"name":"Rui Miguel Dias Jorge","roleName":""},{"name":"Emmanuelle Fitamant","roleName":""},{"name":"David Turner","roleName":""},{"name":"Ilia Squiban","roleName":""},{"name":"Abel Bonazzi Saint-Blancat","roleName":""}],"aliasName":["Rester vertical,天天向上","垂直人生","保持勃起","Staying Vertical","Rester vertical"],"area":["法国"],"award":[{"ceremony":"第69届戛纳电影节","title":"主竞赛单元 金棕榈奖(提名)"},{"ceremony":"第69届戛纳电影节","title":"金棕榈奖(提名) ,同志棕榈奖(提名)"},{"ceremony":"戛纳电影节","title":"同志棕榈奖(提名) ,金棕榈奖(提名)"},{"ceremony":"法国凯撒奖","title":"凯撒奖-最佳新人男演员(提名)"}],"category":"电影","company":"Strand Releasing","director":["阿兰·吉罗迪"],"episode":[],"hot":"1961","img":"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/douban_video/26678594/b2228126b5d411646a9ef7ea2b145fa6.jpg","language":"法语","leadActor":[{"name":"达米安·勃纳尔","roleName":""},{"name":"克里斯蒂安·布耶特","roleName":""},{"name":"劳尔·卡拉米","roleName":""},{"name":"英迪亚·海尔","roleName":""},{"name":"拉斐尔·蒂里","roleName":""},{"name":"茵蒂雅·海尔","roleName":"Marie 玛丽"},{"name":"Christian Bouillette","roleName":""}],"name":"保持站立","publishTime":"2016-05-12","score":"6.1","screenWriter":["阿兰·吉罗迪"],"season":"","source":"iflytek","tags":["剧情","情色","喜剧"]},{"actor":[{"name":"汪涵","roleName":""},{"name":"欧弟","roleName":""},{"name":"田源","roleName":""},{"name":"钱枫","roleName":""},{"name":"金恩圣","roleName":""},{"name":"大张伟","roleName":""},{"name":"王一博","roleName":""},{"name":"矢野浩二","roleName":""},{"name":"俞灏明","roleName":""},{"name":"孟玥","roleName":""},{"name":"陈思","roleName":""},{"name":"黄婷婷","roleName":""},{"name":"龚诗淇","roleName":""},{"name":"陆婷","roleName":""},{"name":"曾艳芬","roleName":""},{"name":"何晓玉","roleName":""},{"name":"鞠婧祎","roleName":""},{"name":"唐安琪","roleName":""},{"name":"朱元冰","roleName":"朱元冰"},{"name":"程琳","roleName":""},{"name":"姚贝娜","roleName":""},{"name":"涂们","roleName":""}],"aliasName":["天天向上","Day Day Up"],"area":["中国大陆"],"award":[],"category":"电影","company":"","director":["毛豆豆"],"episode":[],"hot":"2","img":"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/mtime_video/183358/98c960455a053ce75c625a0caec5af69.jpg","language":"国语","leadActor":[{"name":"汪涵","roleName":""},{"name":"欧弟","roleName":""},{"name":"田源","roleName":""},{"name":"钱枫","roleName":""},{"name":"金恩圣","roleName":""}],"name":"天天向上","publishTime":"2008-08-04","score":"0.0","screenWriter":[],"season":"","source":"iflytek","tags":["电视剧","脱口秀","综艺"]}]}
      * save_history : true
-     * sid : atn00166083@ch11710db360446f2001
+     * rc : 0
+     * semantic : [{"intent":"QUERY","slots":[{"name":"name","value":"天天向上"}]}]
+     * service : video
+     * state : {"fg::video::default::default":{"name":"1","reserved_intent":"1"}}
+     * text : 播放天天向上
+     * uuid : atn002c174c@ch03520db7b9fa6f1d01
+     * answer : {"text":"不好意思，没有为您找到您想看的影片，为您推荐\"保持站立\""}
+     * dialog_stat : dataInvalid
+     * moreResults : [{"text":"播放天天向上","rc":3,"semantic":[{"intent":"PLAY","slots":[{"name":"song","value":"天天向上"}]}],"service":"musicX","state":{"fg::musicX::default::default":{"song":"1"},"fg::video::default::default":{"name":"1","reserved_intent":"1"}}}]
+     * sid : atn002c174c@ch03520db7b9fa6f1d01
      */
 
     private DataBean data;
+    private boolean save_history;
     private int rc;
     private String service;
     private String text;
     private String uuid;
-    private String dialog_stat;
-    private boolean save_history;
-    private String sid;
     private AnswerBean answer;
-
-
-    public static class AnswerBean {
-
-        private String text;
-
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-    }
-
-    public AnswerBean getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(AnswerBean answer) {
-        this.answer = answer;
-    }
+    private String dialog_stat;
+    private String sid;
+    private List<SemanticBean> semantic;
+    private List<MoreResultsBean> moreResults;
 
     public DataBean getData() {
         return data;
@@ -64,6 +43,14 @@ public class VideoBean {
 
     public void setData(DataBean data) {
         this.data = data;
+    }
+
+    public boolean isSave_history() {
+        return save_history;
+    }
+
+    public void setSave_history(boolean save_history) {
+        this.save_history = save_history;
     }
 
     public int getRc() {
@@ -98,20 +85,20 @@ public class VideoBean {
         this.uuid = uuid;
     }
 
+    public AnswerBean getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(AnswerBean answer) {
+        this.answer = answer;
+    }
+
     public String getDialog_stat() {
         return dialog_stat;
     }
 
     public void setDialog_stat(String dialog_stat) {
         this.dialog_stat = dialog_stat;
-    }
-
-    public boolean isSave_history() {
-        return save_history;
-    }
-
-    public void setSave_history(boolean save_history) {
-        this.save_history = save_history;
     }
 
     public String getSid() {
@@ -121,6 +108,179 @@ public class VideoBean {
     public void setSid(String sid) {
         this.sid = sid;
     }
+
+    public List<SemanticBean> getSemantic() {
+        return semantic;
+    }
+
+    public void setSemantic(List<SemanticBean> semantic) {
+        this.semantic = semantic;
+    }
+
+    public List<MoreResultsBean> getMoreResults() {
+        return moreResults;
+    }
+
+    public void setMoreResults(List<MoreResultsBean> moreResults) {
+        this.moreResults = moreResults;
+    }
+
+    public static class MoreResultsBean {
+        /***
+         * {"text":"播放天天向上","rc":3,"
+         * semantic":[{"intent":"PLAY","slots":[{"name":"song","value":"天天向上"}]}],"service":"musicX",
+         * "state":{"fg::musicX::default::default":{"song":"1"},"fg::video::default::default":{"name":"1","reserved_intent":"1"}}}
+         */
+
+        private String text;
+        private List<semanticBean> semantic;
+        private  String service;
+
+
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public List<semanticBean> getSemantic() {
+            return semantic;
+        }
+
+        public void setSemantic(List<semanticBean> semantic) {
+            this.semantic = semantic;
+        }
+
+        public String getService() {
+            return service;
+        }
+
+        public void setService(String service) {
+            this.service = service;
+        }
+
+        public static class semanticBean {
+
+
+            /**
+             *  semantic":[{"intent":"PLAY","slots":[{"name":"song","value":"天天向上"}]}],"service":"musicX",
+             */
+            private String intent;
+            private  List<slotsBean> slotsBeans;
+
+            public String getIntent() {
+                return intent;
+            }
+
+            public void setIntent(String intent) {
+                this.intent = intent;
+            }
+
+            public List<slotsBean> getSlotsBeans() {
+                return slotsBeans;
+            }
+
+            public void setSlotsBeans(List<slotsBean> slotsBeans) {
+                this.slotsBeans = slotsBeans;
+            }
+
+            public static class slotsBean {
+                private String name;
+                private  String value;
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+
+                public String getValue() {
+                    return value;
+                }
+
+                public void setValue(String value) {
+                    this.value = value;
+                }
+            }
+        }
+    }
+
+    public static class SemanticBean {
+        /***
+         * intent":"QUERY","slots":[{"name":"name","value":"天天向上"}
+         */
+        private String intent;
+        private List<slotsBean> slots;
+
+        public String getIntent() {
+            return intent;
+        }
+
+        public void setIntent(String intent) {
+            this.intent = intent;
+        }
+
+        public List<slotsBean> getSlots() {
+            return slots;
+        }
+
+        public void setSlots(List<slotsBean> slots) {
+            this.slots = slots;
+        }
+
+        public static class slotsBean {
+
+            private String name;
+            private String value;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getValue() {
+                return value;
+            }
+
+            public void setValue(String value) {
+                this.value = value;
+            }
+        }
+    }
+
+    public static class AnswerBean {
+        /**
+         * answer : {"text":"不好意思，没有为您找到您想看的影片，为您推荐\"保持站立\""}
+         */
+
+        private String text;
+        private String type;
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+    }
+
 
     public static class DataBean {
         private List<ResultBean> result;
@@ -135,25 +295,25 @@ public class VideoBean {
 
         public static class ResultBean {
             /**
-             * actor : [{"name":"邓超","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"王宝强","roleName":""},{"name":"陈赫","roleName":""},{"name":"郑恺","roleName":""},{"name":"杨颖","roleName":""},{"name":"李晨","roleName":""},{"name":"王心凌","roleName":""}]
-             * aliasName : ["跑男","奔跑吧!兄弟","跑起来!好兄弟","Running Man"]
-             * area : ["中国大陆"]
-             * award : [{"ceremony":"第1届豆瓣电影年度榜单","title":"最受关注的大陆综艺(提名)"}]
-             * category : 综艺
-             * company :
-             * director : ["岑俊义","陆浩"]
+             * actor : [{"name":"达米安·勃纳尔","roleName":""},{"name":"克里斯蒂安·布耶特","roleName":""},{"name":"劳尔·卡拉米","roleName":""},{"name":"英迪亚·海尔","roleName":""},{"name":"拉斐尔·蒂里","roleName":""},{"name":"Basile Meilleurat","roleName":"Yoann"},{"name":"Sébastien Novac","roleName":"Kibor"},{"name":"茵蒂雅·海尔","roleName":"Marie 玛丽"},{"name":"Christian Bouillette","roleName":""},{"name":"Raphal Thierry","roleName":""},{"name":"Baptiste Roques","roleName":"Lucas"},{"name":"Adrien Marsal","roleName":"Enzo"},{"name":"Tangi Belbeoc'h","roleName":"Le clochard"},{"name":"Jakez André","roleName":""},{"name":"Mathieu Milella","roleName":"Gendarme 1"},{"name":"Charles Bénéat","roleName":""},{"name":"Mathieu Philibert","roleName":"Gendarme 2"},{"name":"Clet Beyer","roleName":""},{"name":"Erwan Chapel","roleName":""},{"name":"Johan Floch","roleName":""},{"name":"Grégory Hairon","roleName":""},{"name":"Joan Jacq","roleName":""},{"name":"Stéphane Leucart","roleName":""},{"name":"Thierry Machard","roleName":""},{"name":"Estelle Bourget","roleName":""},{"name":"Jean-Michel Gerbeau","roleName":""},{"name":"Stéphanie Finot","roleName":""},{"name":"Emmanuel Vergnault","roleName":""},{"name":"Fernando Jesus de Abreu","roleName":""},{"name":"Rui Miguel Dias Jorge","roleName":""},{"name":"Emmanuelle Fitamant","roleName":""},{"name":"David Turner","roleName":""},{"name":"Ilia Squiban","roleName":""},{"name":"Abel Bonazzi Saint-Blancat","roleName":""}]
+             * aliasName : ["Rester vertical,天天向上","垂直人生","保持勃起","Staying Vertical","Rester vertical"]
+             * area : ["法国"]
+             * award : [{"ceremony":"第69届戛纳电影节","title":"主竞赛单元 金棕榈奖(提名)"},{"ceremony":"第69届戛纳电影节","title":"金棕榈奖(提名) ,同志棕榈奖(提名)"},{"ceremony":"戛纳电影节","title":"同志棕榈奖(提名) ,金棕榈奖(提名)"},{"ceremony":"法国凯撒奖","title":"凯撒奖-最佳新人男演员(提名)"}]
+             * category : 电影
+             * company : Strand Releasing
+             * director : ["阿兰·吉罗迪"]
              * episode : []
-             * hot : 23794
-             * img : http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/douban_video/25899362/0f3c259311fb102be3dec50e84302118.jpg
-             * language : 国语
-             * leadActor : [{"name":"邓超","roleName":""},{"name":"王祖蓝","roleName":""},{"name":"王宝强","roleName":""},{"name":"陈赫","roleName":""},{"name":"郑恺","roleName":""}]
-             * name : 奔跑吧兄弟 第一季
-             * publishTime : 2014-10-10
-             * score : 8.3
-             * screenWriter : ["俞杭英"]
-             * season : 第一季
+             * hot : 1961
+             * img : http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/douban_video/26678594/b2228126b5d411646a9ef7ea2b145fa6.jpg
+             * language : 法语
+             * leadActor : [{"name":"达米安·勃纳尔","roleName":""},{"name":"克里斯蒂安·布耶特","roleName":""},{"name":"劳尔·卡拉米","roleName":""},{"name":"英迪亚·海尔","roleName":""},{"name":"拉斐尔·蒂里","roleName":""},{"name":"茵蒂雅·海尔","roleName":"Marie 玛丽"},{"name":"Christian Bouillette","roleName":""}]
+             * name : 保持站立
+             * publishTime : 2016-05-12
+             * score : 6.1
+             * screenWriter : ["阿兰·吉罗迪"]
+             * season :
              * source : iflytek
-             * tags : ["电视剧","真人秀"]
+             * tags : ["剧情","情色","喜剧"]
              */
 
             private String category;
@@ -330,7 +490,7 @@ public class VideoBean {
 
             public static class ActorBean {
                 /**
-                 * name : 邓超
+                 * name : 达米安·勃纳尔
                  * roleName :
                  */
 
@@ -356,8 +516,8 @@ public class VideoBean {
 
             public static class AwardBean {
                 /**
-                 * ceremony : 第1届豆瓣电影年度榜单
-                 * title : 最受关注的大陆综艺(提名)
+                 * ceremony : 第69届戛纳电影节
+                 * title : 主竞赛单元 金棕榈奖(提名)
                  */
 
                 private String ceremony;
@@ -382,7 +542,7 @@ public class VideoBean {
 
             public static class LeadActorBean {
                 /**
-                 * name : 邓超
+                 * name : 达米安·勃纳尔
                  * roleName :
                  */
 

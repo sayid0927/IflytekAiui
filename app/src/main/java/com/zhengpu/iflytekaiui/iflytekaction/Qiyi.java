@@ -7,6 +7,7 @@ import android.os.Build;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 
+import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.contentprovider.PlayController;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
@@ -28,8 +29,7 @@ public class Qiyi {
 
     public Qiyi(Context context) {
         this.context = context;
-        this.videoName= PreferUtil.getInstance().getPlayVideoName();
-
+        this.videoName= getPlayStart(context, 6).isPlay;
     }
 
     public void start(AccessibilityNodeInfo info) {
@@ -46,20 +46,22 @@ public class Qiyi {
                         parent = parent.getParent();
                     }
                 } else if (FindNodeInfosById(info, "com.qiyi.video:id/phoneSearchKeyword")) {
+                    Logger.e("FindNodeInfosById >>     11111111111111111");
                     PlayController playController = getPlayStart(context, 5);
+                    Logger.e("PlayController >>  "+playController.toString());
+
                     if(playController.isPlay.equals("true")){
                         // 模拟输入歌曲名
-                        updatePlayStart(context,5,"false");
+                        Logger.e("videoName >>    "+videoName);
                         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
                         ClipData clipData = ClipData.newPlainText("scb", videoName);
                         clipboardManager.setPrimaryClip(clipData);
                         info.performAction(AccessibilityNodeInfo.ACTION_PASTE);
+                        updatePlayStart(context,5,"false");
                     }
                 } else if (info.getText() != null  && "搜索".equals(info.getText().toString()) && FindNodeInfosById(info, "com.qiyi.video:id/txt_action")) {
                     // 模拟点击 搜索歌曲 button
                     updatePlayStart(context,4,"false");
-                    updatePlayStart(context,5,"true");
-
                     AccessibilityNodeInfo parent = info;
                     while (parent != null) {
                         if (parent.isClickable()) {

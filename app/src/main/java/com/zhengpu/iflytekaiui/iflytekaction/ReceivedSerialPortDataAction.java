@@ -47,6 +47,9 @@ public class ReceivedSerialPortDataAction {
         if (bytes != null ) {
             if (bytes[0].equals("5A")  && bytes[1] .equals("50") ) {
                 switch (bytes[4]) {
+                    case "82":
+                        Logger.e(" 查询  >>>   ");
+                        break;
                     case "01":     //设置    PAD发起，控制设备动作或设置参数。
 
                         break;

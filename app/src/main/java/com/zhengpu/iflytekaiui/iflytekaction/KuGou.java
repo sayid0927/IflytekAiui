@@ -28,7 +28,8 @@ public class KuGou {
 
     public KuGou(Context context) {
         this.context = context;
-        this.songName = PreferUtil.getInstance().getPlayMusicName();
+
+        this.songName =getPlayStart(context, 7).isPlay;
     }
 
     public void start(AccessibilityNodeInfo info) {
@@ -67,7 +68,6 @@ public class KuGou {
                         }
                         parent = parent.getParent();
                     }
-
                 } else if (FindNodeInfosById(info, "com.kugou.android:id/b2w")) {
                     PlayController playController = getPlayStart(context, 3);
                     if(playController.isPlay.equals("true")){
