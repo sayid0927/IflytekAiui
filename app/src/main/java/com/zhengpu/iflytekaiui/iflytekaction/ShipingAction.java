@@ -45,13 +45,12 @@ public class ShipingAction {
                 SpeechRecognizerService.startSpeech(AppController.VIDEO_1, text, request);
 
             } else {
-                String videoName = videoBean.getData().getResult().get(0).getName();
 
-//                PreferUtil.getInstance().setPlayVideoName(videoName);
-                updatePlayStart(context,6,videoName);
 
                 if (isAppInstalled(context, "com.qiyi.video")) {
                     //  打开应用
+                    String videoName = videoBean.getData().getResult().get(0).getName();
+                    updatePlayStart(context,6,videoBean.getData().getResult().get(0).getName());
                     updatePlayStart(context, 4, "true");
                     updatePlayStart(context,5,"true");
                     OpenAppAction openAppAction = new OpenAppAction("爱奇艺", context);

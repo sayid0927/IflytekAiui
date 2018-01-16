@@ -123,8 +123,6 @@ public class PlayMusicxAction {
                     }
                     //    酷狗播放
                     if (PalyMode != 0) {
-//                            PreferUtil.getInstance().setPlayMusicName(artist+song);
-
                         if (isAppInstalled(context, "com.kugou.android")) {
                             //  打开应用
                             updatePlayStart(context, 7, artist + song);

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="400dp"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:background="@color/white">
 
@@ -10,8 +10,8 @@
         android:id="@+id/chatlist_image_other"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_alignParentStart="true"
+        android:layout_centerInParent="true"
         android:layout_marginStart="23dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/aiui" />
@@ -31,45 +31,45 @@
         app:arrowLocation="left"
         app:arrowPosition="55dp"
         app:arrowWidth="15dp"
-        app:strokeColor= "#CCCCCC"
-        app:bubbleColor="@color/white">
+        app:bubbleColor="@color/white"
+        app:strokeColor="#CCCCCC">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_marginLeft="20dp"
+            android:id="@+id/rl_f"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <RelativeLayout
+                android:id="@+id/rl_temp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="32"
+                    android:text=""
                     android:textColor="@color/color_4c4c4c"
-                    android:textSize="33sp" />
+                    android:textSize="49sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:layout_toRightOf="@+id/tv_temp"
-                    android:layout_weight="1"
                     android:text="℃"
                     android:textColor="@color/color_4c4c4c"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/rl_temp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/ll_location"
@@ -90,7 +90,7 @@
                         android:layout_marginLeft="5dp"
                         android:text="深圳"
                         android:textColor="@color/color_666666"
-                        android:textSize="7sp" />
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
@@ -98,13 +98,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ll_location"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_gravity="center"
                         android:src="@drawable/weather" />
 
                     <TextView
@@ -114,7 +115,7 @@
                         android:layout_marginLeft="5dp"
                         android:text="多云"
                         android:textColor="@color/color_666666"
-                        android:textSize="7sp" />
+                        android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/tv_tempRange"
@@ -123,21 +124,21 @@
                         android:layout_marginLeft="5dp"
                         android:text="7℃ ~ 14℃"
                         android:textColor="@color/color_666666"
-                        android:textSize="7sp" />
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
             </RelativeLayout>
 
-        </LinearLayout>
-
-
+        </RelativeLayout>
 
 
         <LinearLayout
-            android:layout_margin="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+           android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
 
@@ -152,7 +153,7 @@
                     android:layout_height="wrap_content"
                     android:text="空气质量指数 : "
                     android:textColor="@color/color_676767"
-                    android:textSize="7sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/tv_airQuality"
@@ -160,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:text="良"
                     android:textColor="@color/color_4fad55"
-                    android:textSize="12sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -175,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:text="温馨提示 : "
                     android:textColor="@color/color_666666"
-                    android:textSize="7sp" />
+                    android:textSize="10sp" />
 
 
                 <TextView
@@ -184,18 +185,18 @@
                     android:layout_height="wrap_content"
                     android:text="建议着厚外套加毛衣等服装。年老体弱者宜着大衣、呢外套加羊毛衫。"
                     android:textColor="@color/color_666666"
-                    android:textSize="7sp" />
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="5dp"
-                android:text="查看最近5天天气"
-                android:textColor="@color/color_2d8bff"
-                android:textSize="7sp" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="right"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:text="查看最近5天天气"-->
+                <!--android:textColor="@color/color_2d8bff"-->
+                <!--android:textSize="7sp" />-->
 
         </LinearLayout>
 

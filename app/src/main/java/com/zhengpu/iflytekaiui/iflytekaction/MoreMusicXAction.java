@@ -43,14 +43,15 @@ public class MoreMusicXAction {
     }
 
     public void start() {
-        if (musicXBean != null) {
+        if (musicXBean != null && musicXBean.getSemantic()!=null && musicXBean.getSemantic().get(0).getSlots()!=null &&
+              musicXBean.getSemantic().get(0).getSlots()!=null  ) {
             PalyMode = -1;
-            for (int i = 0; i < musicXBean.getSemantic().getSlotsBeans().size(); i++) {
-                String name = musicXBean.getSemantic().getSlotsBeans().get(i).getName();
+            for (int i = 0; i < musicXBean.getSemantic().get(0).getSlots().size(); i++) {
+                String name = musicXBean.getSemantic().get(0).getSlots().get(i).getName();
                 if (name.equals("artist")) {
-                    artist = musicXBean.getSemantic().getSlotsBeans().get(i).getValue();
+                    artist = musicXBean.getSemantic().get(0).getSlots().get(i).getValue();
                 } else if (name.equals("song")) {
-                    song = musicXBean.getSemantic().getSlotsBeans().get(i).getValue();
+                    song = musicXBean.getSemantic().get(0).getSlots().get(i).getValue();
                 }
             }
 
@@ -79,7 +80,7 @@ public class MoreMusicXAction {
             if (PalyMode != 0) {
                 if (isAppInstalled(context, "com.kugou.android")) {
                     //  打开应用
-                    updatePlayStart(context, 7, artist + song);
+                    updatePlayStart(context, 7, artist +song);
                     updatePlayStart(context, 1, "true");
                     updatePlayStart(context, 3, "true");
 
@@ -88,7 +89,7 @@ public class MoreMusicXAction {
                     SpeechRecognizerService.startSpeech(service, "为你打开酷狗音乐播放" + artist + song, strRequest);
 
                 } else {
-//            没有安装爱奇艺APP  打开浏览器 下载APP
+//               没有安装酷狗播放APP  打开浏览器 下载APP
                     SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.kuguo_tip), strRequest);
                     showDialog();
 

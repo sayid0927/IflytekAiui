@@ -7,6 +7,7 @@ import android.os.Build;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 
+import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.contentprovider.PlayController;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
@@ -50,16 +51,16 @@ public class KuGou {
                     PlayController playController = getPlayStart(context, 2);
                     if (playController.isPlay.equals("true")) {
                         // 模拟输入歌曲名
-                        updatePlayStart(context,2,"false");
+
                         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
                         ClipData clipData = ClipData.newPlainText("scb", songName);
                         clipboardManager.setPrimaryClip(clipData);
                         info.performAction(AccessibilityNodeInfo.ACTION_PASTE);
+                        updatePlayStart(context,2,"false");
 
                     }
-                } else if (FindNodeInfosById(info, "com.kugou.android:id/chy")) {
+                } else if (info.getText() != null  &&  info.getText().toString().contains(songName) && FindNodeInfosById(info, "com.kugou.android:id/chy")) {
                     // 模拟点击 搜索歌曲 button
-
                     AccessibilityNodeInfo parent = info;
                     while (parent != null) {
                         if (parent.isClickable()) {

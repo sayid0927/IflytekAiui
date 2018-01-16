@@ -133,7 +133,7 @@ public class VideoBean {
          */
 
         private String text;
-        private List<semanticBean> semantic;
+        private List<SemanticBean> semantic;
         private  String service;
 
 
@@ -146,11 +146,11 @@ public class VideoBean {
             this.text = text;
         }
 
-        public List<semanticBean> getSemantic() {
+        public List<SemanticBean> getSemantic() {
             return semantic;
         }
 
-        public void setSemantic(List<semanticBean> semantic) {
+        public void setSemantic(List<SemanticBean> semantic) {
             this.semantic = semantic;
         }
 
@@ -162,14 +162,14 @@ public class VideoBean {
             this.service = service;
         }
 
-        public static class semanticBean {
-
-
+        public static class SemanticBean {
             /**
-             *  semantic":[{"intent":"PLAY","slots":[{"name":"song","value":"天天向上"}]}],"service":"musicX",
+             * semantic : [{"intent":"PLAY","slots":[{"name":"song","value":"我的地盘"}]}]
              */
+
             private String intent;
-            private  List<slotsBean> slotsBeans;
+            private List<SlotsBean> slots;
+
 
             public String getIntent() {
                 return intent;
@@ -179,17 +179,20 @@ public class VideoBean {
                 this.intent = intent;
             }
 
-            public List<slotsBean> getSlotsBeans() {
-                return slotsBeans;
+            public List<SlotsBean> getSlots() {
+                return slots;
             }
 
-            public void setSlotsBeans(List<slotsBean> slotsBeans) {
-                this.slotsBeans = slotsBeans;
+            public void setSlots(List<SlotsBean> slots) {
+                this.slots = slots;
             }
 
-            public static class slotsBean {
+            public static class SlotsBean {
+                /**
+                 * semantic : [{"intent":"PLAY","slots":[{"name":"song","value":"我的地盘"}]}]
+                 */
                 private String name;
-                private  String value;
+                private String value;
 
                 public String getName() {
                     return name;

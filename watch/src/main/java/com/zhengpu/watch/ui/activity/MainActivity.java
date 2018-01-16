@@ -1,6 +1,11 @@
 package com.zhengpu.watch.ui.activity;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
+import android.os.IBinder;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -107,799 +112,52 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     private R4Bean r4Bean;
     private RobotCommandRequest robotCommandRequest;
 
-    private String Message = "{\n" +
+    private  String Message = "{\n" +
             "  \"data\": {\n" +
             "    \"result\": [\n" +
             "      {\n" +
-            "        \"actor\": [\n" +
+            "        \"category\": [\n" +
+            "          \"人物\",\n" +
+            "          \"歌手\"\n" +
+            "        ],\n" +
+            "        \"img\": \"http://a2.att.hudong.com/70/13/20300543224648149795136240204_140.jpg\",\n" +
+            "        \"sectionList\": [\n" +
             "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
+            "            \"sectionTitle\": \"早年经历\",\n" +
+            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#1\"\n" +
             "          },\n" +
             "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
+            "            \"sectionTitle\": \"演艺经历\",\n" +
+            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#3\"\n" +
             "          },\n" +
             "          {\n" +
-            "            \"name\": \"王宝强\",\n" +
-            "            \"roleName\": \"\"\n" +
+            "            \"sectionTitle\": \"个人生活\",\n" +
+            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#5\"\n" +
             "          },\n" +
             "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
+            "            \"sectionTitle\": \"主要作品\",\n" +
+            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#15\"\n" +
             "          },\n" +
             "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
+            "            \"sectionTitle\": \"社会活动\",\n" +
+            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#35\"\n" +
             "          },\n" +
             "          {\n" +
-            "            \"name\": \"杨颖\",\n" +
-            "            \"roleName\": \"\"\n" +
+            "            \"sectionTitle\": \"获奖记录\",\n" +
+            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#41\"\n" +
             "          },\n" +
             "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
+            "            \"sectionTitle\": \"人物语录\",\n" +
+            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#47\"\n" +
             "          },\n" +
             "          {\n" +
-            "            \"name\": \"王心凌\",\n" +
-            "            \"roleName\": \"\"\n" +
+            "            \"sectionTitle\": \"人物评价\",\n" +
+            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#49\"\n" +
             "          }\n" +
             "        ],\n" +
-            "        \"aliasName\": [\n" +
-            "          \"跑男\",\n" +
-            "          \"奔跑吧!兄弟\",\n" +
-            "          \"跑起来!好兄弟\",\n" +
-            "          \"Running Man\"\n" +
-            "        ],\n" +
-            "        \"area\": [\n" +
-            "          \"中国大陆\"\n" +
-            "        ],\n" +
-            "        \"award\": [\n" +
-            "          {\n" +
-            "            \"ceremony\": \"第1届豆瓣电影年度榜单\",\n" +
-            "            \"title\": \"最受关注的大陆综艺(提名)\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"category\": \"综艺\",\n" +
-            "        \"company\": \"\",\n" +
-            "        \"director\": [\n" +
-            "          \"岑俊义\",\n" +
-            "          \"陆浩\"\n" +
-            "        ],\n" +
-            "        \"episode\": [],\n" +
-            "        \"hot\": \"23794\",\n" +
-            "        \"img\": \"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/douban_video/25899362/0f3c259311fb102be3dec50e84302118.jpg\",\n" +
-            "        \"language\": \"国语\",\n" +
-            "        \"leadActor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王宝强\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"name\": \"奔跑吧兄弟 第一季\",\n" +
-            "        \"publishTime\": \"2014-10-10\",\n" +
-            "        \"score\": \"8.3\",\n" +
-            "        \"screenWriter\": [\n" +
-            "          \"俞杭英\"\n" +
-            "        ],\n" +
-            "        \"season\": \"第一季\",\n" +
-            "        \"source\": \"iflytek\",\n" +
-            "        \"tags\": [\n" +
-            "          \"电视剧\",\n" +
-            "          \"真人秀\"\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"actor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"鹿晗\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"杨颖\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"aliasName\": [\n" +
-            "          \"跑男3\",\n" +
-            "          \"Running Man season 3\"\n" +
-            "        ],\n" +
-            "        \"area\": [\n" +
-            "          \"中国大陆\"\n" +
-            "        ],\n" +
-            "        \"award\": [],\n" +
-            "        \"category\": \"综艺\",\n" +
-            "        \"company\": \"\",\n" +
-            "        \"director\": [\n" +
-            "          \"岑俊义\",\n" +
-            "          \"陆皓\"\n" +
-            "        ],\n" +
-            "        \"episode\": [],\n" +
-            "        \"hot\": \"11563\",\n" +
-            "        \"img\": \"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/douban_video/26438888/5d263aa80ad468d74f02f2c7abc23905.jpg\",\n" +
-            "        \"language\": \"国语\",\n" +
-            "        \"leadActor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"鹿晗\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"杨颖\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"name\": \"奔跑吧兄弟 第三季\",\n" +
-            "        \"publishTime\": \"2015-10-30\",\n" +
-            "        \"score\": \"6.3\",\n" +
-            "        \"screenWriter\": [],\n" +
-            "        \"season\": \"第三季\",\n" +
-            "        \"source\": \"iflytek\",\n" +
-            "        \"tags\": [\n" +
-            "          \"电视剧\",\n" +
-            "          \"真人秀\",\n" +
-            "          \"综艺\"\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"actor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"鹿晗\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"迪丽热巴\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"杨颖\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"aliasName\": [\n" +
-            "          \"奔跑吧兄弟第五季\",\n" +
-            "          \"跑男5\",\n" +
-            "          \"Keep Running\"\n" +
-            "        ],\n" +
-            "        \"area\": [\n" +
-            "          \"中国大陆\"\n" +
-            "        ],\n" +
-            "        \"award\": [],\n" +
-            "        \"category\": \"综艺\",\n" +
-            "        \"company\": \"\",\n" +
-            "        \"director\": [],\n" +
-            "        \"episode\": [],\n" +
-            "        \"hot\": \"10505\",\n" +
-            "        \"img\": \"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/douban_video/26830085/0f923ec3a1d79652be1ff3f266944420.jpg\",\n" +
-            "        \"language\": \"国语\",\n" +
-            "        \"leadActor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"name\": \"奔跑吧\",\n" +
-            "        \"publishTime\": \"2017-04-14\",\n" +
-            "        \"score\": \"6.4\",\n" +
-            "        \"screenWriter\": [],\n" +
-            "        \"season\": \"\",\n" +
-            "        \"source\": \"iflytek\",\n" +
-            "        \"tags\": [\n" +
-            "          \"电视剧\",\n" +
-            "          \"真人秀\"\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"actor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"杨颖\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"鹿晗\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"代乐乐\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"姜超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"aliasName\": [\n" +
-            "          \"跑男4\",\n" +
-            "          \"Running Man Season 4\"\n" +
-            "        ],\n" +
-            "        \"area\": [\n" +
-            "          \"中国大陆\"\n" +
-            "        ],\n" +
-            "        \"award\": [],\n" +
-            "        \"category\": \"综艺\",\n" +
-            "        \"company\": \"\",\n" +
-            "        \"director\": [\n" +
-            "          \"蒋敏昊\"\n" +
-            "        ],\n" +
-            "        \"episode\": [],\n" +
-            "        \"hot\": \"8730\",\n" +
-            "        \"img\": \"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/douban_video/26710402/8dcaccfbea4438bdd19290f57eab09da.jpg\",\n" +
-            "        \"language\": \"国语\",\n" +
-            "        \"leadActor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"杨颖\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"name\": \"奔跑吧兄弟 第四季\",\n" +
-            "        \"publishTime\": \"2016-04-15\",\n" +
-            "        \"score\": \"5.8\",\n" +
-            "        \"screenWriter\": [],\n" +
-            "        \"season\": \"第四季\",\n" +
-            "        \"source\": \"iflytek\",\n" +
-            "        \"tags\": [\n" +
-            "          \"电视剧\",\n" +
-            "          \"真人秀\",\n" +
-            "          \"综艺\"\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"actor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王宝强\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"杨颖\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"aliasName\": [\n" +
-            "          \"Chinese Running Man\",\n" +
-            "          \"奔跑吧!兄弟\",\n" +
-            "          \"奔跑吧\",\n" +
-            "          \"兄弟\",\n" +
-            "          \"奔跑吧兄弟\"\n" +
-            "        ],\n" +
-            "        \"area\": [\n" +
-            "          \"中国大陆\"\n" +
-            "        ],\n" +
-            "        \"award\": [],\n" +
-            "        \"category\": \"综艺\",\n" +
-            "        \"company\": \"\",\n" +
-            "        \"director\": [],\n" +
-            "        \"episode\": [],\n" +
-            "        \"hot\": \"194\",\n" +
-            "        \"img\": \"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/mtime_video/217596/360c8d0d15e08bddfe1ac73daa9a1f5e.jpg\",\n" +
-            "        \"language\": \"国语\",\n" +
-            "        \"leadActor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王宝强\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"name\": \"奔跑吧兄弟\",\n" +
-            "        \"publishTime\": \"2014-10-10\",\n" +
-            "        \"score\": \"7.1\",\n" +
-            "        \"screenWriter\": [],\n" +
-            "        \"season\": \"\",\n" +
-            "        \"source\": \"iflytek\",\n" +
-            "        \"tags\": [\n" +
-            "          \"电视剧\",\n" +
-            "          \"真人秀\",\n" +
-            "          \"综艺\"\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"actor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"杨颖\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王宝强\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"aliasName\": [\n" +
-            "          \"Chinese Running Man\"\n" +
-            "        ],\n" +
-            "        \"area\": [\n" +
-            "          \"中国大陆\"\n" +
-            "        ],\n" +
-            "        \"award\": [],\n" +
-            "        \"category\": \"综艺\",\n" +
-            "        \"company\": \"\",\n" +
-            "        \"director\": [],\n" +
-            "        \"episode\": [],\n" +
-            "        \"hot\": \"42\",\n" +
-            "        \"img\": \"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/maoyan_video/368767/2c90c84543fde459015c55e4d5691dbc.jpg\",\n" +
-            "        \"language\": \"\",\n" +
-            "        \"leadActor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"杨颖\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"name\": \"奔跑吧兄弟 第一季\",\n" +
-            "        \"publishTime\": \"2014-10-10\",\n" +
-            "        \"score\": \"6.2\",\n" +
-            "        \"screenWriter\": [],\n" +
-            "        \"season\": \"第一季\",\n" +
-            "        \"source\": \"iflytek\",\n" +
-            "        \"tags\": [\n" +
-            "          \"综艺\",\n" +
-            "          \"真人秀\"\n" +
-            "        ]\n" +
-            "      },\n" +
-            "      {\n" +
-            "        \"actor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"杨颖\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王宝强\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"熊黛林\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"谢依霖\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"伊一\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郭京飞\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"张爱钦\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"金钟国\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"包贝尔\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"范冰冰\",\n" +
-            "            \"roleName\": \"第一期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"韩庚\",\n" +
-            "            \"roleName\": \"第一期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"黄晓明\",\n" +
-            "            \"roleName\": \"第二期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"欧弟\",\n" +
-            "            \"roleName\": \"第三期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"宋佳\",\n" +
-            "            \"roleName\": \"第三期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"林更新\",\n" +
-            "            \"roleName\": \"第四期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"张艺兴\",\n" +
-            "            \"roleName\": \"第四期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"叶祖新\",\n" +
-            "            \"roleName\": \"第四期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李治廷\",\n" +
-            "            \"roleName\": \"第四期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"蒋劲夫\",\n" +
-            "            \"roleName\": \"第四期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"吴奇隆\",\n" +
-            "            \"roleName\": \"第五期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"陈乔恩\",\n" +
-            "            \"roleName\": \"第五期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"杜淳\",\n" +
-            "            \"roleName\": \"第五期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"姚晨\",\n" +
-            "            \"roleName\": \"第六期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"萧敬腾\",\n" +
-            "            \"roleName\": \"第六期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"信\",\n" +
-            "            \"roleName\": \"第六期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"吉克隽逸\",\n" +
-            "            \"roleName\": \"第六期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"大鹏\",\n" +
-            "            \"roleName\": \"第六期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"刘涛\",\n" +
-            "            \"roleName\": \"第七期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"蔡少芬\",\n" +
-            "            \"roleName\": \"第九期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"霍思燕\",\n" +
-            "            \"roleName\": \"第九期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李彩桦\",\n" +
-            "            \"roleName\": \"第九期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"蒋欣\",\n" +
-            "            \"roleName\": \"第九期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"江一燕\",\n" +
-            "            \"roleName\": \"第九期嘉宾\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"苏见信\",\n" +
-            "            \"roleName\": \"第六期嘉宾\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"aliasName\": [\n" +
-            "          \"奔跑吧!兄弟\",\n" +
-            "          \"Running Man\",\n" +
-            "          \"奔跑吧兄弟\",\n" +
-            "          \"奔跑吧\",\n" +
-            "          \"兄弟\",\n" +
-            "          \"跑男\",\n" +
-            "          \"奔跑吧兄弟第二季\",\n" +
-            "          \"奔跑吧兄弟 第二季\",\n" +
-            "          \"跑男2\",\n" +
-            "          \"Running Man Season 2\"\n" +
-            "        ],\n" +
-            "        \"area\": [\n" +
-            "          \"中国大陆\"\n" +
-            "        ],\n" +
-            "        \"award\": [\n" +
-            "          {\n" +
-            "            \"ceremony\": \"第7届金扫帚奖\",\n" +
-            "            \"title\": \"最令人失望中小成本电影\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"ceremony\": \"第6届豆瓣电影鑫像奖\",\n" +
-            "            \"title\": \"豆渣单元 最渣影片(华语)\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"ceremony\": \"第2届豆瓣电影年度榜单\",\n" +
-            "            \"title\": \"1月最受关注电影(提名) ,评分最低的华语电影(提名)\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"ceremony\": \"第2届豆瓣电影年度榜单\",\n" +
-            "            \"title\": \"最受关注的大陆综艺(提名)\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"category\": \"综艺\",\n" +
-            "        \"company\": \"万达影视传媒有限公司\",\n" +
-            "        \"director\": [\n" +
-            "          \"胡笳\",\n" +
-            "          \"岑俊义\",\n" +
-            "          \"陆浩\"\n" +
-            "        ],\n" +
-            "        \"episode\": [],\n" +
-            "        \"hot\": \"0\",\n" +
-            "        \"img\": \"http://kchfpre.openspeech.cn/music_db_file/parastor/data/downdata/pictures/maoyan_video/246316/d24fafbab399042eed3e8f44fcd1b669.jpg\",\n" +
-            "        \"language\": \"国语\",\n" +
-            "        \"leadActor\": [\n" +
-            "          {\n" +
-            "            \"name\": \"杨颖\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"陈赫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王宝强\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"王祖蓝\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"李晨\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"郑恺\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"邓超\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"包贝尔\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"叶祖新\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"蒋劲夫\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"信\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"name\": \"吉克隽逸\",\n" +
-            "            \"roleName\": \"\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"name\": \"奔跑吧!兄弟\",\n" +
-            "        \"publishTime\": \"2015-01-30\",\n" +
-            "        \"score\": \"7.8\",\n" +
-            "        \"screenWriter\": [\n" +
-            "          \"胡笳\",\n" +
-            "          \"岑俊义\",\n" +
-            "          \"李雅弢\",\n" +
-            "          \"杨琳\",\n" +
-            "          \"俞杭英\"\n" +
-            "        ],\n" +
-            "        \"season\": \"第二季\",\n" +
-            "        \"source\": \"iflytek\",\n" +
-            "        \"tags\": [\n" +
-            "          \"综艺\",\n" +
-            "          \"喜剧\",\n" +
-            "          \"动作\",\n" +
-            "          \"冒险\",\n" +
-            "          \"电视剧\",\n" +
-            "          \"真人秀\"\n" +
-            "        ]\n" +
+            "        \"summary\": \"周杰伦（Jay Chou），1979年1月18日出生于台湾新北，中国台湾流行乐男歌手、音乐人、演员、导演、编剧、监制、企业家等。2000年发行首张个人专辑《Jay》。2001年发行的专辑《范特西》。2002年举行The One世界巡回演唱会。2003年登上美国《时代周刊》。2004年获世界音乐大奖中国区最畅销艺人奖。2005年凭借动作片《头文字D》获得台湾电影金马奖、香港电影金像奖最佳新人奖。2006年起连续三年获得世界音乐大奖中国区最畅销艺人奖。2007年自编自导的文艺片《不能说的秘密》获得台湾电影金马奖年度台湾杰出电影奖。2009年入选美国CNN评出的25位亚洲最具影响力的人物。2010年入选美国《Fast Company》评出的全球百大创意人物。2011年主演好莱坞电影《青蜂侠》。2014年发行专辑《哎呦，不错哦》。2016年推出专辑《周杰伦的床边故事》。他还涉足商业、设计等领域。2007年成立杰威尔有限公司。2011年担任华硕笔电设计师并入股香港文化传信集团。2017年6月，周杰伦妻子昆凌二胎产子。\",\n" +
+            "        \"title\": \"周杰伦\",\n" +
+            "        \"url\": \"http://www.baike.com/gwiki/周杰伦\"\n" +
             "      }\n" +
             "    ]\n" +
             "  },\n" +
@@ -909,26 +167,30 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
             "      \"intent\": \"QUERY\",\n" +
             "      \"slots\": [\n" +
             "        {\n" +
-            "          \"name\": \"name\",\n" +
-            "          \"value\": \"奔跑吧兄弟\"\n" +
+            "          \"name\": \"keyword\",\n" +
+            "          \"value\": \"周杰伦\"\n" +
             "        }\n" +
             "      ]\n" +
             "    }\n" +
             "  ],\n" +
-            "  \"service\": \"video\",\n" +
+            "  \"service\": \"baike\",\n" +
             "  \"state\": {\n" +
-            "    \"fg::video::default::default\": {\n" +
-            "      \"name\": \"1\"\n" +
+            "    \"fg::baike::default::default\": {\n" +
+            "      \"state\": \"default\"\n" +
             "    }\n" +
             "  },\n" +
-            "  \"text\": \"奔跑吧兄弟\",\n" +
-            "  \"uuid\": \"atn00166083@ch11710db360446f2001\",\n" +
+            "  \"text\": \"周杰伦百科\",\n" +
+            "  \"uuid\": \"atn0037f058@ch67140db8df426f2001\",\n" +
+            "  \"used_state\": {\n" +
+            "    \"state_key\": \"fg::baike::default::default\",\n" +
+            "    \"state\": \"default\"\n" +
+            "  },\n" +
             "  \"answer\": {\n" +
-            "    \"text\": \"不好意思，没有为您找到您想看的影片，为您推荐\\\"奔跑吧兄弟 第一季\\\"\"\n" +
+            "    \"text\": \"周杰伦（Jay Chou），1979年1月18日出生于台湾新北，中国台湾流行乐男歌手、音乐人、演员、导演、编剧、监制、企业家等。2000年发行首张个人专辑《Jay》。2001年发行的专辑《范特西》。2002年举行The One世界巡回演唱会。2003年登上美国《时代周刊》。2004年获世界音乐大奖中国区最畅销艺人奖。2005年凭借动作片《头文字D》获得台湾电影金马奖、香港电影金像奖最佳新人奖。2006年起连续三年获得世界音乐大奖中国区最畅销艺人奖。2007年自编自导的文艺片《不能说的秘密》获得台湾电影金马奖年度台湾杰出电影奖。2009年入选美国CNN评出的25位亚洲最具影响力的人物。2010年入选美国《Fast Company》评出的全球百大创意人物。2011年主演好莱坞电影《青蜂侠》。2014年发行专辑《哎呦，不错哦》。2016年推出专辑《周杰伦的床边故事》。他还涉足商业、设计等领域。2007年成立杰威尔有限公司。2011年担任华硕笔电设计师并入股香港文化传信集团。2017年6月，周杰伦妻子昆凌二胎产子。\"\n" +
             "  },\n" +
             "  \"dialog_stat\": \"dataInvalid\",\n" +
             "  \"save_history\": true,\n" +
-            "  \"sid\": \"atn00166083@ch11710db360446f2001\"\n" +
+            "  \"sid\": \"atn0037f058@ch67140db8df426f2001\"\n" +
             "}";
 
     @Override
@@ -955,6 +217,12 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     @Override
     public void initView() {
 
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
+                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService"));
+        // 绑定服务
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
         fragmentList = new ArrayList<>();
         fragmentList.add(new FragmentHelp_1());
         fragmentList.add(new FragmentHelp_Home_2());
@@ -973,17 +241,16 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
         mainActivity = this;
         HermesEventBus.getDefault().register(this);
 
-        RequestMessage requestMessage = new RequestMessage();
-        requestMessage.setMessage("1");
-        requestMessage.setService("SpeechStart");
-        HermesEventBus.getDefault().post(requestMessage);
+//        RequestMessage requestMessage = new RequestMessage();
+//        requestMessage.setMessage("1");
+//        requestMessage.setService("SpeechStart");
+//        HermesEventBus.getDefault().post(requestMessage);
 
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getMainAppEvent(SendMessage message) {
         Logger.e(message.getMessage() + " \n" + message.getService());
-
         String service = message.getService();
         String Message = message.getMessage();
 
@@ -1021,7 +288,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 
                 break;
 
-            case "wakeup_text":
+            case "wakeup_text":   //唤醒
 
                 userChatBean = new UserChatBean();
                 userChatBean.setText(getResources().getString(R.string.wakeup_text));
@@ -1159,7 +426,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     userChatBean.setText(calcBean.getText());
                     mData.add(userChatBean);
                     mData.add(calcBean);
-
                 }
                 break;
 
@@ -1205,6 +471,19 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                 }
                 break;
 
+            case  "video":  // 视频问答
+
+                Logger.e("VVVVV");
+//                VideoBean videoBean = JsonParser.parseResultVideoBean(Message);
+//                if(videoBean!=null && videoBean.getText()!=null && videoBean.getAnswer()!=null){
+//                    userChatBean = new UserChatBean();
+//                    userChatBean.setText(videoBean.getText());
+//                    mData.add(userChatBean);
+//                    robotCommandRequest = new RobotCommandRequest();
+//                    robotCommandRequest.setText(videoBean.getAnswer().getText());
+//                    mData.add(robotCommandRequest);
+//                }
+                break;
             case "flight":   //订票服务
 
                 FlightBean flightBean = JsonParser.parseResultFlightoBean(Message);
@@ -1329,4 +608,14 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
         HermesEventBus.getDefault().post(requestMessage);
 
     }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+
+        }
+    };
 }
