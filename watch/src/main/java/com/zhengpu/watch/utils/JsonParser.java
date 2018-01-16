@@ -235,7 +235,7 @@ public class JsonParser {
 
 
 
-    static RobotCommandBean parseResultRobotCommandBean(String json) {
+    public static RobotCommandBean parseResultRobotCommandBean(String json) {
         RobotCommandBean robotCommandBean = new RobotCommandBean();
         try {
             Type type = new TypeToken<RobotCommandBean>() {

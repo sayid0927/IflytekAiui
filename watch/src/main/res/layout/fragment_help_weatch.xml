@@ -18,7 +18,7 @@
             android:gravity="center"
             android:text="如何查询天气"
             android:textColor="@color/color_666666"
-            android:textSize="19sp" />
+            android:textSize="36sp" />
 
 
         <TextView
@@ -28,7 +28,7 @@
             android:gravity="center"
             android:text="深圳今天天气"
             android:textColor="@color/color_666666"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
 
 
         <TextView
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:text="明天天气怎么样"
             android:textColor="@color/color_666666"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
 
 
         <TextView
@@ -48,7 +48,7 @@
             android:gravity="center"
             android:text="今天室内外气温"
             android:textColor="@color/color_666666"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
     </LinearLayout>
 
 </RelativeLayout>

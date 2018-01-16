@@ -21,6 +21,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.RobotCommandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.StoryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
+import com.zhengpu.iflytekaiui.iflytekbean.WebSearchBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.CustomMusicBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfCustomBaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicBean;
@@ -317,6 +318,19 @@ public class JsonParser {
             e.printStackTrace();
         }
         return robotCommandBean;
+    }
+
+
+   public   static WebSearchBean parseResultWebSearchBean(String json) {
+        WebSearchBean webSearchBean = new WebSearchBean();
+        try {
+            Type type = new TypeToken<WebSearchBean>() {
+            }.getType();
+            webSearchBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return webSearchBean;
     }
 
 

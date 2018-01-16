@@ -37,6 +37,7 @@ import com.zhengpu.watch.iflytekbean.NewsBean;
 import com.zhengpu.watch.iflytekbean.OpenQABean;
 import com.zhengpu.watch.iflytekbean.PoetryBean;
 import com.zhengpu.watch.iflytekbean.R4Bean;
+import com.zhengpu.watch.iflytekbean.RobotCommandBean;
 import com.zhengpu.watch.iflytekbean.StoryBean;
 import com.zhengpu.watch.iflytekbean.UserChatBean;
 import com.zhengpu.watch.iflytekbean.VideoBean;
@@ -112,7 +113,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     private R4Bean r4Bean;
     private RobotCommandRequest robotCommandRequest;
 
-    private  String Message = "{\n" +
+    private String Message = "{\n" +
             "  \"data\": {\n" +
             "    \"result\": [\n" +
             "      {\n" +
@@ -459,9 +460,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 
                 break;
 
-            case  "video_1":  // 视频问答
+            case "video_1":  // 视频问答
                 VideoBean videoBean = JsonParser.parseResultVideoBean(Message);
-                if(videoBean!=null && videoBean.getText()!=null && videoBean.getAnswer()!=null ){
+                if (videoBean != null && videoBean.getText() != null && videoBean.getAnswer() != null) {
                     userChatBean = new UserChatBean();
                     userChatBean.setText(videoBean.getText());
                     mData.add(userChatBean);
@@ -471,9 +472,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                 }
                 break;
 
-            case  "video":  // 视频问答
+            case "video":  // 视频问答
 
-                Logger.e("VVVVV");
+
 //                VideoBean videoBean = JsonParser.parseResultVideoBean(Message);
 //                if(videoBean!=null && videoBean.getText()!=null && videoBean.getAnswer()!=null){
 //                    userChatBean = new UserChatBean();
@@ -483,6 +484,21 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 //                    robotCommandRequest.setText(videoBean.getAnswer().getText());
 //                    mData.add(robotCommandRequest);
 //                }
+                break;
+
+
+            case "OPENAPPTEST.RobotCommand":  // 机器人指令
+
+                RobotCommandBean robotCommandBean = JsonParser.parseResultRobotCommandBean(Message);
+                if(robotCommandBean!=null&& robotCommandBean.getText()!=null){
+                    String  value = robotCommandBean.getSemantic().get(0).getSlots().get(0).getNormValue();
+                    userChatBean = new UserChatBean();
+                    userChatBean.setText(robotCommandBean.getText());
+                    mData.add(userChatBean);
+                    robotCommandRequest = new RobotCommandRequest();
+                    robotCommandRequest.setText("正在" + value);
+                    mData.add(robotCommandRequest);
+                }
                 break;
             case "flight":   //订票服务
 
@@ -505,6 +521,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     }
                 }
                 break;
+
         }
 
         mAdapter.notifyDataSetChanged();

@@ -46,13 +46,10 @@ public class Qiyi {
                         parent = parent.getParent();
                     }
                 } else if (FindNodeInfosById(info, "com.qiyi.video:id/phoneSearchKeyword")) {
-                    Logger.e("FindNodeInfosById >>     11111111111111111");
                     PlayController playController = getPlayStart(context, 5);
-                    Logger.e("PlayController >>  "+playController.toString());
 
                     if(playController.isPlay.equals("true")){
                         // 模拟输入歌曲名
-                        Logger.e("videoName >>    "+videoName);
                         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
                         ClipData clipData = ClipData.newPlainText("scb", videoName);
                         clipboardManager.setPrimaryClip(clipData);

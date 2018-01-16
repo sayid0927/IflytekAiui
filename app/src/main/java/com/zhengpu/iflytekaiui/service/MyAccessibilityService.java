@@ -27,7 +27,7 @@ public class MyAccessibilityService extends AccessibilityService {
         //接收事件,如触发了通知栏变化、界面变化等
         String nowPackageName = event.getPackageName().toString();
         AccessibilityNodeInfo rootNode = this.getRootInActiveWindow();
-        Logger.e("nowPackageName >>   "+nowPackageName);
+
         switch (nowPackageName) {
             case "com.kugou.android":
                 playController = getPlayStart(MyAccessibilityService.this, 1);

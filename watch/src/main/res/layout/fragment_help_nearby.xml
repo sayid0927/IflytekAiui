@@ -18,7 +18,7 @@
             android:gravity="center"
             android:text="如何查找附近信息"
             android:textColor="@color/color_666666"
-            android:textSize="19sp" />
+            android:textSize="36sp" />
 
 
         <TextView
@@ -28,7 +28,7 @@
             android:gravity="center"
             android:text="附近有什么好吃的"
             android:textColor="@color/color_666666"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
 
 
         <TextView
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:text="附近有没有麦当劳"
             android:textColor="@color/color_666666"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
 
 
         <TextView
@@ -48,7 +48,7 @@
             android:gravity="center"
             android:text="附近有什么火锅店"
             android:textColor="@color/color_666666"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
     </LinearLayout>
 
 </RelativeLayout>

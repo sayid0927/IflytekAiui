@@ -18,7 +18,7 @@
             android:gravity="center"
             android:text="如何播放和查找音乐"
             android:textColor="@color/color_666666"
-            android:textSize="19sp" />
+            android:textSize="36sp" />
 
 
         <TextView
@@ -28,7 +28,7 @@
             android:gravity="center"
             android:text="播放青花瓷"
             android:textColor="@color/color_666666"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
 
 
         <TextView
@@ -38,7 +38,7 @@
             android:gravity="center"
             android:text="查找陈奕迅的歌曲"
             android:textColor="@color/color_666666"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
 
 
         <TextView
@@ -48,7 +48,7 @@
             android:gravity="center"
             android:text="我想听歌"
             android:textColor="@color/color_666666"
-            android:textSize="16sp" />
+            android:textSize="25sp" />
     </LinearLayout>
 
 </RelativeLayout>

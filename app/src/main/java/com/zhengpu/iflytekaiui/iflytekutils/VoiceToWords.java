@@ -31,6 +31,7 @@ import com.zhengpu.iflytekaiui.iflytekaction.RobotCommandAction;
 import com.zhengpu.iflytekaiui.iflytekaction.ShipingAction;
 import com.zhengpu.iflytekaiui.iflytekaction.StoryAction;
 import com.zhengpu.iflytekaiui.iflytekaction.WeatherAction;
+import com.zhengpu.iflytekaiui.iflytekaction.WebSearchAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CalcBean;
@@ -48,6 +49,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.RobotCommandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.StoryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
+import com.zhengpu.iflytekaiui.iflytekbean.WebSearchBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.CustomMusicBean;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
 
@@ -353,6 +355,14 @@ public class VoiceToWords {
                     NewsBean newsBean = JsonParser.parseResultNewsBean(text);
                     NewsAction newsAction = new NewsAction(service, newsBean, text, context);
                     newsAction.start();
+
+                    break;
+
+                case AppController.WEBSEARCH:   //  网络搜索
+
+                    WebSearchBean webSearchBean = JsonParser.parseResultWebSearchBean(text);
+                    WebSearchAction webSearchAction = new WebSearchAction(service,webSearchBean,text,context);
+                    webSearchAction.start();
 
                     break;
 

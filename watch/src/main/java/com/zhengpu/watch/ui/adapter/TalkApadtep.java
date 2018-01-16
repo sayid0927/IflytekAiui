@@ -58,6 +58,7 @@ public class TalkApadtep extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
         addItemType(AppContract.FlightBean, R.layout.item_filght_chat);
         addItemType(AppContract.BaikeBean, R.layout.item_baike_chat);
         addItemType(AppContract.VideoBean, R.layout.item_calc_chat);
+
     }
 
 

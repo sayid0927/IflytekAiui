@@ -29,10 +29,15 @@ public class AppController {
     public static final String POETRY = "poetry";       // 诗词对答
     public static final String STORY = "story";          // 故事
     public static final String VIDEO = "video";   // 视频
+    public static final String WEBSEARCH = "websearch";   // 网络搜索
+
     public static final String VIDEO_1 = "video_1";   // 多轮视频对话
     public static final String OPENAPPTEST_MUSIC_DEMO = "OPENAPPTEST.music_demo";
     public static final String OPENAPPTEST_CUSTOM_BAIKE = "OPENAPPTEST.custom_baike";     //自定义百科
     public static final String OPENAPPTEST_ROBOTCOMMAND = "OPENAPPTEST.RobotCommand";// 机器人指令
+
+
+
 
     public static final String WEATHER = "weather";
     public static final String POINT = "point";
@@ -96,8 +101,5 @@ public class AppController {
     public static final  String AutoCharge ="充电";
     public static final  String AutoUpdata ="升级";
     public static final  String AutoReset ="复位";
-
-
-
 
 }
