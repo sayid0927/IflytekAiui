@@ -57,7 +57,6 @@ public class WebSearchAction {
                     url = "https://s.m.taobao.com/h5?q=" + EncodeUtils.urlEncode(keyword);
                     intent.setData(Uri.parse(url));
                     context.startActivity(intent);
-
                     break;
                 case "baidu":
 
@@ -66,20 +65,28 @@ public class WebSearchAction {
                     url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keyword);
                     intent.setData(Uri.parse(url));
                     context.startActivity(intent);
-
                     break;
+                    
                 case "google":
-
-
+                    intent = new Intent(Intent.ACTION_VIEW);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keyword);
+                    intent.setData(Uri.parse(url));
+                    context.startActivity(intent);
                     break;
                 case "default":
 
-
+                    intent = new Intent(Intent.ACTION_VIEW);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keyword);
+                    intent.setData(Uri.parse(url));
+                    context.startActivity(intent);
                     break;
                 default:
                     R4Action r4Action = new R4Action(context, request);
                     r4Action.start();
                     break;
+
             }
         } else {
             R4Action r4Action = new R4Action(context, request);

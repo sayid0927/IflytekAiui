@@ -83,7 +83,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="50dp"
             android:layout_marginStart="50dp"
-            android:src="@drawable/phone_n"
+            android:background="@drawable/click_phone_but"
             tools:ignore="RtlHardcoded" />
 
 
@@ -121,7 +121,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="50dp"
             android:layout_marginRight="50dp"
-            android:src="@drawable/help_n"
+            android:background="@drawable/click_help_but"
             tools:ignore="RtlHardcoded" />
 
         <ImageView
@@ -133,7 +133,7 @@
             android:layout_marginRight="22dp"
             android:layout_toLeftOf="@+id/iv_help"
             android:layout_toStartOf="@+id/iv_help"
-            android:src="@drawable/video_n"
+            android:background="@drawable/click_video_but"
             tools:ignore="RtlHardcoded" />
 
     </RelativeLayout>

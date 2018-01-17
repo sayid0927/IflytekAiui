@@ -425,7 +425,7 @@ public class VoiceToWords {
                     }
                     break;
 
-                case "weather":   //  天气情况的查询。
+                case AppController.WEATHER:   //  天气情况的查询。
 
                     WeatherBean weatherBean = JsonParser.parseResultWeatherBean(text);
                     WeatherAction weatherAction = new WeatherAction(service, weatherBean, text, context);
