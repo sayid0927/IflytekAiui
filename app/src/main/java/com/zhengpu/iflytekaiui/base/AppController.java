@@ -37,8 +37,6 @@ public class AppController {
     public static final String OPENAPPTEST_ROBOTCOMMAND = "OPENAPPTEST.RobotCommand";// 机器人指令
 
 
-
-
     public static final String WEATHER = "weather";
     public static final String POINT = "point";
     public static final String R4_0 = "r4_0";

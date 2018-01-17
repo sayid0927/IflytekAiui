@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_help_2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:id="@+id/fragment_help_2"
     android:orientation="vertical">
 
 
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="你还可以这样对我说"
-            android:textColor="@color/color_0082ff"
+            android:textColor="@color/color_666666"
             android:textSize="36sp" />
 
     </LinearLayout>

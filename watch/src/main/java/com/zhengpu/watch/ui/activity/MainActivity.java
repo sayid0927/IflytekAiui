@@ -113,86 +113,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     private R4Bean r4Bean;
     private RobotCommandRequest robotCommandRequest;
 
-    private String Message = "{\n" +
-            "  \"data\": {\n" +
-            "    \"result\": [\n" +
-            "      {\n" +
-            "        \"category\": [\n" +
-            "          \"人物\",\n" +
-            "          \"歌手\"\n" +
-            "        ],\n" +
-            "        \"img\": \"http://a2.att.hudong.com/70/13/20300543224648149795136240204_140.jpg\",\n" +
-            "        \"sectionList\": [\n" +
-            "          {\n" +
-            "            \"sectionTitle\": \"早年经历\",\n" +
-            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#1\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"sectionTitle\": \"演艺经历\",\n" +
-            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#3\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"sectionTitle\": \"个人生活\",\n" +
-            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#5\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"sectionTitle\": \"主要作品\",\n" +
-            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#15\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"sectionTitle\": \"社会活动\",\n" +
-            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#35\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"sectionTitle\": \"获奖记录\",\n" +
-            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#41\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"sectionTitle\": \"人物语录\",\n" +
-            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#47\"\n" +
-            "          },\n" +
-            "          {\n" +
-            "            \"sectionTitle\": \"人物评价\",\n" +
-            "            \"sectionUrl\": \"http://www.baike.com/gwiki/周杰伦&fr=xunfei#49\"\n" +
-            "          }\n" +
-            "        ],\n" +
-            "        \"summary\": \"周杰伦（Jay Chou），1979年1月18日出生于台湾新北，中国台湾流行乐男歌手、音乐人、演员、导演、编剧、监制、企业家等。2000年发行首张个人专辑《Jay》。2001年发行的专辑《范特西》。2002年举行The One世界巡回演唱会。2003年登上美国《时代周刊》。2004年获世界音乐大奖中国区最畅销艺人奖。2005年凭借动作片《头文字D》获得台湾电影金马奖、香港电影金像奖最佳新人奖。2006年起连续三年获得世界音乐大奖中国区最畅销艺人奖。2007年自编自导的文艺片《不能说的秘密》获得台湾电影金马奖年度台湾杰出电影奖。2009年入选美国CNN评出的25位亚洲最具影响力的人物。2010年入选美国《Fast Company》评出的全球百大创意人物。2011年主演好莱坞电影《青蜂侠》。2014年发行专辑《哎呦，不错哦》。2016年推出专辑《周杰伦的床边故事》。他还涉足商业、设计等领域。2007年成立杰威尔有限公司。2011年担任华硕笔电设计师并入股香港文化传信集团。2017年6月，周杰伦妻子昆凌二胎产子。\",\n" +
-            "        \"title\": \"周杰伦\",\n" +
-            "        \"url\": \"http://www.baike.com/gwiki/周杰伦\"\n" +
-            "      }\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  \"rc\": 0,\n" +
-            "  \"semantic\": [\n" +
-            "    {\n" +
-            "      \"intent\": \"QUERY\",\n" +
-            "      \"slots\": [\n" +
-            "        {\n" +
-            "          \"name\": \"keyword\",\n" +
-            "          \"value\": \"周杰伦\"\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    }\n" +
-            "  ],\n" +
-            "  \"service\": \"baike\",\n" +
-            "  \"state\": {\n" +
-            "    \"fg::baike::default::default\": {\n" +
-            "      \"state\": \"default\"\n" +
-            "    }\n" +
-            "  },\n" +
-            "  \"text\": \"周杰伦百科\",\n" +
-            "  \"uuid\": \"atn0037f058@ch67140db8df426f2001\",\n" +
-            "  \"used_state\": {\n" +
-            "    \"state_key\": \"fg::baike::default::default\",\n" +
-            "    \"state\": \"default\"\n" +
-            "  },\n" +
-            "  \"answer\": {\n" +
-            "    \"text\": \"周杰伦（Jay Chou），1979年1月18日出生于台湾新北，中国台湾流行乐男歌手、音乐人、演员、导演、编剧、监制、企业家等。2000年发行首张个人专辑《Jay》。2001年发行的专辑《范特西》。2002年举行The One世界巡回演唱会。2003年登上美国《时代周刊》。2004年获世界音乐大奖中国区最畅销艺人奖。2005年凭借动作片《头文字D》获得台湾电影金马奖、香港电影金像奖最佳新人奖。2006年起连续三年获得世界音乐大奖中国区最畅销艺人奖。2007年自编自导的文艺片《不能说的秘密》获得台湾电影金马奖年度台湾杰出电影奖。2009年入选美国CNN评出的25位亚洲最具影响力的人物。2010年入选美国《Fast Company》评出的全球百大创意人物。2011年主演好莱坞电影《青蜂侠》。2014年发行专辑《哎呦，不错哦》。2016年推出专辑《周杰伦的床边故事》。他还涉足商业、设计等领域。2007年成立杰威尔有限公司。2011年担任华硕笔电设计师并入股香港文化传信集团。2017年6月，周杰伦妻子昆凌二胎产子。\"\n" +
-            "  },\n" +
-            "  \"dialog_stat\": \"dataInvalid\",\n" +
-            "  \"save_history\": true,\n" +
-            "  \"sid\": \"atn0037f058@ch67140db8df426f2001\"\n" +
-            "}";
+
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -474,7 +395,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 
             case "video":  // 视频问答
 
-
 //                VideoBean videoBean = JsonParser.parseResultVideoBean(Message);
 //                if(videoBean!=null && videoBean.getText()!=null && videoBean.getAnswer()!=null){
 //                    userChatBean = new UserChatBean();
@@ -500,6 +420,15 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     mData.add(robotCommandRequest);
                 }
                 break;
+
+            case "showLowVoice_text":
+
+                robotCommandRequest = new RobotCommandRequest();
+                robotCommandRequest.setText(Message);
+                mData.add(robotCommandRequest);
+
+                break;
+
             case "flight":   //订票服务
 
                 FlightBean flightBean = JsonParser.parseResultFlightoBean(Message);

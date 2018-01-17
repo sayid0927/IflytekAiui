@@ -108,10 +108,9 @@ public class TalkApadtep extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
             case AppContract.CustomBaikeBean:   //自定义百科
 
                 CustomBaikeBean customBaikeBean = (CustomBaikeBean) item;
-//                helper.setText(R.id.chatlist_text_other, customBaikeBean.getAnswer().getText());
+//            helper.setText(R.id.chatlist_text_other, customBaikeBean.getAnswer().getText());
 
                 break;
-
 
             case AppContract.NewsBean:  //新闻问答
 

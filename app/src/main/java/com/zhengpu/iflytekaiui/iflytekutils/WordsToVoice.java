@@ -201,11 +201,10 @@ public class WordsToVoice {
             if (error == null) {
 //                Logger.e("语音合成回调监听-----------"+"播放完成");
                 iGetWordToVoice.SpeechEnd(serviceData);
-
             } else if (error != null) {
                 //showTip(error.getPlainDescription(true));
                 Logger.e("语音合成回调监听-------错误----"+error.getPlainDescription(true));
-                iGetWordToVoice.SpeechError();
+                iGetWordToVoice.SpeechError(error);
             }
         }
 

@@ -18,6 +18,19 @@ android {
         }
     }
 
+    signingConfigs {
+        release{
+            storeFile file("IflytekAiui.jks")
+            storePassword "000000"
+            keyAlias "iflytekAiui"
+            keyPassword "000000"
+            v2SigningEnabled false
+        }
+
+        debug{
+        }
+    }
+
 }
 
 dependencies {
