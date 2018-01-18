@@ -1,10 +1,12 @@
 package com.zhengpu.watch.base;
 
 import android.annotation.TargetApi;
-import android.app.Application;
 import android.os.Build;
 
 import com.bugtags.library.Bugtags;
+import com.commonsdk.application.BaseApplication;
+import com.commonsdk.zeunpro.appupdatecheck.AppUpdateCheck;
+import com.commonsdk.zeunpro.data.ZpData;
 import com.zhengpu.watch.component.AppComponent;
 import com.zhengpu.watch.component.DaggerAppComponent;
 import com.zhengpu.watch.module.ApiModule;
@@ -18,9 +20,9 @@ import static com.bugtags.library.Bugtags.BTGInvocationEventNone;
 
 @SuppressWarnings("unused")
 
-public class BaseApplication extends Application {
+public class MyApplication extends BaseApplication {
 
-    public static BaseApplication baseApplication;
+    public static MyApplication baseApplication;
 
     private static AppComponent appComponent;
 
@@ -37,6 +39,8 @@ public class BaseApplication extends Application {
         AppUtils.init(this);
         Bugtags.start("beb9b4f14e72470fe0ad088b715ec421", this, BTGInvocationEventNone);
 
+        AppUpdateCheck updateCheck = new AppUpdateCheck(getApplicationContext(), ZpData.IP + AppUpdateCheck.APPUPDATE_URL);
+        updateCheck.checkAppUpdate(AppUpdateCheck.ALWAYS);
     }
 
 
@@ -56,7 +60,7 @@ public class BaseApplication extends Application {
      * @return
      */
 
-    public static BaseApplication getBaseApplication() {
+    public static MyApplication getBaseApplication() {
         return baseApplication;
     }
 

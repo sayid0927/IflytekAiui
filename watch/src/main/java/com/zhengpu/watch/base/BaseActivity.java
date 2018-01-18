@@ -24,7 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
         setContentView(getLayoutId());
         ButterKnife.bind(this);
-        setupActivityComponent(BaseApplication.getBaseApplication().getAppComponent());
+        setupActivityComponent(MyApplication.getBaseApplication().getAppComponent());
         attachView();
         initView();
 

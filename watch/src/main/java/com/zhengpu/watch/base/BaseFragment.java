@@ -40,7 +40,7 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        setupActivityComponent(BaseApplication.getBaseApplication().getAppComponent());
+        setupActivityComponent(MyApplication.getBaseApplication().getAppComponent());
 
         attachView();
 

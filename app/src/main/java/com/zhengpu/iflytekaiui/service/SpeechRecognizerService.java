@@ -253,7 +253,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void SpeechError(SpeechError error) {
       int code =  error.getErrorCode();
       if(code==20001){
-          if(!speechDialog.isShowing()){
+          if(speechDialog!=null && !speechDialog.isShowing()){
               speechDialog.show();
           }
       }
@@ -351,7 +351,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void onDataReceivedSuccess(byte[] bytes) {
 
         String value = ValueUtil.getInstance().bytesToHexStr(bytes);
-        com.orhanobut.logger.Logger.e("心跳       >>>   " + value);
         ReceivedSerialPortDataAction receivedSerialPortDataAction = new ReceivedSerialPortDataAction(value.split(" "), this);
         receivedSerialPortDataAction.start();
 

@@ -1,1 +1,7 @@
 include ':app', ':app2', ':watch'
+
+
+
+include ':CommonSDK'
+project(':CommonSDK').projectDir = new File('../CommonSDK/');
+include(':CommonSDK:common')

@@ -3,10 +3,12 @@ apply plugin: 'com.bugtags.library.plugin'
 //apply plugin: 'walle'
 
 bugtags {
+
     appKey "beb9b4f14e72470fe0ad088b715ec421"
     appSecret "6b657d55cf8d727e1aec0a6ab700be8d"
     mappingUploadEnabled true
     trackingNetworkEnabled true
+
 }
 
 android {
