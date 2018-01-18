@@ -19,8 +19,8 @@ android {
         applicationId "com.zhengpu.watch"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 1
-        versionName "0.1"  //版本指定奇数
+        versionCode 3//版本指定奇数
+        versionName "1.0"  //版本指定奇数
 
     }
 
@@ -88,5 +88,5 @@ dependencies {
     // 多dex 打包的类库
     compile 'com.android.support:multidex:1.0.1'
 
-    compile project(path: ':CommonSDK:common')
+//    compile project(path: ':CommonSDK:common')
 }

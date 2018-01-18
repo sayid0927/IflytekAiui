@@ -17,6 +17,9 @@ package com.zhengpu.watch.api;
 
 
 import com.zhengpu.watch.base.Constant;
+import com.zhengpu.watch.iflytekbean.request.AppUpdateModel;
+
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -48,9 +51,15 @@ public class Api {
         return instance;
     }
 
-//    public Observable<ZhiHuNewsBean> getDailyNews() {
-//        return service.getDailyNews();
-//    }
+    public Observable<AppUpdateModel> Fetch_Apk_Update_Info(Map <String,String > map) {
+        return service.Fetch_Apk_Update_Info(map);
+    }
+
+    public Observable<Response<ResponseBody>> Fetch_Apk_Update_Path(String url) {
+        return service.Fetch_Apk_Update_Path(url);
+    }
+
+
 //
 //
 //    public Observable<WXItemBean> getWXHot(int num, int page) {

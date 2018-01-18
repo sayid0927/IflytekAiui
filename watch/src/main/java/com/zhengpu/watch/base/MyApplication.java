@@ -1,12 +1,14 @@
 package com.zhengpu.watch.base;
 
 import android.annotation.TargetApi;
+import android.app.Application;
 import android.os.Build;
 
+import com.blankj.utilcode.utils.Utils;
 import com.bugtags.library.Bugtags;
-import com.commonsdk.application.BaseApplication;
-import com.commonsdk.zeunpro.appupdatecheck.AppUpdateCheck;
-import com.commonsdk.zeunpro.data.ZpData;
+//import com.commonsdk.application.BaseApplication;
+//import com.commonsdk.zeunpro.appupdatecheck.AppUpdateCheck;
+//import com.commonsdk.zeunpro.data.ZpData;
 import com.zhengpu.watch.component.AppComponent;
 import com.zhengpu.watch.component.DaggerAppComponent;
 import com.zhengpu.watch.module.ApiModule;
@@ -20,7 +22,7 @@ import static com.bugtags.library.Bugtags.BTGInvocationEventNone;
 
 @SuppressWarnings("unused")
 
-public class MyApplication extends BaseApplication {
+public class MyApplication extends Application {
 
     public static MyApplication baseApplication;
 
@@ -37,10 +39,12 @@ public class MyApplication extends BaseApplication {
         HermesEventBus.getDefault().connectApp(this, "com.zhengpu.iflytekaiui");
         PreferUtil.getInstance().init(this);
         AppUtils.init(this);
+        Utils.init(this);
         Bugtags.start("beb9b4f14e72470fe0ad088b715ec421", this, BTGInvocationEventNone);
 
-        AppUpdateCheck updateCheck = new AppUpdateCheck(getApplicationContext(), ZpData.IP + AppUpdateCheck.APPUPDATE_URL);
-        updateCheck.checkAppUpdate(AppUpdateCheck.ALWAYS);
+//        AppUpdateCheck updateCheck = new AppUpdateCheck(getApplicationContext(), ZpData.IP + AppUpdateCheck.APPUPDATE_URL);
+//        updateCheck.checkAppUpdate(AppUpdateCheck.ALWAYS);
+
     }
 
 

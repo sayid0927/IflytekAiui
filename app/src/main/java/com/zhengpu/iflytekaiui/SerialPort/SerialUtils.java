@@ -70,8 +70,6 @@ public class SerialUtils implements OnOpenSerialPortListener {
 
                            String value = ValueUtil.getInstance().bytesToHexStr(bytes);
                            Logger.e("发送成功 >>>   " + value);
-
-
                            // 发送成功
                            if(serialPortListener!=null )
                                serialPortListener.onDataSentSuccess();

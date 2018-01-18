@@ -22,7 +22,7 @@ public class Constant {
     //需要APIKEY请去 http://www.tianapi.com/#wxnew 申请,复用会减少访问可用次数。还有很多别的接口大家可以研究。
 
     public static final String WECHAT_KEY_API = "e6d6ec3ba2f9d7a3051a6c09f0524738";
-
+    public static final String ZP_BASE_URL = "http://192.168.35.177:8080/";
 
     public static final String FILEPATH = "temp";
 
@@ -38,9 +38,10 @@ public class Constant {
      */
     public final static String PATH_TEMP = "zhengpu";
 
+
     /**
-     * 歌词目录
+     * app检测更新的路径
      */
-    public final static String PATH_LYRICS = PATH_TEMP + File.separator + "lyrics";
+    public static final String APPUPDATE_URL = "zeunpro/api/apkupdate.do";
 
 }

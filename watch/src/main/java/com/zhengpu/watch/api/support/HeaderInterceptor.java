@@ -51,15 +51,16 @@ public final class HeaderInterceptor implements Interceptor {
                 //匹配获得新的BaseUrl
                 String headerValue = headerValues.get(0);
                 HttpUrl newBaseUrl = null;
-                if ("zhihu".equals(headerValue)) {
-                    newBaseUrl = HttpUrl.parse(Constant.ZHIHU_BASE_URL);
-                } else if ("tianapi".equals(headerValue)) {
-                    newBaseUrl = HttpUrl.parse(Constant.TIANAPI_BASE_URL);
-                } else  if("kugou".equals(headerValue)){
-                    newBaseUrl = HttpUrl.parse(Constant.KUGOU_BASE_URL);
-                }else  if("KuGouSongInfo".equals(headerValue)){
-                    newBaseUrl = HttpUrl.parse(Constant.KUGOU_SONG_INFO_BASE_URL);
+                if ("zp".equals(headerValue)) {
+                    newBaseUrl = HttpUrl.parse(Constant.ZP_BASE_URL);
                 }
+//                else if ("tianapi".equals(headerValue)) {
+//                    newBaseUrl = HttpUrl.parse(Constant.TIANAPI_BASE_URL);
+//                } else  if("kugou".equals(headerValue)){
+//                    newBaseUrl = HttpUrl.parse(Constant.KUGOU_BASE_URL);
+//                }else  if("KuGouSongInfo".equals(headerValue)){
+//                    newBaseUrl = HttpUrl.parse(Constant.KUGOU_SONG_INFO_BASE_URL);
+//                }
                 //从request中获取原有的HttpUrl实例oldHttpUrl
                 HttpUrl oldHttpUrl = request.url();
                 //重建新的HttpUrl，修改需要修改的url部分

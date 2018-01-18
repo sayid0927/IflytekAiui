@@ -67,7 +67,7 @@
         <service
             android:name=".service.SpeechRecognizerService"
             android:exported="true"
-            android:process=":cccc">
+            android:process=":SpeechRecognizerService">
 
             <intent-filter>
                 <action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />

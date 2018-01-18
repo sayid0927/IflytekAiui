@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
@@ -16,6 +17,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.utils.AppUtils;
+import com.blankj.utilcode.utils.EncodeUtils;
+import com.blankj.utilcode.utils.EncryptUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.orhanobut.logger.Logger;
@@ -42,6 +46,7 @@ import com.zhengpu.watch.iflytekbean.StoryBean;
 import com.zhengpu.watch.iflytekbean.UserChatBean;
 import com.zhengpu.watch.iflytekbean.VideoBean;
 import com.zhengpu.watch.iflytekbean.WeatherBean;
+import com.zhengpu.watch.iflytekbean.request.AppUpdateModel;
 import com.zhengpu.watch.iflytekbean.request.RobotCommandRequest;
 import com.zhengpu.watch.presenter.contract.MainContract;
 import com.zhengpu.watch.presenter.impl.MainActivityPresenter;
@@ -51,12 +56,16 @@ import com.zhengpu.watch.ui.adapter.TalkNewsItemLiserten;
 import com.zhengpu.watch.ui.fragment.FragmentHelp_1;
 import com.zhengpu.watch.ui.fragment.FragmentHelp_Home_2;
 import com.zhengpu.watch.ui.view.HelpViewPager;
+import com.zhengpu.watch.utils.DesBase64Util;
 import com.zhengpu.watch.utils.JsonParser;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -114,6 +123,22 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     private RobotCommandRequest robotCommandRequest;
 
 
+    /**
+     * 检测更新时，发送的key
+     */
+    private static final String APPPACKAGENAME = "packagename";
+    /**
+     * 检测更新时，发送的key
+     */
+    private static final String APPVERSIONCODE = "versioncode";
+    /**
+     * 检测更新时，发送的key
+     */
+    private static final String APPVERSIONNAME = "version";
+    private static final String APPTYPE = "apptype";
+    private static final String CHANNEL_ID = "channel_id";
+    public static final String DES_KEY = "leiyonyj";
+    public static final String DATA = "data";
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -168,6 +193,19 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 //        requestMessage.setService("SpeechStart");
 //        HermesEventBus.getDefault().post(requestMessage);
 
+//        HashMap<String, String> map = new HashMap<>();
+//        JSONObject json = new JSONObject();
+//        try {
+//            json.put(APPPACKAGENAME, getPackageName());
+//            json.put(APPVERSIONNAME,String.valueOf(AppUtils.getAppVersionCode(this)));
+//            json.put(CHANNEL_ID, "");
+//            json.put(APPTYPE, "0");
+//            map.put(DATA, DesBase64Util.encryptDES(json.toString(), DES_KEY));
+//        }catch (Exception e ){
+//            e.toString();
+//        }
+//        mPresenter.Apk_Update(map);
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -175,7 +213,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
         Logger.e(message.getMessage() + " \n" + message.getService());
         String service = message.getService();
         String Message = message.getMessage();
-
 
         isFist = false;
         isClickHelp = true;
@@ -421,7 +458,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                 }
                 break;
 
-            case "showLowVoice_text":
+            case "showLowVoice_text":  //机器人 去休息
 
                 robotCommandRequest = new RobotCommandRequest();
                 robotCommandRequest.setText(Message);
@@ -564,4 +601,24 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 
         }
     };
+
+//
+//    @Override
+//    public void Apk_Update_Info(AppUpdateModel appUpdateModel) {
+//        int versioncode = Integer.parseInt(appUpdateModel.getVersioncode());
+//        if (AppUtils.getAppVersionCode(this)!= versioncode) {
+//            //升级App
+//          mPresenter.Apk_Update_Path(appUpdateModel.getApk_download_path());
+//        }
+//    }
+//
+//    @Override
+//    public void Apk_Update_Path(File file) {
+//        Uri uri = Uri.fromFile(file);
+//        Intent install = new Intent(Intent.ACTION_VIEW);
+//        install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        install.setDataAndType(uri, "application/vnd.android.package-archive");
+//        this.startActivity(install);
+//    }
+
 }

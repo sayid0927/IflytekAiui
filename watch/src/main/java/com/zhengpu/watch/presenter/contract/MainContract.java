@@ -20,11 +20,12 @@ import com.zhengpu.watch.base.BaseContract;
 public interface MainContract {
 
     interface View extends BaseContract.BaseView {
-
+//        void Apk_Update_Info(AppUpdateModel appUpdateModel);
+//        void Apk_Update_Path(File file);
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
-
-
+//        void Apk_Update(Map<String ,String> map);
+//        void Apk_Update_Path(String url);
     }
 }
