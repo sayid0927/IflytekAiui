@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
         android:layout_marginStart="23dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/aiui" />
@@ -25,14 +24,14 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/chatlist_image_other"
         android:padding="10dp"
-        android:text=""
+        android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:angle="5dp"
         app:arrowCenter="true"
         app:arrowHeight="10dp"
         app:arrowLocation="left"
-        app:arrowPosition="160dp"
+        app:arrowPosition="30dp"
         app:arrowWidth="15dp"
         app:bubbleColor="@color/white"
         app:strokeColor="#CCCCCC" />
@@ -41,21 +40,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/chatlist_text_other"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="120dp"
         android:layout_marginTop="30dp"
         android:orientation="horizontal"
+        android:background="@drawable/raule_bra"
         android:gravity="center">
 
-
         <TextView
-            android:text="百度百科"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_gravity="center"
+            android:gravity="center"
+            android:text="百度百科"
+            android:padding="2dp"
             android:textColor="@color/color_4d4d4d"
             android:textSize="10sp" />
 
+
+        <ImageView
+            android:paddingLeft="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baidu"/>
 
     </LinearLayout>
 

@@ -140,6 +140,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     public static final String DES_KEY = "leiyonyj";
     public static final String DATA = "data";
 
+
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
         DaggerMainComponent.builder().appComponent(appComponent).build().inject(this);
@@ -164,11 +165,29 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     @Override
     public void initView() {
 
-        Intent intent = new Intent();
-        intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
-                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService"));
-        // 绑定服务
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        byte[] bytes = new byte[]{0x5A, 0x50, 0x17, 0x30, 0x03, 0x50, 0x20, 0x13, 0x4A
+                , 0x21, (byte) 0xAE, 0x00, (byte) 0x9b, 0x05, 0x24, 0x0A, 0x22, 0x00, 0x48, 0x0A, 0x7A, 0x00, 0x0A, 0x00
+                , 0x44, 0x00, (byte) 0xD9, 0x0D, 0x0A}; //复位
+
+
+        if (bytes[0] == 0x5A & bytes[1] == 0x50) {
+            for (int i = 1; i < bytes.length; i++) {
+                Logger.e(String.valueOf(bytes[i]&0xff));
+
+//                String tt = String.valueOf(bytes[4 * i] & 0xFF);
+//                String  gg = String.valueOf(bytes[4 * i + 1] & 0xFF);
+//                Logger.e("tt >>"+tt+"\n"+ "gg>>> "+gg);
+            }
+        } else {
+        }
+
+
+//        Intent intent = new Intent();
+//        intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
+//                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService"));
+//        // 绑定服务
+//        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
         fragmentList = new ArrayList<>();
         fragmentList.add(new FragmentHelp_1());
@@ -187,6 +206,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 //    UmengUtil.onEvent(MainActivity.this, "MainActivity", null);
         mainActivity = this;
         HermesEventBus.getDefault().register(this);
+
 
 //        RequestMessage requestMessage = new RequestMessage();
 //        requestMessage.setMessage("1");
@@ -443,12 +463,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 //                }
                 break;
 
-
             case "OPENAPPTEST.RobotCommand":  // 机器人指令
 
                 RobotCommandBean robotCommandBean = JsonParser.parseResultRobotCommandBean(Message);
-                if(robotCommandBean!=null&& robotCommandBean.getText()!=null){
-                    String  value = robotCommandBean.getSemantic().get(0).getSlots().get(0).getNormValue();
+                if (robotCommandBean != null && robotCommandBean.getText() != null) {
+                    String value = robotCommandBean.getSemantic().get(0).getSlots().get(0).getNormValue();
                     userChatBean = new UserChatBean();
                     userChatBean.setText(robotCommandBean.getText());
                     mData.add(userChatBean);

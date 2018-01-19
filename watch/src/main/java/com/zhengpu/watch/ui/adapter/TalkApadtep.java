@@ -1,10 +1,13 @@
 package com.zhengpu.watch.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.blankj.utilcode.utils.EncodeUtils;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -98,11 +101,23 @@ public class TalkApadtep extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
                 break;
 
             case AppContract.FlightBean:   //订票服务
+                helper.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                      Intent    intent = new Intent(Intent.ACTION_VIEW);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        String  url = "https://m.ctrip.com/html5" ;
+                        intent.setData(Uri.parse(url));
+                        context.startActivity(intent);
+                    }
+                });
 
                 break;
             case AppContract.BaikeBean:   //互动百科词条查询
+
                 BaikeBean baikeBean = (BaikeBean) item;
                 helper.setText(R.id.chatlist_text_other, baikeBean.getAnswer().getText());
+
                 break;
 
             case AppContract.CustomBaikeBean:   //自定义百科

@@ -1,5 +1,6 @@
 package com.zhengpu.watch.base;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -17,9 +18,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-//        }
+        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }//设置模屏
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
         setContentView(getLayoutId());
@@ -35,15 +37,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onResume();
         Bugtags.onResume(this);
         MobclickAgent.onResume(this);
-
-
     }
 
     public void onPause() {
         super.onPause();
         Bugtags.onPause(this);
         MobclickAgent.onPause(this);
-
     }
 
 
@@ -69,4 +68,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void detachView();
 
     public abstract void initView();
+
 }

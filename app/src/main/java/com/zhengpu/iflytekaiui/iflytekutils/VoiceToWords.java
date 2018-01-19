@@ -304,13 +304,13 @@ public class VoiceToWords {
 
                     break;
 
-                case AppController.OPENAPPTEST_CUSTOM_BAIKE: // 自定义百科 对人名 地名进行百科
-
-                    CustomBaikeBean customBaikeBean = JsonParser.parseResultCustomBaikeBean(text);
-                    CustomBaikeAction customBaikeAction = new CustomBaikeAction(service, customBaikeBean, text, context);
-                    customBaikeAction.start();
-
-                    break;
+//                case AppController.OPENAPPTEST_CUSTOM_BAIKE: // 自定义百科 对人名 地名进行百科
+//
+//                    CustomBaikeBean customBaikeBean = JsonParser.parseResultCustomBaikeBean(text);
+//                    CustomBaikeAction customBaikeAction = new CustomBaikeAction(service, customBaikeBean, text, context);
+//                    customBaikeAction.start();
+//
+//                    break;
                 case AppController.CALC:     //  数值计算问答
 
                     CalcBean calcBean = JsonParser.parseResultCalc(text);

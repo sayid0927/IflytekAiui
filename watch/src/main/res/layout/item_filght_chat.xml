@@ -60,9 +60,10 @@
                 android:text="@string/filght_text" />
 
             <ImageView
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
+                android:layout_marginLeft="35dp"
                 android:src="@drawable/filght" />
 
         </LinearLayout>

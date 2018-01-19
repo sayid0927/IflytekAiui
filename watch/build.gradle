@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.bugtags.library.plugin'
-
+//apply plugin: 'walle'
 
 bugtags {
     appKey "beb9b4f14e72470fe0ad088b715ec421"
@@ -9,11 +9,17 @@ bugtags {
     trackingNetworkEnabled true
 }
 
-
 android {
     compileSdkVersion 25
     aaptOptions.cruncherEnabled =false
     aaptOptions.useNewCruncher =false
+
+
+//    //recommend Tinker相关配置
+//    dexOptions {
+//        jumboMode = true
+//    }
+
 
     defaultConfig {
         applicationId "com.zhengpu.watch"
@@ -22,13 +28,26 @@ android {
         versionCode 3//版本指定奇数
         versionName "1.0"  //版本指定奇数
 
-    }
+//        //Tinker相关配置start======================================
+//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        /**
+//         * you can use multiDex and install it in your ApplicationLifeCycle implement
+//         */
+//        multiDexEnabled true
+//        /**
+//         * buildConfig can change during patch!
+//         * we can use the newly value when patch
+//         */
+//        buildConfigField "String", "MESSAGE", "\"I am the base apk\""
+////        buildConfigField "String", "MESSAGE", "\"I am the patch apk\""
+//        /**
+//         * client version would update with patch
+//         * so we can get the newly git version easily!
+//         */
+//        buildConfigField "String", "TINKER_ID", "\"${getTinkerIdValue()}\""
+//        buildConfigField "String", "PLATFORM",  "\"all\""
+//        //Tinker相关配置end======================================
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
     }
 
     signingConfigs {
@@ -37,10 +56,24 @@ android {
             storePassword "000000"
             keyAlias "iflytekAiui"
             keyPassword "000000"
-            v2SigningEnabled false
         }
-
         debug{
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            signingConfig signingConfigs.release //设置签名
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            signingConfig signingConfigs.debug
         }
     }
 
@@ -83,10 +116,18 @@ dependencies {
     compile 'com.meituan.android.walle:library:1.1.4'
     compile 'me.weyye.hipermission:library:1.0.7'
 
-
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.0'
-    // 多dex 打包的类库
-    compile 'com.android.support:multidex:1.0.1'
+
+
+//    // 多dex 打包的类库
+//    compile 'com.android.support:multidex:1.0.1'
+//
+//    compile 'com.meituan.android.walle:library:1.1.6'
+//
+//    //tinker的核心库
+//    compile("com.tencent.tinker:tinker-android-lib:${TINKER_VERSION}") { changing = true }
+//    //用于生成application类
+//    provided("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
 
 //    compile project(path: ':CommonSDK:common')
 }

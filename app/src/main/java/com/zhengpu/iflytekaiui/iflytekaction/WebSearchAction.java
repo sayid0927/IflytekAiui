@@ -8,6 +8,7 @@ import android.nfc.cardemulation.CardEmulation;
 import com.blankj.utilcode.utils.EncodeUtils;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WebSearchBean;
+import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 
 import java.util.List;
 
@@ -57,6 +58,7 @@ public class WebSearchAction {
                     url = "https://s.m.taobao.com/h5?q=" + EncodeUtils.urlEncode(keyword);
                     intent.setData(Uri.parse(url));
                     context.startActivity(intent);
+                    SpeechRecognizerService.startSpeech(service, "为你打开淘宝搜索" + keyword, request);
                     break;
                 case "baidu":
 
@@ -65,6 +67,7 @@ public class WebSearchAction {
                     url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keyword);
                     intent.setData(Uri.parse(url));
                     context.startActivity(intent);
+                    SpeechRecognizerService.startSpeech(service, "为你打开百度搜索" + keyword, request);
                     break;
                     
                 case "google":
@@ -73,6 +76,7 @@ public class WebSearchAction {
                     url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keyword);
                     intent.setData(Uri.parse(url));
                     context.startActivity(intent);
+                    SpeechRecognizerService.startSpeech(service, "为你打开百度搜索" + keyword, request);
                     break;
                 case "default":
 
@@ -81,6 +85,7 @@ public class WebSearchAction {
                     url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keyword);
                     intent.setData(Uri.parse(url));
                     context.startActivity(intent);
+                    SpeechRecognizerService.startSpeech(service, "为你打开百度搜索" + keyword, request);
                     break;
                 default:
                     R4Action r4Action = new R4Action(context, request);

@@ -38,6 +38,104 @@ public class CustomBaikeBean {
     private String version;
     private String sid;
     private String text;
+    private List<SemanticBean> semantic;
+
+
+    public List<SemanticBean> getSemantic() {
+        return semantic;
+    }
+
+    public void setSemantic(List<SemanticBean> semantic) {
+        this.semantic = semantic;
+    }
+
+    public  static class  SemanticBean{
+        private  String entrypoint;
+        private  String intent;
+        private  String score;
+        private  List<SlotsBean> slots;
+
+        public String getEntrypoint() {
+            return entrypoint;
+        }
+
+        public void setEntrypoint(String entrypoint) {
+            this.entrypoint = entrypoint;
+        }
+
+        public String getIntent() {
+            return intent;
+        }
+
+        public void setIntent(String intent) {
+            this.intent = intent;
+        }
+
+        public String getScore() {
+            return score;
+        }
+
+        public void setScore(String score) {
+            this.score = score;
+        }
+
+        public List<SlotsBean> getSlots() {
+            return slots;
+        }
+
+        public void setSlots(List<SlotsBean> slots) {
+            this.slots = slots;
+        }
+
+        public static class SlotsBean{
+
+            private  int begin;
+            private int end;
+            private  String name;
+            private  String normValue;
+            private String value;
+
+            public int getBegin() {
+                return begin;
+            }
+
+            public void setBegin(int begin) {
+                this.begin = begin;
+            }
+
+            public int getEnd() {
+                return end;
+            }
+
+            public void setEnd(int end) {
+                this.end = end;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getNormValue() {
+                return normValue;
+            }
+
+            public void setNormValue(String normValue) {
+                this.normValue = normValue;
+            }
+
+            public String getValue() {
+                return value;
+            }
+
+            public void setValue(String value) {
+                this.value = value;
+            }
+        }
+    }
 
     public String getCategory() {
         return category;

@@ -41,9 +41,10 @@ public class CustomBaikeAction {
 
     public void start() {
 
-        if (customBaikeBean != null && customBaikeBean.getQuery() != null) {
+        if (customBaikeBean != null && customBaikeBean.getSemantic()!=null && customBaikeBean.getSemantic().size()!=0 && customBaikeBean.getSemantic().get(0).getSlots()!=null
+                && customBaikeBean.getSemantic().get(0).getSlots().size()!=0 && customBaikeBean.getSemantic().get(0).getSlots().get(0).getValue()!=null) {
 
-            String url = "http://aiui.xfyun.cn/taste/getAnswer?text=" + EncodeUtils.urlEncode(customBaikeBean.getQuery() + "百科") + "&appid=all&category=baike&timestamp=1513932137263";
+            String url = "http://aiui.xfyun.cn/taste/getAnswer?text=" + EncodeUtils.urlEncode(customBaikeBean.getSemantic().get(0).getSlots().get(0).getValue() + "百科") + "&appid=all&category=baike&timestamp=1513932137263";
             OkHttpClient okHttpClient = new OkHttpClient();
             final Request request = new Request.Builder()
                     .url(url)
