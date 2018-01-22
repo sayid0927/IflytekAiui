@@ -165,11 +165,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     @Override
     public void initView() {
 
-//        Intent intent = new Intent();
-//        intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
-//                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService"));
-//        // 绑定服务
-//        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
+                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService"));
+        // 绑定服务
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
         fragmentList = new ArrayList<>();
         fragmentList.add(new FragmentHelp_1());

@@ -36,10 +36,12 @@ public class MoreMusicXAction {
 
 
     public MoreMusicXAction(String service, VideoBean.MoreResultsBean musicXBean, String strRequest, Context context) {
+
         this.service = service;
         this.musicXBean = musicXBean;
         this.context = context;
         this.strRequest = strRequest;
+
     }
 
     public void start() {
@@ -108,16 +110,17 @@ public class MoreMusicXAction {
         commDialog.setOnClickListener(new CommDialog.OnClickListener() {
             @Override
             public void onButtonOKClick() {
-//                String keywords = "安卓酷狗音乐App";
+
+//            String keywords = "安卓酷狗音乐App";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 String url = "http://sj.qq.com/myapp/detail.htm?apkName=cn.kuwo.kwmusichd";
-//                String url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keywords);
+//            String url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keywords);
                 intent.setData(Uri.parse(url));
                 context.startActivity(intent);
                 commDialog.dismiss();
-            }
 
+            }
             @Override
             public void onButtonCanelClick() {
                 commDialog.dismiss();

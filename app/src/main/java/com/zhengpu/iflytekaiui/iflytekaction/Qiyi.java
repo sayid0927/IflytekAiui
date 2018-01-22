@@ -30,7 +30,6 @@ public class Qiyi {
     public Qiyi(Context context) {
         this.context = context;
         this.videoName= getPlayStart(context, 6).isPlay;
-
     }
 
     public void start(AccessibilityNodeInfo info) {
