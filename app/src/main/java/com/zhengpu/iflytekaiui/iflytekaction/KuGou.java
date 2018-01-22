@@ -36,7 +36,7 @@ public class KuGou {
     public void start(AccessibilityNodeInfo info) {
         if (info != null) {
             if (info.getChildCount() == 0) {
-                if (FindNodeInfosById(info, "com.kugou.android:id/y5")) {
+                if (FindNodeInfosById(info, "cn.kuwo.kwmusichd:id/tab_search_img")) {
                     // 模拟点击搜索button
                     AccessibilityNodeInfo parent = info;
                     while (parent != null) {
@@ -46,20 +46,19 @@ public class KuGou {
                         }
                         parent = parent.getParent();
                     }
-
-                } else if (FindNodeInfosById(info, "com.kugou.android:id/abj")) {
+                } else if (FindNodeInfosById(info, "cn.kuwo.kwmusichd:id/search_bar_et")) {
                     PlayController playController = getPlayStart(context, 2);
                     if (playController.isPlay.equals("true")) {
                         // 模拟输入歌曲名
-
                         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
                         ClipData clipData = ClipData.newPlainText("scb", songName);
                         clipboardManager.setPrimaryClip(clipData);
                         info.performAction(AccessibilityNodeInfo.ACTION_PASTE);
-                        updatePlayStart(context,2,"false");
-
+                        updatePlayStart(context, 2, "false");
                     }
-                } else if (info.getText() != null  &&  info.getText().toString().contains(songName) && FindNodeInfosById(info, "com.kugou.android:id/chy")) {
+
+//                } else if (info.getText() != null  &&  info.getText().toString().contains(songName) && FindNodeInfosById(info, "cn.kuwo.kwmusichd:id/search_main_tip_list_item_text")) {
+                }else if(FindNodeInfosById(info, "cn.kuwo.kwmusichd:id/search_main_tip_list_item_text") ){
                     // 模拟点击 搜索歌曲 button
                     AccessibilityNodeInfo parent = info;
                     while (parent != null) {
@@ -69,7 +68,7 @@ public class KuGou {
                         }
                         parent = parent.getParent();
                     }
-                } else if (FindNodeInfosById(info, "com.kugou.android:id/b2w")) {
+                } else if (FindNodeInfosById(info, "cn.kuwo.kwmusichd:id/online_music_name")) {
                     PlayController playController = getPlayStart(context, 3);
                     if(playController.isPlay.equals("true")){
                         //  模拟点击播放歌曲button
@@ -102,6 +101,18 @@ public class KuGou {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             List<AccessibilityNodeInfo> list = nodeInfo.findAccessibilityNodeInfosByViewId(resId);
             if (list != null && !list.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //通过id查找
+    public static boolean FindNodeInfosByText(AccessibilityNodeInfo nodeInfo, String resId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            List<AccessibilityNodeInfo> list = nodeInfo.findAccessibilityNodeInfosByViewId(resId);
+            if (list != null && !list.isEmpty()) {
+
                 return true;
             }
         }

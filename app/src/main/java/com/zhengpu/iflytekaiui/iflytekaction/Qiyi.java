@@ -30,12 +30,13 @@ public class Qiyi {
     public Qiyi(Context context) {
         this.context = context;
         this.videoName= getPlayStart(context, 6).isPlay;
+
     }
 
     public void start(AccessibilityNodeInfo info) {
         if (info != null) {
             if (info.getChildCount() == 0) {
-                if (FindNodeInfosById(info, "com.qiyi.video:id/txt_left")) {
+                if (FindNodeInfosById(info, "com.qiyi.video.pad:id/main_search_word")) {
                      // 模拟点击搜索button
                     AccessibilityNodeInfo parent = info;
                     while (parent != null) {
@@ -45,18 +46,19 @@ public class Qiyi {
                         }
                         parent = parent.getParent();
                     }
-                } else if (FindNodeInfosById(info, "com.qiyi.video:id/phoneSearchKeyword")) {
+                } else if (FindNodeInfosById(info, "com.qiyi.video.pad:id/phoneSearchKeyword")) {
                     PlayController playController = getPlayStart(context, 5);
 
-                    if(playController.isPlay.equals("true")){
+                    if (playController.isPlay.equals("true")) {
                         // 模拟输入歌曲名
                         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
                         ClipData clipData = ClipData.newPlainText("scb", videoName);
                         clipboardManager.setPrimaryClip(clipData);
                         info.performAction(AccessibilityNodeInfo.ACTION_PASTE);
-                        updatePlayStart(context,5,"false");
+                        updatePlayStart(context, 5, "false");
                     }
-                } else if (info.getText() != null  && "搜索".equals(info.getText().toString()) && FindNodeInfosById(info, "com.qiyi.video:id/txt_action")) {
+//                } else if (info.getText() != null  && "搜索".equals(info.getText().toString()) && FindNodeInfosById(info, "com.qiyi.video:id/txt_action")) {
+                }else if(FindNodeInfosById(info,"com.qiyi.video.pad:id/phoneAdapterSearchText")){
                     // 模拟点击 搜索歌曲 button
                     updatePlayStart(context,4,"false");
                     AccessibilityNodeInfo parent = info;

@@ -165,24 +165,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     @Override
     public void initView() {
 
-
-        byte[] bytes = new byte[]{0x5A, 0x50, 0x17, 0x30, 0x03, 0x50, 0x20, 0x13, 0x4A
-                , 0x21, (byte) 0xAE, 0x00, (byte) 0x9b, 0x05, 0x24, 0x0A, 0x22, 0x00, 0x48, 0x0A, 0x7A, 0x00, 0x0A, 0x00
-                , 0x44, 0x00, (byte) 0xD9, 0x0D, 0x0A}; //复位
-
-
-        if (bytes[0] == 0x5A & bytes[1] == 0x50) {
-            for (int i = 1; i < bytes.length; i++) {
-                Logger.e(String.valueOf(bytes[i]&0xff));
-
-//                String tt = String.valueOf(bytes[4 * i] & 0xFF);
-//                String  gg = String.valueOf(bytes[4 * i + 1] & 0xFF);
-//                Logger.e("tt >>"+tt+"\n"+ "gg>>> "+gg);
-            }
-        } else {
-        }
-
-
 //        Intent intent = new Intent();
 //        intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
 //                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService"));
@@ -208,10 +190,10 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
         HermesEventBus.getDefault().register(this);
 
 
-//        RequestMessage requestMessage = new RequestMessage();
-//        requestMessage.setMessage("1");
-//        requestMessage.setService("SpeechStart");
-//        HermesEventBus.getDefault().post(requestMessage);
+        RequestMessage requestMessage = new RequestMessage();
+        requestMessage.setMessage("1");
+        requestMessage.setService("SpeechStart");
+        HermesEventBus.getDefault().post(requestMessage);
 
 //        HashMap<String, String> map = new HashMap<>();
 //        JSONObject json = new JSONObject();

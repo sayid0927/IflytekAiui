@@ -29,7 +29,8 @@ public class MyAccessibilityService extends AccessibilityService {
         AccessibilityNodeInfo rootNode = this.getRootInActiveWindow();
 
         switch (nowPackageName) {
-            case "com.kugou.android":
+            case "cn.kuwo.kwmusichd":
+
                 playController = getPlayStart(MyAccessibilityService.this, 1);
                 if (playController.isPlay.equals("true")) {
                     KuGou kuGou = new KuGou(this);
@@ -37,7 +38,8 @@ public class MyAccessibilityService extends AccessibilityService {
                 }
                 break;
 
-            case "com.qiyi.video":
+            case "com.qiyi.video.pad":
+
                 playController = getPlayStart(MyAccessibilityService.this, 4);
                 if (playController.isPlay.equals("true")) {
                     Qiyi qiyi = new Qiyi(this);

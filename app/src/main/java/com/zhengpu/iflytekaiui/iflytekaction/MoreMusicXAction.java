@@ -78,15 +78,15 @@ public class MoreMusicXAction {
             }
             //    酷狗播放
             if (PalyMode != 0) {
-                if (isAppInstalled(context, "com.kugou.android")) {
+                if (isAppInstalled(context, "cn.kuwo.kwmusichd")) {
                     //  打开应用
                     updatePlayStart(context, 7, artist +song);
                     updatePlayStart(context, 1, "true");
                     updatePlayStart(context, 3, "true");
 
-                    OpenAppAction openAppAction = new OpenAppAction("酷狗音乐", context);
+                    OpenAppAction openAppAction = new OpenAppAction("酷我音乐HD", context);
                     openAppAction.start();
-                    SpeechRecognizerService.startSpeech(service, "为你打开酷狗音乐播放" + artist + song, strRequest);
+                    SpeechRecognizerService.startSpeech(service, "为你打开酷我音乐播放" + artist + song, strRequest);
 
                 } else {
 //               没有安装酷狗播放APP  打开浏览器 下载APP
@@ -108,10 +108,11 @@ public class MoreMusicXAction {
         commDialog.setOnClickListener(new CommDialog.OnClickListener() {
             @Override
             public void onButtonOKClick() {
-                String keywords = "安卓酷狗音乐App";
+//                String keywords = "安卓酷狗音乐App";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                String url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keywords);
+                String url = "http://sj.qq.com/myapp/detail.htm?apkName=cn.kuwo.kwmusichd";
+//                String url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keywords);
                 intent.setData(Uri.parse(url));
                 context.startActivity(intent);
                 commDialog.dismiss();

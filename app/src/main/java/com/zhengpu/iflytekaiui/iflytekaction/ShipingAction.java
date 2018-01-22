@@ -46,16 +46,15 @@ public class ShipingAction {
 
             } else {
 
-
-                if (isAppInstalled(context, "com.qiyi.video")) {
+                if (isAppInstalled(context, "com.qiyi.video.pad")) {
                     //  打开应用
                     String videoName = videoBean.getData().getResult().get(0).getName();
+                    SpeechRecognizerService.startSpeech(service, "为你打开爱奇艺搜索" + videoName, request);
                     updatePlayStart(context,6,videoBean.getData().getResult().get(0).getName());
                     updatePlayStart(context, 4, "true");
                     updatePlayStart(context,5,"true");
-                    OpenAppAction openAppAction = new OpenAppAction("爱奇艺", context);
+                    OpenAppAction openAppAction = new OpenAppAction("爱奇艺HD", context);
                     openAppAction.start();
-                    SpeechRecognizerService.startSpeech(service, "为你打开爱奇艺搜索" + videoName, request);
 
                 } else {
 //                没有安装爱奇艺APP  打开浏览器 下载APP
@@ -69,19 +68,21 @@ public class ShipingAction {
         }
     }
 
-
     public void showDialog() {
         final CommDialog commDialog = new CommDialog(context,context.getResources().getString(R.string.aiqiyi_tip));
         commDialog.setOnClickListener(new CommDialog.OnClickListener() {
             @Override
             public void onButtonOKClick() {
-                String keywords = "安卓爱奇艺App";
+
+//            String keywords = "安卓爱奇艺App";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                String url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keywords);
+//            String url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keywords);
+                String  url = "http://sj.qq.com/myapp/detail.htm?apkName=com.qiyi.video.pad";
                 intent.setData(Uri.parse(url));
                 context.startActivity(intent);
                 commDialog.dismiss();
+
             }
             @Override
             public void onButtonCanelClick() {
