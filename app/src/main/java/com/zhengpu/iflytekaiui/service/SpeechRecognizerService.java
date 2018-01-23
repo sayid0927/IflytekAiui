@@ -93,7 +93,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         iflytekWakeUp = new IflytekWakeUp(this, new MyWakeuperListener(this, this));
         iflytekWakeUp.startWakeuper();
         kuGuoMuiscPlayThread = KuGuoMuiscPlayThread.getInstance(this);
-        startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
+//        startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
 
         //初始化串口
         serialUtils = SerialUtils.getInstance(this);

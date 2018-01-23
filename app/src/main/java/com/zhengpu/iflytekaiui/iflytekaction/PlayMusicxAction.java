@@ -131,7 +131,7 @@ public class PlayMusicxAction {
 
                             OpenAppAction openAppAction = new OpenAppAction("酷我音乐HD", context);
                             openAppAction.start();
-                            SpeechRecognizerService.startSpeech(service, "为你打开酷狗音乐播放" + artist + song, strRequest);
+                            SpeechRecognizerService.startSpeech(service, "为你打开酷我音乐播放" + artist + song, strRequest);
 
                             break;
                         } else {
@@ -160,7 +160,7 @@ public class PlayMusicxAction {
 //            String keywords = "安卓酷狗音乐App";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                String url = "http://sj.qq.com/myapp/detail.htm?apkName=com.kugou.playerHDyy";
+                String url = "http://sj.qq.com/myapp/detail.htm?apkName=cn.kuwo.kwmusichd";
                 intent.setData(Uri.parse(url));
                 context.startActivity(intent);
                 commDialog.dismiss();

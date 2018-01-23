@@ -40,10 +40,9 @@ public class MyApplication extends Application {
         PreferUtil.getInstance().init(this);
         AppUtils.init(this);
         Utils.init(this);
-        Bugtags.start("beb9b4f14e72470fe0ad088b715ec421", this, BTGInvocationEventNone);
-
-//        AppUpdateCheck updateCheck = new AppUpdateCheck(getApplicationContext(), ZpData.IP + AppUpdateCheck.APPUPDATE_URL);
-//        updateCheck.checkAppUpdate(AppUpdateCheck.ALWAYS);
+        Bugtags.start("d9e1bb99a794bb5d45206e48b8e9c8a3", this, BTGInvocationEventNone);
+//    AppUpdateCheck updateCheck = new AppUpdateCheck(getApplicationContext(), ZpData.IP + AppUpdateCheck.APPUPDATE_URL);
+//     updateCheck.checkAppUpdate(AppUpdateCheck.ALWAYS);
 
     }
 

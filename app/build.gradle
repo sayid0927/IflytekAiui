@@ -4,8 +4,8 @@ apply plugin: 'com.bugtags.library.plugin'
 
 bugtags {
 
-    appKey "beb9b4f14e72470fe0ad088b715ec421"
-    appSecret "6b657d55cf8d727e1aec0a6ab700be8d"
+    appKey "a2c7a5fe7d501248b07b48400f6f5210"
+    appSecret "45cdba5729079cd3cbb443a735087a35"
     mappingUploadEnabled true
     trackingNetworkEnabled true
 
@@ -18,7 +18,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
-        versionName "0.2" //版本指定偶数
+        versionName "0.1"
     }
 
 //    signingConfigs {

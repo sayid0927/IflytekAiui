@@ -3,8 +3,8 @@ apply plugin: 'com.bugtags.library.plugin'
 //apply plugin: 'walle'
 
 bugtags {
-    appKey "beb9b4f14e72470fe0ad088b715ec421"
-    appSecret "6b657d55cf8d727e1aec0a6ab700be8d"
+    appKey "d9e1bb99a794bb5d45206e48b8e9c8a3"
+    appSecret "30846109dddf77274b8f29c9d501c8e0"
     mappingUploadEnabled true
     trackingNetworkEnabled true
 }
@@ -54,7 +54,6 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     implementation 'xiaofei.library:hermes-eventbus:0.3.0'
-
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'

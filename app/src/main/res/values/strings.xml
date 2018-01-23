@@ -13,7 +13,7 @@
 
     <string name="kindly_reminder">温馨提示</string>
     <string name="aiqiyi_tip">你还没安装爱奇艺APP， 是否去下载该程序</string>
-    <string name="kuguo_tip"> 你还没安装酷狗音乐APP， 是否去下载该程序</string>
+    <string name="kuguo_tip"> 你还没安装酷我音乐APP， 是否去下载该程序</string>
 
     <string name="no_network_text">网络错误,暂时无法使用语音播报</string>
 

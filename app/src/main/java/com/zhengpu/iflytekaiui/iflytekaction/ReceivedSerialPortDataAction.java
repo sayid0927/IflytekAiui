@@ -86,6 +86,9 @@ public class ReceivedSerialPortDataAction {
 
     private void ParserByte() {
 
+
+
+
         if (bytes[8].equals("00") ) {  //头顶
 
             if (TimeUtils.getTimeSpanByNow(TouchHeadTime, ConstUtils.TimeUnit.MIN) < 5) {
@@ -164,52 +167,6 @@ public class ReceivedSerialPortDataAction {
         } else if (bytes[8] .equals("06")) {   //后背
             SpeechRecognizerService.startSpeech(AppController.TouchBack, context.getResources().getString(R.string.Touch_Back_text), context.getResources().getString(R.string.Touch_Back_text));
         }
-
-//        switch (bytes[6]){
-//            case 0x01:  //头顶
-//
-//                if (TimeUtils.getTimeSpanByNow(TouchHeadTime, ConstUtils.TimeUnit.MIN) < 5) {
-//                    switch (TouchHeadCount) {
-//                        case 0:
-//                            SpeechRecognizerService.startSpeech(AppController.TouchHead,context.getResources().getString(R.string.Touch_Head_text_0),context.getResources().getString(R.string.Touch_Head_text_0));
-//                            break;
-//                        case 1:
-//                            SpeechRecognizerService.startSpeech(AppController.TouchHead,context.getResources().getString(R.string.Touch_Head_text_1),context.getResources().getString(R.string.Touch_Head_text_1));
-//                            break;
-//                        case 2:
-//                            SpeechRecognizerService.startSpeech(AppController.TouchHead,context.getResources().getString(R.string.Touch_Head_text_2),context.getResources().getString(R.string.Touch_Head_text_2));
-//                            break;
-//                        default:
-//                            SpeechRecognizerService.startSpeech(AppController.TouchHead,context.getResources().getString(R.string.Touch_Head_text_0),context.getResources().getString(R.string.Touch_Head_text_0));
-//                    }
-//                    TouchHeadCount++;
-//                    if (TouchHeadCount == 3) TouchHeadCount = 0;
-//                    PreferUtil.getInstance().setTouchHeadCount(TouchHeadCount);
-//                } else {
-//                    SpeechRecognizerService.startSpeech(AppController.TouchHead,context.getResources().getString(R.string.Touch_Head_text_0),context.getResources().getString(R.string.Touch_Head_text_0));
-//                    PreferUtil.getInstance().setTouchHeadTime(TimeUtils.getNowTimeMills());
-//                    PreferUtil.getInstance().setTouchHeadCount(1);
-//                }
-//
-//                break;
-//            case 0x02 :  //左脸
-//                SpeechRecognizerService.startSpeech(AppController.TouchLeftFace,context.getResources().getString(R.string.Touch_Face_text_0),context.getResources().getString(R.string.Touch_Face_text_0));
-//                break;
-//            case 0x03:  //右脸
-//                SpeechRecognizerService.startSpeech(AppController.TouchRightFace,context.getResources().getString(R.string.Touch_Face_text_0),context.getResources().getString(R.string.Touch_Face_text_0));
-//                break;
-//            case 0x04:  // 左手
-//                SpeechRecognizerService.startSpeech(AppController.TouchLeftHand,context.getResources().getString(R.string.Touch_Hand_text_0),context.getResources().getString(R.string.Touch_Hand_text_0));
-//                break;
-//            case 0x05:  // 右手
-//                SpeechRecognizerService.startSpeech(AppController.TouchRightHand,context.getResources().getString(R.string.Touch_Hand_text_0),context.getResources().getString(R.string.Touch_Hand_text_0));
-//                break;
-//            case 0x06:  //前胸
-//                SpeechRecognizerService.startSpeech(AppController.TouchFront,context.getResources().getString(R.string.Touch_Front_text),context.getResources().getString(R.string.Touch_Front_text));
-//                break;
-//            case 0x07:  //后背
-//                SpeechRecognizerService.startSpeech(AppController.TouchBack,context.getResources().getString(R.string.Touch_Back_text),context.getResources().getString(R.string.Touch_Back_text));
-//                break;
-//        }
     }
+
 }

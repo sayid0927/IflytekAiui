@@ -413,7 +413,7 @@ public class VoiceToWords {
                     if (videoBean.getMoreResults() != null) {
                        String ser = videoBean.getMoreResults().get(0).getService();
                         if(ser.equals("musicX")){   //如果在更多的选项中有音乐
-                            MoreMusicXAction moreMusicXAction = new MoreMusicXAction(service,videoBean.getMoreResults().get(0),text,context);
+                            MoreMusicXAction moreMusicXAction = new MoreMusicXAction("musicX",videoBean.getMoreResults().get(0),text,context);
                             moreMusicXAction.start();
                         }else {
                             ShipingAction shipingAction = new ShipingAction(service, videoBean, context, text);
