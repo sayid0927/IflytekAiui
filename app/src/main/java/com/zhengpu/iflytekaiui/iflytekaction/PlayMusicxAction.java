@@ -129,9 +129,9 @@ public class PlayMusicxAction {
                             updatePlayStart(context, 1, "true");
                             updatePlayStart(context, 3, "true");
 
-                            OpenAppAction openAppAction = new OpenAppAction("酷我音乐HD", context);
+                            OpenAppAction openAppAction = new OpenAppAction("QQ音乐HD", context);
                             openAppAction.start();
-                            SpeechRecognizerService.startSpeech(service, "为你打开酷我音乐播放" + artist + song, strRequest);
+                            SpeechRecognizerService.startSpeech(service, "为你打开QQ音乐播放" + artist + song, strRequest);
 
                             break;
                         } else {
@@ -160,12 +160,11 @@ public class PlayMusicxAction {
 //            String keywords = "安卓酷狗音乐App";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                String url = "http://sj.qq.com/myapp/detail.htm?apkName=cn.kuwo.kwmusichd";
+                String url = "http://sj.qq.com/myapp/detail.htm?apkName=com.tencent.qqmusicpad";
                 intent.setData(Uri.parse(url));
                 context.startActivity(intent);
                 commDialog.dismiss();
             }
-
             @Override
             public void onButtonCanelClick() {
                 commDialog.dismiss();

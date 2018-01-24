@@ -8,27 +8,19 @@ import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.utils.ConstUtils;
 import com.blankj.utilcode.utils.TimeUtils;
-import com.blankj.utilcode.utils.Utils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechUtility;
+import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.SerialPort.OpenSerialPortListener;
 import com.zhengpu.iflytekaiui.SerialPort.SerialUtils;
 import com.zhengpu.iflytekaiui.base.AppController;
-import com.zhengpu.iflytekaiui.iflytekaction.MoreMusicXAction;
-import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
 import com.zhengpu.iflytekaiui.iflytekaction.ReceivedSerialPortDataAction;
-import com.zhengpu.iflytekaiui.iflytekaction.ShipingAction;
-import com.zhengpu.iflytekaiui.iflytekaction.WebSearchAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
-import com.zhengpu.iflytekaiui.iflytekbean.MusicXBean;
-import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
-import com.zhengpu.iflytekaiui.iflytekbean.WebSearchBean;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetVoiceToWord;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetWordToVoice;
 import com.zhengpu.iflytekaiui.iflytekutils.IflytekWakeUp;
-import com.zhengpu.iflytekaiui.iflytekutils.JsonParser;
 import com.zhengpu.iflytekaiui.iflytekutils.MyWakeuperListener;
 import com.zhengpu.iflytekaiui.iflytekutils.VoiceToWords;
 import com.zhengpu.iflytekaiui.iflytekutils.WakeUpListener;
@@ -37,7 +29,6 @@ import com.zhengpu.iflytekaiui.ipc.entity.RequestMessage;
 import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayThread;
-import com.zhengpu.iflytekaiui.utils.CommDialog;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 import com.zhengpu.iflytekaiui.utils.SpeechDialog;
 import com.zhengpu.iflytekaiui.utils.ValueUtil;
@@ -47,6 +38,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
+import static com.zhengpu.iflytekaiui.utils.DeviceUtils.IntentcreateExplicitFromImplicitIntent;
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAccessibilitySettingsOn;
 
 
@@ -65,7 +57,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     private String message;
     private String SpeechType = "0";
     private SpeechDialog speechDialog;
-
 
 
     @Override
@@ -93,12 +84,11 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         iflytekWakeUp = new IflytekWakeUp(this, new MyWakeuperListener(this, this));
         iflytekWakeUp.startWakeuper();
         kuGuoMuiscPlayThread = KuGuoMuiscPlayThread.getInstance(this);
-//        startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
+        startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
 
         //初始化串口
         serialUtils = SerialUtils.getInstance(this);
         serialUtils.setSerialPortListener(this);
-
         speechDialog = new SpeechDialog(this, this.getResources().getString(R.string.no_network_text));
 
 //        byte[] byteAutoReset = new byte[]{0x5A,0x50,0x03,0x02,0x02,0x01,0x05,0x0D,0x0A}; //复位
@@ -125,6 +115,10 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
                 voiceToWords.startRecognizer();
                 startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
             }
+        }else if(reqService.equals("AAAAA")){
+
+            startSpeech("AAAAA", reqMessage, reqMessage);
+
         } else {
             startSpeech(reqService, reqMessage, reqMessage);
         }
@@ -198,6 +192,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     /**
      * 机器人唤醒成功
      */
+
     @Override
     public void OnWakeUpSuccess() {
         if (kuGuoMuiscPlayThread.isPlay())
@@ -217,9 +212,18 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      *
      * 机器人语音播报结束回调
      */
+
     @Override
     public void SpeechEnd(String service) {
         switch (service) {
+            case AppController.LAUNCHER_TEXT:
+
+                Intent intent = new Intent("com.zeunpro.service.FaceRecognitionService");
+                startService(IntentcreateExplicitFromImplicitIntent(this,intent));
+                Logger.e("启动FaceRecognitionService   >>>>>>>>   ");
+
+                break;
+
             case AppController.SHOWLOWVOICE_TEXT:
                 voiceToWords.mIatDestroy();
                 break;

@@ -7,6 +7,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.contentprovider.PlayController;
 import com.zhengpu.iflytekaiui.iflytekaction.KuGou;
+import com.zhengpu.iflytekaiui.iflytekaction.QQ;
 import com.zhengpu.iflytekaiui.iflytekaction.Qiyi;
 
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.getPlayStart;
@@ -30,12 +31,12 @@ public class MyAccessibilityService extends AccessibilityService {
 
         switch (nowPackageName) {
             case "cn.kuwo.kwmusichd":
-
                 playController = getPlayStart(MyAccessibilityService.this, 1);
                 if (playController.isPlay.equals("true")) {
                     KuGou kuGou = new KuGou(this);
                     kuGou.start(rootNode);
                 }
+
                 break;
 
             case "com.qiyi.video.pad":
@@ -45,6 +46,19 @@ public class MyAccessibilityService extends AccessibilityService {
                     Qiyi qiyi = new Qiyi(this);
                     qiyi.start(rootNode);
                 }
+                break;
+
+            case "com.tencent.qqmusicpad":
+//            case  "com.kugou.playerHDyy":
+
+//                playController = getPlayStart(MyAccessibilityService.this, 1);
+//                if (playController.isPlay.equals("true")) {
+                    QQ qq = new QQ(this);
+                    qq.start(rootNode);
+
+//                }
+
+
                 break;
         }
     }

@@ -51,6 +51,13 @@ public class PlayProvider  extends ContentProvider {
         mDb.execSQL("insert into start values(5, 'aiqiyi_play_searchkeyword','true');");
         mDb.execSQL("insert into start values(6, 'videoName','false');");
         mDb.execSQL("insert into start values(7, 'videoName','false');");
+        mDb.execSQL("insert into start values(8, 'qq_find_name','true');");
+        mDb.execSQL("insert into start values(9, 'qq_search_edit','true');");
+        mDb.execSQL("insert into start values(10, 'qq_search_edit','true');");
+        mDb.execSQL("insert into start values(11, 'search_smart_result_view_container','true');");
+        mDb.execSQL("insert into start values(12, 'song_album_img','true');");
+
+
     }
 
     @Nullable

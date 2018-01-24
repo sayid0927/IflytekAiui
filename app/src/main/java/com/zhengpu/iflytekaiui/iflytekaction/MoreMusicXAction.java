@@ -56,7 +56,6 @@ public class MoreMusicXAction {
                     song = musicXBean.getSemantic().get(0).getSlots().get(i).getValue();
                 }
             }
-
             //  本地播放
             List<AllAudioSongBean> allAudioSongBeanList = scanAllAudioFiles(context);
             for (int i = 0; i < allAudioSongBeanList.size(); i++) {
@@ -84,13 +83,15 @@ public class MoreMusicXAction {
                     //  打开应用
                     updatePlayStart(context, 7, artist +song);
                     updatePlayStart(context, 1, "true");
-                    updatePlayStart(context, 3, "true");
-
-                    OpenAppAction openAppAction = new OpenAppAction("酷我音乐HD", context);
+                    updatePlayStart(context, 8, "true");
+                    updatePlayStart(context, 9, "true");
+                    updatePlayStart(context, 11, "true");
+                    OpenAppAction openAppAction = new OpenAppAction("QQ音乐HD", context);
                     openAppAction.start();
                     SpeechRecognizerService.startSpeech(service, "为你打开酷我音乐播放" + artist + song, strRequest);
 
                 } else {
+
 //               没有安装酷狗播放APP  打开浏览器 下载APP
                     SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.kuguo_tip), strRequest);
                     showDialog();
@@ -114,7 +115,8 @@ public class MoreMusicXAction {
 //            String keywords = "安卓酷狗音乐App";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                String url = "http://sj.qq.com/myapp/detail.htm?apkName=cn.kuwo.kwmusichd";
+                String url = "http://sj.qq.com/myapp/detail.htm?apkName=com.tencent.qqmusicpad";
+//               String url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode("音乐")+"HD";
 //            String url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keywords);
                 intent.setData(Uri.parse(url));
                 context.startActivity(intent);
