@@ -42,7 +42,6 @@ import static com.zhengpu.iflytekaiui.utils.DeviceUtils.updatePlayStart;
 
 public class PlayMusicxAction {
 
-
     private Context context;
     private String service;
     private MusicXBean musicXBean;
@@ -123,7 +122,7 @@ public class PlayMusicxAction {
                     }
                     //    酷狗播放
                     if (PalyMode != 0) {
-                        if (isAppInstalled(context, "cn.kuwo.kwmusichd")) {
+                        if (isAppInstalled(context, "com.tencent.qqmusicpad")) {
                             //  打开应用
                             updatePlayStart(context, 7, artist + song);
                             updatePlayStart(context, 1, "true");

@@ -10,7 +10,6 @@
         android:id="@+id/commonbar"
         layout="@layout/common_toolbar" />
 
-
     <com.zhengpu.watch.ui.view.HelpViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
@@ -40,7 +39,7 @@
         <com.skyfishjy.library.RippleBackground
             android:id="@+id/ripple_voice"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             app:rb_color="@color/colorText"
@@ -57,14 +56,18 @@
                 android:layout_centerInParent="true"
                 android:background="@drawable/voice" />
 
-
         </com.skyfishjy.library.RippleBackground>
 
-
-
+        <TextView
+            android:id="@+id/iv_launcher"
+            android:layout_marginTop="10dp"
+            android:textSize="24sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/launcher_text"
+            android:textColor="@color/color_2d8bff" />
 
     </LinearLayout>
-
 
 
 

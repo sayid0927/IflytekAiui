@@ -19,10 +19,12 @@ import com.zhengpu.iflytekaiui.iflytekbean.PoetryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.R4Bean;
 import com.zhengpu.iflytekaiui.iflytekbean.RobotCommandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.StoryBean;
+import com.zhengpu.iflytekaiui.iflytekbean.TelephoneBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WebSearchBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.CustomMusicBean;
+import com.zhengpu.iflytekaiui.iflytekbean.otherbean.HotspotRequest;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfCustomBaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicResBean;
@@ -334,6 +336,33 @@ public class JsonParser {
     }
 
 
+
+
+    public   static HotspotRequest parseHotspotRequest(String json) {
+        HotspotRequest hotspotRequest = new HotspotRequest();
+        try {
+            Type type = new TypeToken<HotspotRequest>() {
+            }.getType();
+            hotspotRequest = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hotspotRequest;
+    }
+
+
+
+    public   static TelephoneBean parseResultTelephoneBean(String json) {
+        TelephoneBean telephoneBean = new TelephoneBean();
+        try {
+            Type type = new TypeToken<TelephoneBean>() {
+            }.getType();
+            telephoneBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return telephoneBean;
+    }
 
 
 

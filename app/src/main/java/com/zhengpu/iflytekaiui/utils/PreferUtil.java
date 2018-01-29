@@ -40,6 +40,25 @@ public final class PreferUtil {
     private static final String SHOW_LOW_VOICE_TIME = "show_low_voice_time";
     private static final String SHOW_LOW_VOICE_COUNT = "show_low_voice_count";
 
+    private static final String CONNECT_WIFI = "connect_wifi";
+    private static final String CONNECT_WIFI_SSID = "connect_wifi_ssid";
+
+
+    public  String getConnectWifiSSID(){
+        return  getString(CONNECT_WIFI_SSID,"");
+    }
+
+    public void setConnectWifiSSID(String flag){
+        putString(CONNECT_WIFI_SSID, flag);
+    }
+
+    public  boolean getConnectWifi(){
+        return  getBoolean(CONNECT_WIFI,false);
+    }
+
+    public void setConnectWifi(boolean flag){
+        putBoolean(CONNECT_WIFI, flag);
+    }
 
     public String getPlayMusicName() {
         return getString(PLAY_MUSIC_NAME, "");

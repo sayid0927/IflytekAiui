@@ -86,6 +86,12 @@ public class ReceivedSerialPortDataAction {
 
     private void ParserByte() {
 
+//        if(bytes[7]){
+//
+//        }
+
+
+
 
 
 

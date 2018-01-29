@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.blankj.utilcode.utils.AppUtils;
 import com.blankj.utilcode.utils.EncodeUtils;
@@ -105,6 +106,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     ImageView ivHelp;
     @BindView(R.id.viewpager)
     HelpViewPager viewpager;
+    @BindView(R.id.iv_launcher)
+    TextView ivLauncher;
 
 
     public static MainActivity mainActivity;
@@ -188,7 +191,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 //    UmengUtil.onEvent(MainActivity.this, "MainActivity", null);
         mainActivity = this;
         HermesEventBus.getDefault().register(this);
-
 
         RequestMessage requestMessage = new RequestMessage();
         requestMessage.setMessage("1");

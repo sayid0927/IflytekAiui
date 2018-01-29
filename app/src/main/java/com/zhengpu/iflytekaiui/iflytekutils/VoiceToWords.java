@@ -30,6 +30,7 @@ import com.zhengpu.iflytekaiui.iflytekaction.R4Action;
 import com.zhengpu.iflytekaiui.iflytekaction.RobotCommandAction;
 import com.zhengpu.iflytekaiui.iflytekaction.ShipingAction;
 import com.zhengpu.iflytekaiui.iflytekaction.StoryAction;
+import com.zhengpu.iflytekaiui.iflytekaction.TelephoneAction;
 import com.zhengpu.iflytekaiui.iflytekaction.WeatherAction;
 import com.zhengpu.iflytekaiui.iflytekaction.WebSearchAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaikeBean;
@@ -47,6 +48,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.PoetryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.R4Bean;
 import com.zhengpu.iflytekaiui.iflytekbean.RobotCommandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.StoryBean;
+import com.zhengpu.iflytekaiui.iflytekbean.TelephoneBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WebSearchBean;
@@ -440,6 +442,16 @@ public class VoiceToWords {
                     robotCommandAction.start();
 
                     break;
+
+                case AppController.TELEPHONE:
+
+                    TelephoneBean telephoneBean = JsonParser.parseResultTelephoneBean(text);
+                    TelephoneAction telephoneAction = new TelephoneAction(service, telephoneBean, text, context);
+                    telephoneAction.start();
+
+                    break;
+
+
 
 //                case "OPENAPPTEST.music_demo": {  //   艺人跟歌曲 搜索和播放
 //                    CustomMusicBean customMusicBean = JsonParser.parseResultCustomMusicBean(text);

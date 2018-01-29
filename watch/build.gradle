@@ -11,6 +11,7 @@ bugtags {
 
 
 android {
+
     compileSdkVersion 25
     aaptOptions.cruncherEnabled =false
     aaptOptions.useNewCruncher =false

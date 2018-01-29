@@ -1,26 +1,30 @@
 package com.zhengpu.iflytekaiui.service;
 
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.utils.ConstUtils;
+import com.blankj.utilcode.utils.DeviceUtils;
 import com.blankj.utilcode.utils.TimeUtils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechUtility;
-import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.SerialPort.OpenSerialPortListener;
 import com.zhengpu.iflytekaiui.SerialPort.SerialUtils;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekaction.ReceivedSerialPortDataAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
+import com.zhengpu.iflytekaiui.iflytekbean.otherbean.HotspotRequest;
+import com.zhengpu.iflytekaiui.iflytekbean.otherbean.WifiData;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetVoiceToWord;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetWordToVoice;
 import com.zhengpu.iflytekaiui.iflytekutils.IflytekWakeUp;
+import com.zhengpu.iflytekaiui.iflytekutils.JsonParser;
 import com.zhengpu.iflytekaiui.iflytekutils.MyWakeuperListener;
 import com.zhengpu.iflytekaiui.iflytekutils.VoiceToWords;
 import com.zhengpu.iflytekaiui.iflytekutils.WakeUpListener;
@@ -29,8 +33,11 @@ import com.zhengpu.iflytekaiui.ipc.entity.RequestMessage;
 import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayThread;
+import com.zhengpu.iflytekaiui.utils.HotsposListener;
+import com.zhengpu.iflytekaiui.utils.HotspotUtils;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 import com.zhengpu.iflytekaiui.utils.SpeechDialog;
+import com.zhengpu.iflytekaiui.utils.UDPSendUtils;
 import com.zhengpu.iflytekaiui.utils.ValueUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -38,7 +45,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
-import static com.zhengpu.iflytekaiui.utils.DeviceUtils.IntentcreateExplicitFromImplicitIntent;
 import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAccessibilitySettingsOn;
 
 
@@ -47,7 +53,8 @@ import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAccessibilitySettingsO
  * Created by wengmf on 2017/11/21
  */
 
-public class SpeechRecognizerService extends Service implements IGetVoiceToWord, WakeUpListener, IGetWordToVoice, KuGuoMuiscPlayListener, OpenSerialPortListener {
+public class SpeechRecognizerService extends Service implements IGetVoiceToWord, WakeUpListener, IGetWordToVoice, KuGuoMuiscPlayListener,
+        OpenSerialPortListener,HotsposListener {
 
     private IflytekWakeUp iflytekWakeUp;
     private static VoiceToWords voiceToWords;
@@ -57,6 +64,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     private String message;
     private String SpeechType = "0";
     private SpeechDialog speechDialog;
+
 
 
     @Override
@@ -71,7 +79,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 
         HermesEventBus.getDefault().register(SpeechRecognizerService.this);
 //        Utils.init(this);
-        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5a654648," + SpeechConstant.FORCE_LOGIN + "=true");// 传递科大讯飞appid
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5a694592," + SpeechConstant.FORCE_LOGIN + "=true");// 传递科大讯飞appid
 //        PreferUtil.getInstance().init(this);
 
         //初始化讯飞语音识别
@@ -90,6 +98,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         serialUtils = SerialUtils.getInstance(this);
         serialUtils.setSerialPortListener(this);
         speechDialog = new SpeechDialog(this, this.getResources().getString(R.string.no_network_text));
+        //  创建热点
+        HotspotUtils hotspotUtils = HotspotUtils.getHotspotUtils(this);
+        hotspotUtils.setHotsposListener(this);
 
 //        byte[] byteAutoReset = new byte[]{0x5A,0x50,0x03,0x02,0x02,0x01,0x05,0x0D,0x0A}; //复位
 //        sendSerialMessageBytes(byteAutoReset);
@@ -116,9 +127,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
                 startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
             }
         }else if(reqService.equals("AAAAA")){
-
             startSpeech("AAAAA", reqMessage, reqMessage);
-
         } else {
             startSpeech(reqService, reqMessage, reqMessage);
         }
@@ -211,6 +220,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     /***
      *
      * 机器人语音播报结束回调
+     *
      */
 
     @Override
@@ -218,12 +228,13 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         switch (service) {
             case AppController.LAUNCHER_TEXT:
 
-                Intent intent = new Intent("com.zeunpro.service.FaceRecognitionService");
-                startService(IntentcreateExplicitFromImplicitIntent(this,intent));
-                Logger.e("启动FaceRecognitionService   >>>>>>>>   ");
+                Intent intent = new Intent();
+                ComponentName componentName = new ComponentName("com.zeunpro.login", "com.zeunpro.login.FaceRecognitionService");
+                intent.setComponent(componentName);
+                startService(intent);
+                voiceToWords.startRecognizer();
 
                 break;
-
             case AppController.SHOWLOWVOICE_TEXT:
                 voiceToWords.mIatDestroy();
                 break;
@@ -299,7 +310,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         return null;
     }
 
-
     // 播放音乐暂停、继续和停止
     private void setKuGuoMuiscPlayStart(int Type) {
         if (Type == 0) {     //暂停
@@ -347,7 +357,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void onDataSentFail() {
-
     }
 
     /**
@@ -357,8 +366,66 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void onDataReceivedSuccess(byte[] bytes) {
 
         String value = ValueUtil.getInstance().bytesToHexStr(bytes);
+
         ReceivedSerialPortDataAction receivedSerialPortDataAction = new ReceivedSerialPortDataAction(value.split(" "), this);
         receivedSerialPortDataAction.start();
 
     }
+
+
+    /***
+     * 打开热点成功
+     */
+    @Override
+    public void openHotspotSuccess() {
+
+    }
+
+    /***
+     * 打开热点失败
+     */
+    @Override
+    public void openHotspotError() {
+
+    }
+
+    /***
+     * 接收到从机器人表情UDP消息
+     */
+    @Override
+    public void UDPReceiveSuccess(String content) {
+
+        final HotspotRequest hotspotRequest = JsonParser.parseHotspotRequest(content);
+          if(hotspotRequest.getStatus()==1){   // 收到表情命令确认
+
+
+          }
+    }
+
+    /***
+     *   关闭热点重连Wifi 成功
+     */
+    @Override
+    public void connectWifiSuccess() {
+
+        UDPSendUtils  udpSendUtils = UDPSendUtils.getInstance();
+
+        WifiData wifiInfo = new WifiData();
+        wifiInfo.setMsg("wifi psw");
+        wifiInfo.setPassword("ZP1");
+        wifiInfo.setSsid("zeunpro123");
+        wifiInfo.setCode(1001);
+        String wifiString = WifiData.toJsonStr(wifiInfo);
+        udpSendUtils.send(wifiString);
+
+    }
+
+    /***
+     *   关闭热点重连Wifi 失败
+     */
+    @Override
+    public void connectWifiError() {
+
+    }
+
 }

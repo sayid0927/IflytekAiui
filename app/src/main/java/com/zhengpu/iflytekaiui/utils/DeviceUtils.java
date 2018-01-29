@@ -222,23 +222,16 @@ public class DeviceUtils {
         }
     }
 
-    public static Intent IntentcreateExplicitFromImplicitIntent(Context context, Intent implicitIntent) {
-        PackageManager pm =context.getPackageManager();
-        List<ResolveInfo> resolveInfo =pm.queryIntentServices(implicitIntent, 0);
-        if (resolveInfo == null ||resolveInfo.size() != 1) {
-            return null;
-        }
-        ResolveInfo serviceInfo =resolveInfo.get(0);
-        String packageName =serviceInfo.serviceInfo.packageName;
-        String className =serviceInfo.serviceInfo.name;
-        ComponentName component = new ComponentName(packageName, className);
-        Intent explicitIntent = new Intent(implicitIntent);
+
+
+    public static Intent IntentcreateExplicitFromImplicitIntent() {
+
+        ComponentName component = new ComponentName("com.zeunpro.login", "com.zeunpro.sevice.FaceRecognitionService");
+        Intent explicitIntent = new Intent();
         explicitIntent.setComponent(component);
         return explicitIntent;
+
     }
-
-
-
 
 }
 

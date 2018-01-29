@@ -6,12 +6,22 @@ import com.blankj.utilcode.utils.Utils;
 import com.bugtags.library.Bugtags;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 import static com.bugtags.library.Bugtags.BTGInvocationEventNone;
 
 
 public class BaseApplication extends Application {
+
+
+    /**
+     * 主线程池
+     */
+    public static Executor MAIN_EXECUTOR = Executors.newFixedThreadPool(5);
+
 
     @Override
     public void onCreate() {

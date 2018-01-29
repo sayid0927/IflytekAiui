@@ -3,8 +3,8 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
     <mapping directory="$PROJECT_DIR$/../CommonSDK" vcs="svn" />
-    <mapping directory="$PROJECT_DIR$/../CommonSDK" vcs="svn" />
     <mapping directory="$PROJECT_DIR$/../CommonSDK/common" vcs="svn" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib" vcs="svn" />
   </component>
 </project>
