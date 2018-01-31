@@ -43,6 +43,15 @@ public final class PreferUtil {
     private static final String CONNECT_WIFI = "connect_wifi";
     private static final String CONNECT_WIFI_SSID = "connect_wifi_ssid";
 
+    private static final String EMOJI_CONNECT_STATE= "emoji_connect_state";
+
+    public  void  setEmojiConnectState(boolean flag){
+        putBoolean(EMOJI_CONNECT_STATE,flag);
+    }
+
+    public  boolean getEmojiConnectState(){
+        return  getBoolean(EMOJI_CONNECT_STATE,true);
+    }
 
     public  String getConnectWifiSSID(){
         return  getString(CONNECT_WIFI_SSID,"");

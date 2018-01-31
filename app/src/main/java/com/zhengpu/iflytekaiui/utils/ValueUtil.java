@@ -72,9 +72,11 @@ public class ValueUtil {
         String stmp;
         StringBuilder sb = new StringBuilder("");
         for (byte aByte : bytes) {
+
             stmp = Integer.toHexString(aByte & 0xFF);
             sb.append((stmp.length() == 1) ? "0" + stmp : stmp);
             sb.append(" ");
+
         }
         return sb.toString().toUpperCase().trim();
     }
@@ -90,6 +92,7 @@ public class ValueUtil {
         }
         return b;
     }
+
     private static int parse(char c) {
         if (c >= 'a')
             return (c - 'a' + 10) & 0x0f;
@@ -97,5 +100,4 @@ public class ValueUtil {
             return (c - 'A' + 10) & 0x0f;
         return (c - '0') & 0x0f;
     }
-
 }

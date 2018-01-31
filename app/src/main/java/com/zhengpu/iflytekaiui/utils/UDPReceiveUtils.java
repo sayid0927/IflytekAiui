@@ -1,5 +1,8 @@
 package com.zhengpu.iflytekaiui.utils;
 
+import com.blankj.utilcode.utils.ToastUtils;
+import com.orhanobut.logger.Logger;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -34,36 +37,17 @@ public class UDPReceiveUtils extends Thread {
         this.udpReceiveListenter = udpReceiveListenter;
     }
 
-
-
-//    private void joinGroup() {
-//        // 多播配置
-//        try {
-//            multicastSocket = new MulticastSocket(BROADCAST_PORT);
-//            inetAddress = InetAddress.getByName(BROADCAST_IP);
-//            multicastSocket.joinGroup(inetAddress);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @Override
     public void run() {
         while (true) {
-
             byte buf[] = new byte[1024];
             DatagramPacket dp = new DatagramPacket(buf, buf.length, inetAddress, BROADCAST_PORT);
             try {
                 multicastSocket.receive(dp);
                 String content = new String(buf, 0, dp.getLength());
-
+                Logger.e("content"+content);
                 if(udpReceiveListenter!=null)
                     udpReceiveListenter.UDPReceiveSuccess(content);
-
-//                Message msg = new Message();
-//                msg.what = RECEIVE_MSG;
-//                msg.obj = content;
-//                handler.sendMessage(msg);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

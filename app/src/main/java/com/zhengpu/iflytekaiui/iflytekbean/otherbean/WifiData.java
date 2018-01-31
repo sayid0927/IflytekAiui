@@ -20,6 +20,8 @@ public class WifiData implements Serializable {
 
     private String  msg;
 
+//    private  int
+
 
     public String getMsg() {
         return msg;

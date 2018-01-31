@@ -20,6 +20,7 @@ public class ReceivedSerialPortDataAction {
 
     private Context context;
     private String[] bytes;
+    private byte[] originalBytes;
     private long TouchHeadTime;
     private int TouchHeadCount;
     private long TouchFaceTime;
@@ -27,10 +28,12 @@ public class ReceivedSerialPortDataAction {
     private long TouchHandTime;
     private int TouchHandCount;
 
-    public ReceivedSerialPortDataAction(String[] bytes, Context context) {
+
+    public ReceivedSerialPortDataAction(byte[] originalBytes, String[] bytes, Context context) {
 
         this.context = context;
         this.bytes = bytes;
+        this.originalBytes = originalBytes;
 
         this.TouchHeadTime = PreferUtil.getInstance().getTouchHeadTime(); // 上次的时间戳
         this.TouchHeadCount = PreferUtil.getInstance().getTouchHeadCount();
@@ -44,8 +47,8 @@ public class ReceivedSerialPortDataAction {
     }
 
     public void start() {
-        if (bytes != null ) {
-            if (bytes[0].equals("5A")  && bytes[1] .equals("50") ) {
+        if (bytes != null) {
+            if (bytes[0].equals("5A") && bytes[1].equals("50")) {
                 switch (bytes[4]) {
                     case "82":
                         Logger.e(" 查询  >>>   ");
@@ -58,15 +61,15 @@ public class ReceivedSerialPortDataAction {
                         break;
                     case "03":    //心跳   心跳为设备发起，时间间隔默认为10s,(PAD可以根据设置命令来改变心跳时间间隔)。
 
-                        byte b=Byte.valueOf(bytes[3]) ;
+                        byte b = Byte.valueOf(bytes[3]);
 //                        int b1=b<<4&0xf0; //左移4位和 11110000与运算 低位变高位
 //                        int b2=b>>>4&0x0f;//右移4位和 00001111与运算 高位变低位
 
-                        int b1=b>>4&0x0f; //左移4位和 11110000与运算 低位变高位
-                        int b2=b<<4&0xf0;//右移4位和 00001111与运算 高位变低位
+                        int b1 = b >> 4 & 0x0f; //左移4位和 11110000与运算 低位变高位
+                        int b2 = b << 4 & 0xf0;//右移4位和 00001111与运算 高位变低位
 
-                        int c=b1+b2; //高位低位相加得到高地位互换
-                        Logger.e("高四位与低四位交换   >>>   "+String.valueOf(c));
+                        int c = b1 + b2; //高位低位相加得到高地位互换
+                        Logger.e("高四位与低四位交换   >>>   " + String.valueOf(c));
 
                         break;
                     case "04":  //主动上报   如体感触摸，温度超过上限，有火警，盗警，烟雾报警等。
@@ -86,16 +89,30 @@ public class ReceivedSerialPortDataAction {
 
     private void ParserByte() {
 
-//        if(bytes[7]){
-//
-//        }
+        int pir = originalBytes[7];
+        String hongwai = function1(pir);
+//        String strPir = hongwai.substring(hongwai.length() - 2);
+        int i = Integer.parseInt(hongwai.substring(hongwai.length() - 2));
+        Logger.e("pir  "+ String.valueOf(i));
+        switch (i){
+            case 00 :  //  前后没人
+                Logger.e("pir   前后没人");
+                break;
+            case  10:   //前面有人
+                Logger.e("pir  前面有人");
+              SpeechRecognizerService.stratFaceservice(context);
+                break;
+            case 01:   //后面有人
+                Logger.e("pir   后面有人");
+                break;
+            case 11 :  //  前后有人
+                Logger.e("pir    前后有人");
+                SpeechRecognizerService.stratFaceservice(context);
+                break;
 
+        }
 
-
-
-
-
-        if (bytes[8].equals("00") ) {  //头顶
+        if (bytes[8].equals("00")) {  //头顶
 
             if (TimeUtils.getTimeSpanByNow(TouchHeadTime, ConstUtils.TimeUnit.MIN) < 5) {
                 switch (TouchHeadCount) {
@@ -119,7 +136,7 @@ public class ReceivedSerialPortDataAction {
                 PreferUtil.getInstance().setTouchHeadTime(TimeUtils.getNowTimeMills());
                 PreferUtil.getInstance().setTouchHeadCount(1);
             }
-        } else if (bytes[8].equals("01")  || bytes[6] .equals("02") ) {  //脸
+        } else if (bytes[8].equals("01") || bytes[6].equals("02")) {  //脸
 
             if (TimeUtils.getTimeSpanByNow(TouchFaceTime, ConstUtils.TimeUnit.MIN) < 5) {
                 switch (TouchFaceCount) {
@@ -144,7 +161,7 @@ public class ReceivedSerialPortDataAction {
                 PreferUtil.getInstance().setTouchFaceCount(1);
             }
 
-        } else if (bytes[8] .equals("03")  || bytes[8] .equals("04") ) {  //手
+        } else if (bytes[8].equals("03") || bytes[8].equals("04")) {  //手
 
             if (TimeUtils.getTimeSpanByNow(TouchHandTime, ConstUtils.TimeUnit.MIN) < 5) {
                 switch (TouchHandCount) {
@@ -168,11 +185,16 @@ public class ReceivedSerialPortDataAction {
                 PreferUtil.getInstance().setTouchHandTime(TimeUtils.getNowTimeMills());
                 PreferUtil.getInstance().setTouchHandCount(1);
             }
-        } else if (bytes[8] .equals("05") ) {   //前胸
+        } else if (bytes[8].equals("05")) {   //前胸
             SpeechRecognizerService.startSpeech(AppController.TouchFront, context.getResources().getString(R.string.Touch_Front_text), context.getResources().getString(R.string.Touch_Front_text));
-        } else if (bytes[8] .equals("06")) {   //后背
+        } else if (bytes[8].equals("06")) {   //后背
             SpeechRecognizerService.startSpeech(AppController.TouchBack, context.getResources().getString(R.string.Touch_Back_text), context.getResources().getString(R.string.Touch_Back_text));
         }
+    }
+
+
+    private static String function1(int n) {
+        return Integer.toBinaryString(n);
     }
 
 }

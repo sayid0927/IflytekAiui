@@ -37,6 +37,87 @@ public class TelephoneBean {
     private String sid;
     private List<SemanticBean> semantic;
 
+
+    public DataBean getData() {
+        return data;
+    }
+
+    public void setData(DataBean data) {
+        this.data = data;
+    }
+
+    public int getRc() {
+        return rc;
+    }
+
+    public void setRc(int rc) {
+        this.rc = rc;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public AnswerBean getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(AnswerBean answer) {
+        this.answer = answer;
+    }
+
+    public String getDialog_stat() {
+        return dialog_stat;
+    }
+
+    public void setDialog_stat(String dialog_stat) {
+        this.dialog_stat = dialog_stat;
+    }
+
+    public boolean isSave_history() {
+        return save_history;
+    }
+
+    public void setSave_history(boolean save_history) {
+        this.save_history = save_history;
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+
+    public List<SemanticBean> getSemantic() {
+        return semantic;
+    }
+
+    public void setSemantic(List<SemanticBean> semantic) {
+        this.semantic = semantic;
+    }
+
     public static  class  SemanticBean{
 
         private  String intent;

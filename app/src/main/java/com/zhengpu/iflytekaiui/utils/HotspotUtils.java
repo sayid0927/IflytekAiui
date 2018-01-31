@@ -96,6 +96,7 @@ public class HotspotUtils implements WifiChangeListener {
         //  创建热点
         openHotspot();
 
+
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.wifi.STATE_CHANGE");
         filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
@@ -103,6 +104,7 @@ public class HotspotUtils implements WifiChangeListener {
         //注册广播接收
         context.registerReceiver(wifiChangeBroadcastReceiver, filter);
         wifiChangeBroadcastReceiver.setWifiChangeListener(this);
+
 
     }
 
@@ -233,7 +235,7 @@ public class HotspotUtils implements WifiChangeListener {
             Logger.e("开启热点  接收到的消息 -------->>>" + response);
             final HotspotRequest hotspotRequest = JsonParser.parseHotspotRequest(response);
             switch (hotspotRequest.getMsg()) {
-                case "connect success":       // 对方连接热点成功
+                case "connect_success":       // 对方连接热点成功
                     InetAddress inetAddress = receivePacket.getAddress();
                     int port = receivePacket.getPort();
                     //通过UDP发送文件列表给接收端
@@ -249,16 +251,18 @@ public class HotspotUtils implements WifiChangeListener {
                     wifiMgr.openWifi();
                     PreferUtil.getInstance().setConnectWifi(true);
                     PreferUtil.getInstance().setConnectWifiSSID(WIFISSID);
+
                     // 监听机器人表情发过来的消息  通过UDP发送 有消息自动触发
-                    UDPReceiveUtils udpReceiveUtils = new UDPReceiveUtils();
-                    udpReceiveUtils.setUdpReceiveListenter(new UDPReceiveListenter() {
-                        @Override
-                        public void UDPReceiveSuccess(String content) {
-                            if (hotsposListener != null)
-                                hotsposListener.UDPReceiveSuccess(content);
-                        }
-                    });
-                    udpReceiveUtils.run();
+//                    UDPReceiveUtils udpReceiveUtils = new UDPReceiveUtils();
+//                    udpReceiveUtils.setUdpReceiveListenter(new UDPReceiveListenter() {
+//                        @Override
+//                        public void UDPReceiveSuccess(String content) {
+//                            if (hotsposListener != null)
+//                                hotsposListener.UDPReceiveSuccess(content);
+//                        }
+//                    });
+//                    udpReceiveUtils.run();
+//                    udpReceiveUtils.start();
                     break;
             }
         }
@@ -271,7 +275,7 @@ public class HotspotUtils implements WifiChangeListener {
     private void sendFileInfoListToFileReceiverWithUdp(InetAddress ipAddress, int serverPort) {
 
         WifiData wifiInfo = new WifiData();
-        wifiInfo.setMsg("wifi psw");
+        wifiInfo.setMsg("wifi_psw");
         wifiInfo.setPassword(PWD);
         wifiInfo.setSsid(WIFISSID);
         wifiInfo.setCode(1001);

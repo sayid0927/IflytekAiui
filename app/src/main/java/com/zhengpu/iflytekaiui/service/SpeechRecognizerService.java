@@ -2,14 +2,15 @@ package com.zhengpu.iflytekaiui.service;
 
 import android.app.Service;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.utils.ConstUtils;
-import com.blankj.utilcode.utils.DeviceUtils;
 import com.blankj.utilcode.utils.TimeUtils;
+import com.blankj.utilcode.utils.ToastUtils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechUtility;
@@ -37,6 +38,8 @@ import com.zhengpu.iflytekaiui.utils.HotsposListener;
 import com.zhengpu.iflytekaiui.utils.HotspotUtils;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 import com.zhengpu.iflytekaiui.utils.SpeechDialog;
+import com.zhengpu.iflytekaiui.utils.UDPReceiveListenter;
+import com.zhengpu.iflytekaiui.utils.UDPReceiveUtils;
 import com.zhengpu.iflytekaiui.utils.UDPSendUtils;
 import com.zhengpu.iflytekaiui.utils.ValueUtil;
 
@@ -54,7 +57,7 @@ import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAccessibilitySettingsO
  */
 
 public class SpeechRecognizerService extends Service implements IGetVoiceToWord, WakeUpListener, IGetWordToVoice, KuGuoMuiscPlayListener,
-        OpenSerialPortListener,HotsposListener {
+        OpenSerialPortListener,HotsposListener, UDPReceiveListenter {
 
     private IflytekWakeUp iflytekWakeUp;
     private static VoiceToWords voiceToWords;
@@ -64,6 +67,8 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     private String message;
     private String SpeechType = "0";
     private SpeechDialog speechDialog;
+    private  boolean isConnect=true;
+    private static boolean FaceServiceState=false;
 
 
 
@@ -79,7 +84,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 
         HermesEventBus.getDefault().register(SpeechRecognizerService.this);
 //        Utils.init(this);
-        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5a694592," + SpeechConstant.FORCE_LOGIN + "=true");// 传递科大讯飞appid
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5a71aaeb," + SpeechConstant.FORCE_LOGIN + "=true");// 传递科大讯飞appid
 //        PreferUtil.getInstance().init(this);
 
         //初始化讯飞语音识别
@@ -98,9 +103,13 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         serialUtils = SerialUtils.getInstance(this);
         serialUtils.setSerialPortListener(this);
         speechDialog = new SpeechDialog(this, this.getResources().getString(R.string.no_network_text));
+
+
         //  创建热点
-        HotspotUtils hotspotUtils = HotspotUtils.getHotspotUtils(this);
-        hotspotUtils.setHotsposListener(this);
+//        HotspotUtils hotspotUtils = HotspotUtils.getHotspotUtils(this);
+//        hotspotUtils.setHotsposListener(this);
+
+//        connectWifiSuccess();
 
 //        byte[] byteAutoReset = new byte[]{0x5A,0x50,0x03,0x02,0x02,0x01,0x05,0x0D,0x0A}; //复位
 //        sendSerialMessageBytes(byteAutoReset);
@@ -128,6 +137,10 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
             }
         }else if(reqService.equals("AAAAA")){
             startSpeech("AAAAA", reqMessage, reqMessage);
+        } else if(reqService.equals("state_start")){
+            FaceServiceState =true;
+        }else if(reqService.equals("state_end")){
+            FaceServiceState =false;
         } else {
             startSpeech(reqService, reqMessage, reqMessage);
         }
@@ -217,6 +230,19 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 
     }
 
+
+    /**
+     *  启动人脸识别服务
+     */
+    public static void  stratFaceservice(Context context){
+        if(!FaceServiceState) {
+            Intent intent = new Intent();
+            ComponentName componentName = new ComponentName("com.zeunpro.login", "com.zeunpro.login.FaceRecognitionService");
+            intent.setComponent(componentName);
+            context.startService(intent);
+        }
+    }
+
     /***
      *
      * 机器人语音播报结束回调
@@ -226,15 +252,15 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     @Override
     public void SpeechEnd(String service) {
         switch (service) {
-            case AppController.LAUNCHER_TEXT:
-
-                Intent intent = new Intent();
-                ComponentName componentName = new ComponentName("com.zeunpro.login", "com.zeunpro.login.FaceRecognitionService");
-                intent.setComponent(componentName);
-                startService(intent);
-                voiceToWords.startRecognizer();
-
-                break;
+//            case AppController.LAUNCHER_TEXT:
+//
+//                Intent intent = new Intent();
+//                ComponentName componentName = new ComponentName("com.zeunpro.login", "com.zeunpro.login.FaceRecognitionService");
+//                intent.setComponent(componentName);
+//                startService(intent);
+//                voiceToWords.startRecognizer();
+//
+//                break;
             case AppController.SHOWLOWVOICE_TEXT:
                 voiceToWords.mIatDestroy();
                 break;
@@ -277,7 +303,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     }
 
     /***
-     *   设置机器人语音播报内容
+     * 设置机器人语音播报内容
      * @param service    语义场景
      * @param text         播报内容
      * @param request    发送给其他线程的内容
@@ -355,19 +381,22 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     /**
      * 发送串口消息失败
      */
+
     @Override
     public void onDataSentFail() {
+
     }
 
     /**
      * 接收串口消息成功
      */
+
     @Override
     public void onDataReceivedSuccess(byte[] bytes) {
 
         String value = ValueUtil.getInstance().bytesToHexStr(bytes);
-
-        ReceivedSerialPortDataAction receivedSerialPortDataAction = new ReceivedSerialPortDataAction(value.split(" "), this);
+        com.orhanobut.logger.Logger.e("value>>>   "+value);
+        ReceivedSerialPortDataAction receivedSerialPortDataAction = new ReceivedSerialPortDataAction(bytes,value.split(" "), this);
         receivedSerialPortDataAction.start();
 
     }
@@ -394,10 +423,15 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void UDPReceiveSuccess(String content) {
+        com.orhanobut.logger.Logger.e(" udp信息"+content);
 
         final HotspotRequest hotspotRequest = JsonParser.parseHotspotRequest(content);
           if(hotspotRequest.getStatus()==1){   // 收到表情命令确认
 
+          }else  if(hotspotRequest.getMsg().equals("emoji_connect_success")){   //连接成功
+
+              com.orhanobut.logger.Logger.e("双方连接wifi成功");
+              PreferUtil.getInstance().setEmojiConnectState(false);
 
           }
     }
@@ -408,16 +442,37 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     @Override
     public void connectWifiSuccess() {
 
-        UDPSendUtils  udpSendUtils = UDPSendUtils.getInstance();
+       new Thread(){
+           @Override
+           public void run() {
+               try {
+                   sleep(2000);
+                   UDPReceiveUtils udpReceiveUtils = new UDPReceiveUtils();
+                   udpReceiveUtils.setUdpReceiveListenter(SpeechRecognizerService.this);
+                   udpReceiveUtils.start();
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+           }
+       }.start();
 
-        WifiData wifiInfo = new WifiData();
-        wifiInfo.setMsg("wifi psw");
-        wifiInfo.setPassword("ZP1");
-        wifiInfo.setSsid("zeunpro123");
-        wifiInfo.setCode(1001);
-        String wifiString = WifiData.toJsonStr(wifiInfo);
-        udpSendUtils.send(wifiString);
+        new Thread(){
+            @Override
+            public void run() {
+                while (PreferUtil.getInstance().getEmojiConnectState()){
 
+                    UDPSendUtils  udpSendUtils = UDPSendUtils.getInstance();
+                    WifiData wifiInfo = new WifiData();
+                    wifiInfo.setMsg("pad_connect_success");
+                    wifiInfo.setPassword("ZP1");
+                    wifiInfo.setSsid("zeunpro123");
+                    wifiInfo.setCode(1002);
+                    String wifiString = WifiData.toJsonStr(wifiInfo);
+                    udpSendUtils.send(wifiString);
+
+                }
+            }
+        }.start();
     }
 
     /***

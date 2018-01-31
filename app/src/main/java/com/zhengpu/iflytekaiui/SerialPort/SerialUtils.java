@@ -37,7 +37,7 @@ public class SerialUtils implements OnOpenSerialPortListener {
         ArrayList<Device> devices = serialPortFinder.getDevices();
 
         for(int i =0;i<devices.size();i++){
-           if(devices.get(i).getFile().getAbsolutePath().equals("/dev/ttyMT2")){
+           if(devices.get(i).getFile().getAbsolutePath().equals("/dev/ttyMT1")){
              device = devices.get(i);
              break;
            }
@@ -49,10 +49,8 @@ public class SerialUtils implements OnOpenSerialPortListener {
                    .setOnSerialPortDataListener(new OnSerialPortDataListener() {
                        @Override
                        public void onDataReceived(byte[] bytes) {
-//                           Logger.e("onDataReceived  [ byte[] ]: " + Arrays.toString(bytes));
-//                           Logger.e( "onDataReceived [ String ]: " + new String(bytes));
-
-
+                           Logger.e("onDataReceived  [ byte[] ]: " + Arrays.toString(bytes));
+//                       Logger.e( "onDataReceived [ String ]: " + new String(bytes));
 
                            String value = ValueUtil.getInstance().bytesToHexStr(bytes);
                            Logger.e("接收成功 >>>   " + value);

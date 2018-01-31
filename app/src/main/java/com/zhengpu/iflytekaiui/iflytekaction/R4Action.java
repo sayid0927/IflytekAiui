@@ -37,6 +37,7 @@ public class R4Action {
             switch (spaceCount) {
                 case 0:
                     SpeechRecognizerService.startSpeech(AppController.R4_0, context.getResources().getString(R.string.r4_0_text), request);
+
                     break;
                 case 1:
                     SpeechRecognizerService.startSpeech(AppController.R4_1, context.getResources().getString(R.string.r4_1_text), request);

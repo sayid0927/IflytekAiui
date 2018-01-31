@@ -17,6 +17,8 @@ import static com.bugtags.library.Bugtags.BTGInvocationEventNone;
 public class BaseApplication extends Application {
 
 
+
+    public static BaseApplication baseApplication;
     /**
      * 主线程池
      */
@@ -30,5 +32,10 @@ public class BaseApplication extends Application {
         HermesEventBus.getDefault().init(this);
         Utils.init(this);
         PreferUtil.getInstance().init(this);
+    }
+
+
+    public static BaseApplication getBaseApplication() {
+        return baseApplication;
     }
 }

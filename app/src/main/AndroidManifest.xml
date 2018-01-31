@@ -28,6 +28,7 @@
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <!-- 读取短信权限 -->
     <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <!-- 获取地理位置权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -43,6 +44,7 @@
     <!-- 往sdcard中读写数据的权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:name=".base.BaseApplication"
@@ -72,30 +74,21 @@
             android:exported="true" />
 
         <!--<service-->
-        <!--android:name=".service.SpeechRecognizerService"-->
-        <!--android:exported="true"-->
-        <!--android:process=":SpeechRecognizerService">-->
-
-        <!--<intent-filter>-->
-        <!--<action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />-->
-        <!--</intent-filter>-->
-        <!--</service>-->
-
-        <!--<receiver android:name=".broadcastReceiver.WifiChangeBroadcastReceiver">-->
+            <!--android:name=".service.SpeechRecognizerService"-->
+            <!--android:exported="true"-->
+            <!--android:process=":SpeechRecognizerService">-->
 
             <!--<intent-filter>-->
-                <!--<action android:name="android.net.wifi.STATE_CHANGE" />-->
-                <!--<action android:name="android.net.wifi.WIFI_STATE_CHANGED" />-->
+                <!--<action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />-->
             <!--</intent-filter>-->
-
-        <!--</receiver>-->
+        <!--</service>-->
 
 
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
 
         <!--<provider-->
