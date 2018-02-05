@@ -68,28 +68,29 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <service android:name=".service.SpeechRecognizerService" />
+        <!--<service android:name=".service.SpeechRecognizerService" />-->
+
         <service
             android:name="xiaofei.library.hermes.HermesService$HermesService0"
             android:exported="true" />
 
-        <!--<service-->
-            <!--android:name=".service.SpeechRecognizerService"-->
-            <!--android:exported="true"-->
-            <!--android:process=":SpeechRecognizerService">-->
+        <service
+            android:name=".service.SpeechRecognizerService"
+            android:exported="true"
+            android:process=":SpeechRecognizerService">
 
-            <!--<intent-filter>-->
-                <!--<action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />-->
-            <!--</intent-filter>-->
-        <!--</service>-->
+            <intent-filter>
+                <action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />
+            </intent-filter>
+        </service>
 
 
-        <activity android:name=".MainActivity">
-        <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
+        <!--<activity android:name=".MainActivity">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
+        <!--<category android:name="android.intent.category.LAUNCHER" />-->
+        <!--</intent-filter>-->
+        <!--</activity>-->
 
         <!--<provider-->
         <!--android:name=".content.BookProvider"-->
@@ -103,6 +104,9 @@
             android:exported="true"
             android:permission="com.zhengpu.iflytekaiui.BOOK_PROVIDER"
             android:process=":provider" />
+
+        <!--<meta-data android:value="5a73f4ccf43e480e110001a0" android:name="UMENG_APPKEY"/>-->
+        <!--<meta-data android:value="Channel_1" android:name="UMENG_CHANNEL"/>-->
 
     </application>
 

@@ -1,6 +1,7 @@
 package com.zhengpu.iflytekaiui.iflytekaction;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.blankj.utilcode.utils.ConstUtils;
 import com.blankj.utilcode.utils.TimeUtils;
@@ -88,25 +89,24 @@ public class ReceivedSerialPortDataAction {
     }
 
     private void ParserByte() {
-
-        int pir = originalBytes[7];
-        String hongwai = function1(pir);
-//        String strPir = hongwai.substring(hongwai.length() - 2);
+        String hongwai = function1(originalBytes[7]);
         int i = Integer.parseInt(hongwai.substring(hongwai.length() - 2));
         Logger.e("pir  "+ String.valueOf(i));
         switch (i){
             case 00 :  //  前后没人
-                Logger.e("pir   前后没人");
+                Log.e("TAG","BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+
                 break;
             case  10:   //前面有人
-                Logger.e("pir  前面有人");
-              SpeechRecognizerService.stratFaceservice(context);
+                Log.e("TAG","CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+                SpeechRecognizerService.stratFaceservice(context);
+
                 break;
             case 01:   //后面有人
-                Logger.e("pir   后面有人");
+                Log.e("TAG","DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
                 break;
             case 11 :  //  前后有人
-                Logger.e("pir    前后有人");
+                Log.e("TAG","EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
                 SpeechRecognizerService.stratFaceservice(context);
                 break;
 

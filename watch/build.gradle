@@ -83,7 +83,6 @@ dependencies {
     compile 'com.meituan.android.walle:library:1.1.4'
     compile 'me.weyye.hipermission:library:1.0.7'
 
-
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.0'
     // 多dex 打包的类库
     compile 'com.android.support:multidex:1.0.1'

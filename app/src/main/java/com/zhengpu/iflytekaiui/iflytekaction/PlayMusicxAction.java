@@ -124,9 +124,11 @@ public class PlayMusicxAction {
                     if (PalyMode != 0) {
                         if (isAppInstalled(context, "com.tencent.qqmusicpad")) {
                             //  打开应用
-                            updatePlayStart(context, 7, artist + song);
+                            updatePlayStart(context, 7, artist +song);
                             updatePlayStart(context, 1, "true");
-                            updatePlayStart(context, 3, "true");
+                            updatePlayStart(context, 8, "true");
+                            updatePlayStart(context, 9, "true");
+                            updatePlayStart(context, 11, "true");
 
                             OpenAppAction openAppAction = new OpenAppAction("QQ音乐HD", context);
                             openAppAction.start();
@@ -156,7 +158,6 @@ public class PlayMusicxAction {
         commDialog.setOnClickListener(new CommDialog.OnClickListener() {
             @Override
             public void onButtonOKClick() {
-//            String keywords = "安卓酷狗音乐App";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 String url = "http://sj.qq.com/myapp/detail.htm?apkName=com.tencent.qqmusicpad";

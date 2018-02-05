@@ -112,12 +112,9 @@ public class MoreMusicXAction {
             @Override
             public void onButtonOKClick() {
 
-//            String keywords = "安卓酷狗音乐App";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 String url = "http://sj.qq.com/myapp/detail.htm?apkName=com.tencent.qqmusicpad";
-//               String url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode("音乐")+"HD";
-//            String url = "https://m.baidu.com/from=844b/s?word=" + EncodeUtils.urlEncode(keywords);
                 intent.setData(Uri.parse(url));
                 context.startActivity(intent);
                 commDialog.dismiss();

@@ -51,6 +51,7 @@ import com.zhengpu.watch.iflytekbean.request.AppUpdateModel;
 import com.zhengpu.watch.iflytekbean.request.RobotCommandRequest;
 import com.zhengpu.watch.presenter.contract.MainContract;
 import com.zhengpu.watch.presenter.impl.MainActivityPresenter;
+import com.zhengpu.watch.serivce.StartCommandService;
 import com.zhengpu.watch.ui.adapter.HelpFragmentAdapter;
 import com.zhengpu.watch.ui.adapter.TalkApadtep;
 import com.zhengpu.watch.ui.adapter.TalkNewsItemLiserten;
@@ -168,11 +169,23 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     @Override
     public void initView() {
 
-        Intent intent = new Intent();
-        intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
-                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService"));
-        // 绑定服务
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+//        Intent intent = new Intent();
+//        intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
+//                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService"));
+//        // 绑定服务
+//        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        try {
+            Intent intent = new Intent();
+            ComponentName componentName = new ComponentName("com.zhengpu.iflytekaiui",
+                    "com.zhengpu.iflytekaiui.service.SpeechRecognizerService");
+            intent.setComponent(componentName);
+            startService(intent);
+        }catch (Exception e){
+            e.toString();
+        }
+
+        startService(new Intent(this, StartCommandService.class));
 
         fragmentList = new ArrayList<>();
         fragmentList.add(new FragmentHelp_1());

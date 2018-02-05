@@ -308,9 +308,7 @@ public static java.lang.String TABLENAME;
 -keep class xiaofei.library.hermeseventbus.**{*;}
 -dontwarn com.xiaofei.library.hermeseventbus.**
 
-
-
-
+-keep class com.umeng.commonsdk.** {*;}
 
 
 

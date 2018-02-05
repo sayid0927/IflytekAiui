@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Application;
 import android.os.Build;
 
+import com.blankj.utilcode.utils.ThreadPoolUtils;
 import com.blankj.utilcode.utils.Utils;
 import com.bugtags.library.Bugtags;
 //import com.commonsdk.application.BaseApplication;
@@ -27,6 +28,8 @@ public class MyApplication extends Application {
     public static MyApplication baseApplication;
 
     private static AppComponent appComponent;
+
+    public  static ThreadPoolUtils MAIN_EXECUTOR =   new ThreadPoolUtils(ThreadPoolUtils.Type.FixedThread,5);
 
 
     @Override

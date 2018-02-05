@@ -30,14 +30,14 @@ public class MyAccessibilityService extends AccessibilityService {
         AccessibilityNodeInfo rootNode = this.getRootInActiveWindow();
 
         switch (nowPackageName) {
-            case "cn.kuwo.kwmusichd":
-                playController = getPlayStart(MyAccessibilityService.this, 1);
-                if (playController.isPlay.equals("true")) {
-                    KuGou kuGou = new KuGou(this);
-                    kuGou.start(rootNode);
-                }
-
-                break;
+//            case "cn.kuwo.kwmusichd":
+//                playController = getPlayStart(MyAccessibilityService.this, 1);
+//                if (playController.isPlay.equals("true")) {
+//                    KuGou kuGou = new KuGou(this);
+//                    kuGou.start(rootNode);
+//                }
+//
+//                break;
 
             case "com.qiyi.video.pad":
 
@@ -49,16 +49,11 @@ public class MyAccessibilityService extends AccessibilityService {
                 break;
 
             case "com.tencent.qqmusicpad":
-//            case  "com.kugou.playerHDyy":
-
-//                playController = getPlayStart(MyAccessibilityService.this, 1);
-//                if (playController.isPlay.equals("true")) {
+                playController = getPlayStart(MyAccessibilityService.this, 1);
+                if (playController.isPlay.equals("true")) {
                     QQ qq = new QQ(this);
                     qq.start(rootNode);
-
-//                }
-
-
+                }
                 break;
         }
     }
