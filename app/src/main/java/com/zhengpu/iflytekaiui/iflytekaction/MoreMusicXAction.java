@@ -86,6 +86,7 @@ public class MoreMusicXAction {
                     updatePlayStart(context, 8, "true");
                     updatePlayStart(context, 9, "true");
                     updatePlayStart(context, 11, "true");
+                    updatePlayStart(context, 12, "true");
                     OpenAppAction openAppAction = new OpenAppAction("QQ音乐HD", context);
                     openAppAction.start();
                     SpeechRecognizerService.startSpeech(service, "为你打开QQ音乐播放" + artist + song, strRequest);

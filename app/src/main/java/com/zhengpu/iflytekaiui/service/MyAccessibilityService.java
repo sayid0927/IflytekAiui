@@ -30,15 +30,6 @@ public class MyAccessibilityService extends AccessibilityService {
         AccessibilityNodeInfo rootNode = this.getRootInActiveWindow();
 
         switch (nowPackageName) {
-//            case "cn.kuwo.kwmusichd":
-//                playController = getPlayStart(MyAccessibilityService.this, 1);
-//                if (playController.isPlay.equals("true")) {
-//                    KuGou kuGou = new KuGou(this);
-//                    kuGou.start(rootNode);
-//                }
-//
-//                break;
-
             case "com.qiyi.video.pad":
 
                 playController = getPlayStart(MyAccessibilityService.this, 4);

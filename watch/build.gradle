@@ -48,12 +48,9 @@ android {
 }
 
 dependencies {
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:25.4.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-
     implementation 'xiaofei.library:hermes-eventbus:0.3.0'
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
@@ -79,13 +76,18 @@ dependencies {
     compile 'com.github.open-android:ViewPager:0.1.0'
     compile 'com.bugtags.library:bugtags-lib:2.2.3'
     compile 'com.bugtags.library:bugtags-lib:latest.integration'
-    compile 'com.umeng.analytics:analytics:latest.integration'
+
     compile 'com.meituan.android.walle:library:1.1.4'
     compile 'me.weyye.hipermission:library:1.0.7'
-
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.0'
     // 多dex 打包的类库
     compile 'com.android.support:multidex:1.0.1'
 
-//    compile project(path: ':CommonSDK:common')
+    compile 'com.umeng.sdk:common:latest.integration'
+    compile 'com.umeng.sdk:analytics:latest.integration'
+
+
+
+    //    compile project(path: ':CommonSDK:common')
+
 }

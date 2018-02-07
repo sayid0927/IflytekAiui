@@ -45,7 +45,6 @@ public class StartCommandService extends Service {
             public void run() {
                 List<ActivityManager.RunningServiceInfo> mServiceList = mActivityManager.getRunningServices(100);
                 if (!ServiceIsStart(mServiceList, "com.zhengpu.iflytekaiui.service.SpeechRecognizerService")) {
-                    Log.e("TAG","11111111111111111111111111");
                     try {
                         Intent intent = new Intent();
                         ComponentName componentName = new ComponentName("com.zhengpu.iflytekaiui",
@@ -56,9 +55,6 @@ public class StartCommandService extends Service {
                         e.toString();
                     }
                 }else {
-
-                    Log.e("TAG","2222222222222222222222222");
-
                 }
             }
         };

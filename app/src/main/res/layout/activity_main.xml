@@ -9,10 +9,4 @@
     android:gravity="center"
     tools:context="com.zhengpu.iflytekaiui.MainActivity">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MMM" />
-
 </LinearLayout>
