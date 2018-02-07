@@ -1,5 +1,7 @@
 package com.zhengpu.iflytekaiui.service;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.blankj.utilcode.utils.ConstUtils;
@@ -14,13 +17,19 @@ import com.blankj.utilcode.utils.TimeUtils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechUtility;
+import com.umeng.analytics.MobclickAgent;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.SerialPort.OpenSerialPortListener;
 import com.zhengpu.iflytekaiui.SerialPort.SerialUtils;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.base.BaseApplication;
+import com.zhengpu.iflytekaiui.iflytekaction.MoreMusicXAction;
+import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
 import com.zhengpu.iflytekaiui.iflytekaction.ReceivedSerialPortDataAction;
+import com.zhengpu.iflytekaiui.iflytekaction.ShipingAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
+import com.zhengpu.iflytekaiui.iflytekbean.MusicXBean;
+import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.HotspotRequest;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.WifiData;
 import com.zhengpu.iflytekaiui.iflytekutils.IGetVoiceToWord;
@@ -41,11 +50,16 @@ import com.zhengpu.iflytekaiui.utils.SpeechDialog;
 import com.zhengpu.iflytekaiui.utils.UDPReceiveListenter;
 import com.zhengpu.iflytekaiui.utils.UDPReceiveUtils;
 import com.zhengpu.iflytekaiui.utils.UDPSendUtils;
+import com.zhengpu.iflytekaiui.utils.UmengUtil;
 import com.zhengpu.iflytekaiui.utils.ValueUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
@@ -76,9 +90,12 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     private static boolean FaceServiceState = false;
 
 
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+
 
         if (!isAccessibilitySettingsOn(this)) {
             Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -87,9 +104,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         }
 
         HermesEventBus.getDefault().register(SpeechRecognizerService.this);
-//    Utils.init(this);
         SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5a71aaeb," + SpeechConstant.FORCE_LOGIN + "=true");// 传递科大讯飞appid
-//     PreferUtil.getInstance().init(this);
 
         //初始化讯飞语音识别
         voiceToWords = VoiceToWords.getInstance(this);
@@ -243,15 +258,11 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 //            intent.setComponent(componentName);
 //            context.startService(intent);
             try {
-                Log.e("TAG","FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
-
-
                 Intent intent = new Intent();
                 ComponentName componentName = new ComponentName("com.zeunpro.login", "com.zeunpro.login.FaceRecognitionActivity");
                 intent.setComponent(componentName);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-
-                Log.e("TAG","GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
             } catch (Exception e) {
                 e.toString();
             }
@@ -267,6 +278,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     @Override
     public void SpeechEnd(String service) {
         switch (service) {
+
             case AppController.SHOWLOWVOICE_TEXT:
                 voiceToWords.mIatDestroy();
                 break;

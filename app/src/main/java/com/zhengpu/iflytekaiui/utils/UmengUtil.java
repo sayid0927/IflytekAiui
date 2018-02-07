@@ -1,6 +1,5 @@
-package com.zhengpu.watch.utils;
+package com.zhengpu.iflytekaiui.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.blankj.utilcode.utils.AppUtils;
@@ -33,12 +32,17 @@ public class UmengUtil {
     }
 
     public static synchronized void UmengUtilInit(Context context) {
+
         if (umengUtil == null) {
             umengUtil = new UmengUtil(context);
         }
+
     }
 
     public static void onEvent(String EventsName) {
+        MobclickAgent.onEvent(context, EventsName, maps);
+    }
+    public static void onEvent(Context context, String EventsName) {
         MobclickAgent.onEvent(context, EventsName, maps);
     }
 }

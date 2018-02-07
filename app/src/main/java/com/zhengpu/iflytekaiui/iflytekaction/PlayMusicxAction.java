@@ -129,6 +129,7 @@ public class PlayMusicxAction {
                             updatePlayStart(context, 8, "true");
                             updatePlayStart(context, 9, "true");
                             updatePlayStart(context, 11, "true");
+                            updatePlayStart(context, 12, "true");
 
                             OpenAppAction openAppAction = new OpenAppAction("QQ音乐HD", context);
                             openAppAction.start();

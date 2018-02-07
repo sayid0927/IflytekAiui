@@ -50,17 +50,10 @@ public class SerialUtils implements OnOpenSerialPortListener {
                    .setOnSerialPortDataListener(new OnSerialPortDataListener() {
                        @Override
                        public void onDataReceived(byte[] bytes) {
-//                           Logger.e("onDataReceived  [ byte[] ]: " + Arrays.toString(bytes));
+//                       Logger.e("onDataReceived  [ byte[] ]: " + Arrays.toString(bytes));
 //                       Logger.e( "onDataReceived [ String ]: " + new String(bytes));
-
-                           String value = ValueUtil.getInstance().bytesToHexStr(bytes);
-
-                           Log.e("TAG","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
-//                           Logger.e("   " + value);
-
                            //  接收成功
-                           if(serialPortListener!=null )
+                           if(bytes!=null && bytes.length!=0 &&  serialPortListener!=null)
                                serialPortListener.onDataReceivedSuccess(bytes);
 
                        }

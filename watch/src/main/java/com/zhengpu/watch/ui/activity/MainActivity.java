@@ -1,9 +1,12 @@
 package com.zhengpu.watch.ui.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
@@ -11,6 +14,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -60,12 +64,18 @@ import com.zhengpu.watch.ui.fragment.FragmentHelp_Home_2;
 import com.zhengpu.watch.ui.view.HelpViewPager;
 import com.zhengpu.watch.utils.DesBase64Util;
 import com.zhengpu.watch.utils.JsonParser;
+import com.zhengpu.watch.utils.UmengUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,15 +175,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
         mPresenter.detachView();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void initView() {
-
-//        Intent intent = new Intent();
-//        intent.setComponent(new ComponentName("com.zhengpu.iflytekaiui",
-//                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService"));
-//        // 绑定服务
-//        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
         try {
             Intent intent = new Intent();
@@ -181,6 +184,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     "com.zhengpu.iflytekaiui.service.SpeechRecognizerService");
             intent.setComponent(componentName);
             startService(intent);
+
         }catch (Exception e){
             e.toString();
         }
@@ -201,7 +205,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
         rvSpeech.setAdapter(mAdapter);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         mAdapter.setTalkNewsItemLiserten(this);
-//    UmengUtil.onEvent(MainActivity.this, "MainActivity", null);
+
         mainActivity = this;
         HermesEventBus.getDefault().register(this);
 
@@ -209,6 +213,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
         requestMessage.setMessage("1");
         requestMessage.setService("SpeechStart");
         HermesEventBus.getDefault().post(requestMessage);
+
+        UmengUtil.onEvent("MainActivity");
 
 //        HashMap<String, String> map = new HashMap<>();
 //        JSONObject json = new JSONObject();
@@ -273,6 +279,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                 robotCommandRequest = new RobotCommandRequest();
                 robotCommandRequest.setText(Message);
                 mData.add(robotCommandRequest);
+                UmengUtil.onEvent("wakeup_text");
 
             case "r4_0":  //听不懂一次
                 r4Bean = JsonParser.parseResultR4Bean(Message);
@@ -285,7 +292,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     robotCommandRequest = new RobotCommandRequest();
                     robotCommandRequest.setText(getResources().getString(R.string.r4_0_text));
                     mData.add(robotCommandRequest);
-
+                    UmengUtil.onEvent("r4_0");
                 }
                 break;
             case "r4_1":// 听不懂二次
@@ -299,7 +306,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     robotCommandRequest = new RobotCommandRequest();
                     robotCommandRequest.setText(getResources().getString(R.string.r4_1_text));
                     mData.add(robotCommandRequest);
-
+                    UmengUtil.onEvent("r4_1");
                 }
                 break;
             case "r4_2": // 听不懂三次
@@ -312,7 +319,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     robotCommandRequest = new RobotCommandRequest();
                     robotCommandRequest.setText(getResources().getString(R.string.r4_2_text));
                     mData.add(robotCommandRequest);
-
+                    UmengUtil.onEvent("r4_2");
                 }
                 break;
 
@@ -323,6 +330,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     userChatBean.setText(openQABean.getText());
                     mData.add(userChatBean);
                     mData.add(openQABean);
+                    UmengUtil.onEvent("openQA");
                 }
                 break;
 
@@ -335,7 +343,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     robotCommandRequest = new RobotCommandRequest();
                     robotCommandRequest.setText(getResources().getString(R.string.no_text));
                     mData.add(robotCommandRequest);
-
+                    UmengUtil.onEvent("joke");
                 }
                 break;
 
@@ -348,6 +356,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     robotCommandRequest = new RobotCommandRequest();
                     robotCommandRequest.setText(getResources().getString(R.string.no_text));
                     mData.add(robotCommandRequest);
+                    UmengUtil.onEvent("story");
                 }
                 break;
 
@@ -358,6 +367,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     userChatBean.setText(poetryBean.getText());
                     mData.add(userChatBean);
                     mData.add(poetryBean);
+                    UmengUtil.onEvent("poetry");
                 }
                 break;
 
@@ -368,6 +378,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     userChatBean.setText(baikeBean.getText());
                     mData.add(userChatBean);
                     mData.add(baikeBean);
+                    UmengUtil.onEvent("baike");
                 }
                 break;
 
@@ -391,7 +402,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     userChatBean.setText(datetimeBean.getText());
                     mData.add(userChatBean);
                     mData.add(datetimeBean);
-
+                    UmengUtil.onEvent("datetime");
                 }
                 break;
 
@@ -402,6 +413,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     userChatBean.setText(calcBean.getText());
                     mData.add(userChatBean);
                     mData.add(calcBean);
+                    UmengUtil.onEvent("calc");
                 }
                 break;
 
@@ -412,7 +424,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     userChatBean.setText(weatherBean.getText());
                     mData.add(userChatBean);
                     mData.add(weatherBean);
-
+                    UmengUtil.onEvent("weather");
                 }
                 break;
 
@@ -430,7 +442,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     mData.add(userChatBean);
                     mData.add(robotCommandRequest);
                     mData.add(newsBean);
-
+                    UmengUtil.onEvent("news");
                 }
 
                 break;
@@ -444,6 +456,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     robotCommandRequest = new RobotCommandRequest();
                     robotCommandRequest.setText(videoBean.getAnswer().getText());
                     mData.add(robotCommandRequest);
+                    UmengUtil.onEvent("video_1");
                 }
                 break;
 
@@ -471,6 +484,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     robotCommandRequest = new RobotCommandRequest();
                     robotCommandRequest.setText("正在" + value);
                     mData.add(robotCommandRequest);
+                    UmengUtil.onEvent("OPENAPPTEST_RobotCommand");
                 }
                 break;
 
@@ -479,7 +493,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                 robotCommandRequest = new RobotCommandRequest();
                 robotCommandRequest.setText(Message);
                 mData.add(robotCommandRequest);
-
+                UmengUtil.onEvent("showLowVoice_text");
                 break;
 
             case "flight":   //订票服务
@@ -492,6 +506,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     mData.add(userChatBean);
                     mData.add(flightBean);
 
+
                 } else {
                     if (flightBean != null && flightBean.getText() != null) {
                         userChatBean = new UserChatBean();
@@ -502,6 +517,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                         mData.add(robotCommandRequest);
                     }
                 }
+                UmengUtil.onEvent("flight");
                 break;
 
         }
@@ -636,5 +652,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 //        install.setDataAndType(uri, "application/vnd.android.package-archive");
 //        this.startActivity(install);
 //    }
+
 
 }

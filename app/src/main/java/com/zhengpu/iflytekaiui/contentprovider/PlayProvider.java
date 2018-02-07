@@ -57,7 +57,6 @@ public class PlayProvider  extends ContentProvider {
         mDb.execSQL("insert into start values(11, 'search_smart_result_view_container','true');");
         mDb.execSQL("insert into start values(12, 'song_album_img','true');");
 
-
     }
 
     @Nullable

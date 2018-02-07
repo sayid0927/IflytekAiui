@@ -284,11 +284,6 @@ public static java.lang.String TABLENAME;
 -dontnote rx.internal.util.PlatformDependent
 
 
-
-
-
-
-
 # ProGuard configurations for Bugtags
 -keepattributes LineNumberTable,SourceFile
 
@@ -308,7 +303,17 @@ public static java.lang.String TABLENAME;
 -keep class xiaofei.library.hermeseventbus.**{*;}
 -dontwarn com.xiaofei.library.hermeseventbus.**
 
+
+
+# ProGuard configurations for umeng  友盟
+
 -keep class com.umeng.commonsdk.** {*;}
 
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
 
-
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}

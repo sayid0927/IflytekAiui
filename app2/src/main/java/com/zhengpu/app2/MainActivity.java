@@ -74,11 +74,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.butn_sendMessage:
 
-//                String message = editText.getText().toString().trim();
-//                RequestMessage requestMessage = new RequestMessage();
-//                requestMessage.setMessage(message);
-//                requestMessage.setService("AAAAA");
-//                HermesEventBus.getDefault().post(requestMessage);
+                String message = editText.getText().toString().trim();
+                RequestMessage requestMessage = new RequestMessage();
+                requestMessage.setMessage(message);
+                requestMessage.setService("AAAAA");
+                HermesEventBus.getDefault().post(requestMessage);
 
                 break;
         }
