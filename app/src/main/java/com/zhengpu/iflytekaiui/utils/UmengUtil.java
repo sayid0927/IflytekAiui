@@ -36,6 +36,7 @@ public class UmengUtil {
         if (umengUtil == null) {
             umengUtil = new UmengUtil(context);
         }
+
     }
 
     public static void onEvent(String EventsName) {
