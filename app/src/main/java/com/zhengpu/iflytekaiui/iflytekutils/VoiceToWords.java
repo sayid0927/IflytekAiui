@@ -18,19 +18,25 @@ import com.zhengpu.iflytekaiui.iflytekaction.BaikeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.CalcAction;
 import com.zhengpu.iflytekaiui.iflytekaction.CustomBaikeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.DateTimeAction;
+import com.zhengpu.iflytekaiui.iflytekaction.FaceserviceAction;
 import com.zhengpu.iflytekaiui.iflytekaction.FlightAction;
+import com.zhengpu.iflytekaiui.iflytekaction.IflyJokeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.JokeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.MoreMusicXAction;
 import com.zhengpu.iflytekaiui.iflytekaction.NewsAction;
 import com.zhengpu.iflytekaiui.iflytekaction.OpenAppAction;
+import com.zhengpu.iflytekaiui.iflytekaction.OpenCameraAction;
 import com.zhengpu.iflytekaiui.iflytekaction.OpenQaAction;
+import com.zhengpu.iflytekaiui.iflytekaction.OpenVideoAction;
 import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
 import com.zhengpu.iflytekaiui.iflytekaction.PoetryAction;
 import com.zhengpu.iflytekaiui.iflytekaction.R4Action;
 import com.zhengpu.iflytekaiui.iflytekaction.RobotCommandAction;
 import com.zhengpu.iflytekaiui.iflytekaction.ShipingAction;
+import com.zhengpu.iflytekaiui.iflytekaction.ShootAction;
 import com.zhengpu.iflytekaiui.iflytekaction.StoryAction;
 import com.zhengpu.iflytekaiui.iflytekaction.TelephoneAction;
+import com.zhengpu.iflytekaiui.iflytekaction.VideoCammandAction;
 import com.zhengpu.iflytekaiui.iflytekaction.WeatherAction;
 import com.zhengpu.iflytekaiui.iflytekaction.WebSearchAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaikeBean;
@@ -38,18 +44,24 @@ import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CalcBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CustomBaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.DatetimeBean;
+import com.zhengpu.iflytekaiui.iflytekbean.FaceserviceBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FlightBean;
+import com.zhengpu.iflytekaiui.iflytekbean.IflyJokeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.JokeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.MusicXBean;
 import com.zhengpu.iflytekaiui.iflytekbean.NewsBean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenAppBean;
+import com.zhengpu.iflytekaiui.iflytekbean.OpenCameraBean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenQABean;
+import com.zhengpu.iflytekaiui.iflytekbean.OpenVideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.PoetryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.R4Bean;
 import com.zhengpu.iflytekaiui.iflytekbean.RobotCommandBean;
+import com.zhengpu.iflytekaiui.iflytekbean.ShootBean;
 import com.zhengpu.iflytekaiui.iflytekbean.StoryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.TelephoneBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
+import com.zhengpu.iflytekaiui.iflytekbean.VideoCammandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WebSearchBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.CustomMusicBean;
@@ -231,6 +243,9 @@ public class VoiceToWords {
                     int rc = jsonObject2.getInt("rc");
                     if (service != "" && rc != 4) {
                         judgeService(service, text);
+
+
+
                     } else {
                         R4Action r4Action = new R4Action(context, text);
                         r4Action.start();
@@ -307,12 +322,11 @@ public class VoiceToWords {
                     break;
 
 //                case AppController.OPENAPPTEST_CUSTOM_BAIKE: // 自定义百科 对人名 地名进行百科
-//
 //                    CustomBaikeBean customBaikeBean = JsonParser.parseResultCustomBaikeBean(text);
 //                    CustomBaikeAction customBaikeAction = new CustomBaikeAction(service, customBaikeBean, text, context);
 //                    customBaikeAction.start();
-//
 //                    break;
+
                 case AppController.CALC:     //  数值计算问答
 
                     CalcBean calcBean = JsonParser.parseResultCalc(text);
@@ -339,9 +353,13 @@ public class VoiceToWords {
 
                 case AppController.JOKE:  // 笑话的点播
 
-                    JokeBean jokeBean = JsonParser.parseResultJokeBean(text);
-                    JokeAction jokeAction = new JokeAction(service, jokeBean, text, context);
-                    jokeAction.start();
+                    IflyJokeBean iflyJokeBean =  JsonParser.parseResultIflyJokeBean(text);
+                    IflyJokeAction iflyJokeAction = new IflyJokeAction(service, iflyJokeBean, text, context);
+                    iflyJokeAction.start();
+
+//                    JokeBean jokeBean = JsonParser.parseResultJokeBean(text);
+//                    JokeAction jokeAction = new JokeAction(service, jokeBean, text, context);
+//                    jokeAction.start();
 
                     break;
 
@@ -384,6 +402,34 @@ public class VoiceToWords {
                     }
 
                     break;
+
+                case AppController.OPENAPPTEST_OPENCAMERA:      //打开相机
+                    OpenCameraBean openCameraBean = JsonParser.parseResultOpenCameraBean(text);
+                    OpenCameraAction openCameraAction = new OpenCameraAction(service, context);
+                    openCameraAction.start();
+                    break;
+
+
+                case AppController.OPENAPPTEST_SHOOT:      //声控拍摄相机
+                    ShootBean shootBean = JsonParser.parseResultShootBean(text);
+                    ShootAction shootAction = new ShootAction(service, context);
+                    shootAction.start();
+                    break;
+
+
+                case AppController.OPENAPPTEST_OPENVIDEO:      //打开录像机
+                    OpenVideoBean openVideoBean = JsonParser.parseResultOpenVideoBean(text);
+                    OpenVideoAction openVideoAction = new OpenVideoAction(service, context);
+                    openVideoAction.start();
+                    break;
+
+                case AppController.OPENAPPTEST_VIDEO_ACTION:      //声控录像机
+                    VideoCammandBean videoCammandBean = JsonParser.parseResultVideoCammandBean(text);
+                    VideoCammandAction videoCammandAction = new VideoCammandAction(videoCammandBean, context);
+                    videoCammandAction.start();
+                    break;
+
+
 
                 case AppController.OPENQA:   //     开放问答
 
@@ -448,6 +494,14 @@ public class VoiceToWords {
                     TelephoneBean telephoneBean = JsonParser.parseResultTelephoneBean(text);
                     TelephoneAction telephoneAction = new TelephoneAction(service, telephoneBean, text, context);
                     telephoneAction.start();
+
+                    break;
+
+                case  AppController.FACESERVICE:
+
+                    FaceserviceBean faceserviceBean = JsonParser.parseResultFaceserviceBean(text);
+                    FaceserviceAction faceserviceAction = new FaceserviceAction(service, faceserviceBean, text, context);
+                    faceserviceAction.start();
 
                     break;
 

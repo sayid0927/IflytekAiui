@@ -48,8 +48,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:maxWidth="500dp"
-                android:text="" />
+                android:textSize="@dimen/sp_16"
+                android:maxWidth="500dp" />
 
             <TextView
                 android:maxWidth="500dp"
@@ -58,6 +58,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_title"
                 android:layout_centerInParent="true"
+                android:textSize="@dimen/sp_16"
+
                 android:text="" />
 
         </RelativeLayout>

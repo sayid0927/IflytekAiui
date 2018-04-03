@@ -22,8 +22,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }//设置模屏
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
         setContentView(getLayoutId());
         ButterKnife.bind(this);
         setupActivityComponent(MyApplication.getBaseApplication().getAppComponent());

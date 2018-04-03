@@ -1,26 +1,16 @@
 package com.zhengpu.iflytekaiui;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
+import android.util.Log;
 
-import com.blankj.utilcode.utils.ConvertUtils;
-import com.blankj.utilcode.utils.Utils;
-import com.orhanobut.logger.Logger;
-import com.umeng.commonsdk.UMConfigure;
-import com.zhengpu.iflytekaiui.utils.PreferUtil;
+import com.blankj.utilcode.utils.RegexUtils;
+import com.zhengpu.iflytekaiui.base.BaseActivity;
 import com.zhengpu.iflytekaiui.utils.UmengUtil;
 
 import java.io.BufferedReader;
@@ -34,24 +24,37 @@ import java.lang.reflect.Method;
  * Created by Administrator on 2017/12/23 0023.
  */
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
-
-    private Button button;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        UmengUtil.onEvent(this,"Test");
-        startService(new Intent().setComponent(new ComponentName("com.zhengpu.iflytekaiui",
-                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService")));
+    public int getLayoutId() {
+        return R.layout.activity_main;
+    }
 
-        Logger.e("Test     "+ getDeviceInfo(this));
+    @Override
+    public void attachView() {
+
+    }
+
+    @Override
+    public void detachView() {
 
     }
 
 
+
+    @Override
+    public void initView() {
+
+        Intent intent = new Intent();
+        ComponentName componentName = new ComponentName("com.zhengpu.iflytekaiui",
+                "com.zhengpu.iflytekaiui.service.SpeechRecognizerService");
+        intent.setComponent(componentName);
+        startService(intent);
+        UmengUtil.onEvent("Test");
+//        Log.e("TAG",getDeviceInfo(this));
+    }
 
     public static boolean checkPermission(Context context, String permission) {
         boolean result = false;
@@ -130,6 +133,4 @@ public class MainActivity extends Activity {
         }
         return null;
     }
-
-
 }

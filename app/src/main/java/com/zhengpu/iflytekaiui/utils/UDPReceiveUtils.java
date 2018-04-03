@@ -20,6 +20,14 @@ public class UDPReceiveUtils extends Thread {
     private InetAddress inetAddress;
     private UDPReceiveListenter udpReceiveListenter;
 
+    public static UDPReceiveUtils install;
+
+    public static UDPReceiveUtils getUDPReceiveUtils() {
+        if (install == null)
+            return new UDPReceiveUtils();
+        return install;
+    }
+
     public UDPReceiveUtils() {
         try {
             multicastSocket = new MulticastSocket(BROADCAST_PORT);
@@ -36,8 +44,6 @@ public class UDPReceiveUtils extends Thread {
 
     @Override
     public void run() {
-        try {
-            sleep(2000);
             while (true) {
                 byte buf[] = new byte[1024];
                 DatagramPacket dp = new DatagramPacket(buf, buf.length, inetAddress, BROADCAST_PORT);
@@ -50,8 +56,5 @@ public class UDPReceiveUtils extends Thread {
                     e.printStackTrace();
                 }
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-    }
 }

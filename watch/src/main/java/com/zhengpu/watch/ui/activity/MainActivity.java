@@ -185,7 +185,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
             intent.setComponent(componentName);
             startService(intent);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.toString();
         }
 
@@ -214,7 +214,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
         requestMessage.setService("SpeechStart");
         HermesEventBus.getDefault().post(requestMessage);
 
-        UmengUtil.onEvent("MainActivity");
+        UmengUtil.onEvent("Test");
 
 //        HashMap<String, String> map = new HashMap<>();
 //        JSONObject json = new JSONObject();
@@ -312,7 +312,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
             case "r4_2": // 听不懂三次
                 r4Bean = JsonParser.parseResultR4Bean(Message);
                 if (r4Bean != null && r4Bean.getText() != null) {
-
                     userChatBean = new UserChatBean();
                     userChatBean.setText(r4Bean.getText());
                     mData.add(userChatBean);
@@ -336,15 +335,25 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 
             case "joke":  //笑话问答
                 JokeBean jokeBean = JsonParser.parseResultJokeBean(Message);
-                if (jokeBean != null && jokeBean.getText() != null) {
+                if (jokeBean != null && jokeBean.getData() != null && jokeBean.getData().getResult() != null && jokeBean.getData().getResult().size() != 0) {
                     userChatBean = new UserChatBean();
                     userChatBean.setText(jokeBean.getText());
                     mData.add(userChatBean);
                     robotCommandRequest = new RobotCommandRequest();
-                    robotCommandRequest.setText(getResources().getString(R.string.no_text));
+                    robotCommandRequest.setText(jokeBean.getData().getResult().get(0).getContent());
                     mData.add(robotCommandRequest);
                     UmengUtil.onEvent("joke");
                 }
+//                JokeBean jokeBean = JsonParser.parseResultJokeBean(Message);
+//                if (jokeBean != null && jokeBean.getText() != null) {
+//                    userChatBean = new UserChatBean();
+//                    userChatBean.setText(jokeBean.getText());
+//                    mData.add(userChatBean);
+//                    robotCommandRequest = new RobotCommandRequest();
+//                    robotCommandRequest.setText(getResources().getString(R.string.no_text));
+//                    mData.add(robotCommandRequest);
+//                    UmengUtil.onEvent("joke");
+//                }
                 break;
 
             case "story":  //故事问答

@@ -29,10 +29,18 @@ public class AppController {
     public static final String POETRY = "poetry";       // 诗词对答
     public static final String STORY = "story";          // 故事
     public static final String VIDEO = "video";   // 视频
+    public static final String OPENAPPTEST_OPENCAMERA = "OPENAPPTEST.OpenCamera";   // 打开相机
+    public static final String OPENAPPTEST_SHOOT = "OPENAPPTEST.Shoot";   // 打开相机
+    public static final String OPENAPPTEST_OPENVIDEO = "OPENAPPTEST.OpenVideo";   // 打开相机
+    public static final String OPENAPPTEST_VIDEO_ACTION = "OPENAPPTEST.Video_Action";   // 打开相机
+
+
 
 
     public static final String TELEPHONE = "telephone";   // 打电话
     public static final String WEBSEARCH = "websearch";   // 网络搜索
+
+    public  static  final  String FACESERVICE ="OPENAPPTEST.Faceservice" ;
 
     public static final String VIDEO_1 = "video_1";   // 多轮视频对话
     public static final String OPENAPPTEST_MUSIC_DEMO = "OPENAPPTEST.music_demo";

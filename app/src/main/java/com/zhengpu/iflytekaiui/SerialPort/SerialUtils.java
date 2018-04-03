@@ -9,6 +9,7 @@ import com.kongqw.serialportlibrary.SerialPortManager;
 import com.kongqw.serialportlibrary.listener.OnOpenSerialPortListener;
 import com.kongqw.serialportlibrary.listener.OnSerialPortDataListener;
 import com.orhanobut.logger.Logger;
+import com.zhengpu.iflytekaiui.utils.UmengUtil;
 import com.zhengpu.iflytekaiui.utils.ValueUtil;
 
 import java.io.File;
@@ -52,23 +53,23 @@ public class SerialUtils implements OnOpenSerialPortListener {
                        public void onDataReceived(byte[] bytes) {
 //                       Logger.e("onDataReceived  [ byte[] ]: " + Arrays.toString(bytes));
 //                       Logger.e( "onDataReceived [ String ]: " + new String(bytes));
+                           String value = ValueUtil.getInstance().bytesToHexStr(bytes);
+                           Logger.e(" 接收成功>>  "+value);
+                           UmengUtil.onEvent("SerialPort",value);
                            //  接收成功
                            if(bytes!=null && bytes.length!=0 &&  serialPortListener!=null)
                                serialPortListener.onDataReceivedSuccess(bytes);
-
                        }
                        @Override
                        public void onDataSent(byte[] bytes) {
 //                           Logger.e("onDataSent [ byte[] ]: " + Arrays.toString(bytes));
 //                           Logger.e("onDataSent [ String ]: " + new String(bytes));
 
-
                            String value = ValueUtil.getInstance().bytesToHexStr(bytes);
                            Logger.e("发送成功 >>>   " + value);
                            // 发送成功
                            if(serialPortListener!=null )
                                serialPortListener.onDataSentSuccess();
-
                        }
                    })
                    .openSerialPort(device.getFile(), 115200);

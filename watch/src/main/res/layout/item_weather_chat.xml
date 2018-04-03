@@ -30,6 +30,7 @@
         app:arrowHeight="10dp"
         app:arrowLocation="left"
         app:arrowPosition="55dp"
+
         app:arrowWidth="15dp"
         app:bubbleColor="@color/white"
         app:strokeColor="#CCCCCC">
@@ -89,6 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="深圳"
+
                         android:textColor="@color/color_666666"
                         android:textSize="10sp" />
 

@@ -297,8 +297,10 @@ public static java.lang.String TABLENAME;
 # ProGuard configurations for 讯飞语音
 
 -keep class com.iflytek.**{*;}
+
 -dontwarn com.iflytek.**
 -keepattributes Signature
+
 
 -keep class xiaofei.library.hermeseventbus.**{*;}
 -dontwarn com.xiaofei.library.hermeseventbus.**

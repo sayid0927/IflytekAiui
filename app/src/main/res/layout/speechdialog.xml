@@ -35,7 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:visibility="invisible"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -43,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <Button
@@ -66,11 +66,11 @@
 
             <Button
                 android:id="@+id/but_cancel"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
+                android:layout_width="110dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:background="@drawable/blue_dialog"
-                android:text="取消"
+                android:text="确定"
                 android:textSize="13dp"
                 android:textColor="@color/color_4d4d4d" />
         </LinearLayout>

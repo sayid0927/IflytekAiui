@@ -9,18 +9,24 @@ import com.zhengpu.iflytekaiui.iflytekbean.CalcBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CmdBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CustomBaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.DatetimeBean;
+import com.zhengpu.iflytekaiui.iflytekbean.FaceserviceBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FlightBean;
+import com.zhengpu.iflytekaiui.iflytekbean.IflyJokeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.JokeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.MusicXBean;
 import com.zhengpu.iflytekaiui.iflytekbean.NewsBean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenAppBean;
+import com.zhengpu.iflytekaiui.iflytekbean.OpenCameraBean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenQABean;
+import com.zhengpu.iflytekaiui.iflytekbean.OpenVideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.PoetryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.R4Bean;
 import com.zhengpu.iflytekaiui.iflytekbean.RobotCommandBean;
+import com.zhengpu.iflytekaiui.iflytekbean.ShootBean;
 import com.zhengpu.iflytekaiui.iflytekbean.StoryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.TelephoneBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
+import com.zhengpu.iflytekaiui.iflytekbean.VideoCammandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WebSearchBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.CustomMusicBean;
@@ -30,13 +36,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.IfMusicResBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.TianJokeBean;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import java.lang.reflect.Type;
-
-import retrofit2.http.PUT;
 
 public class JsonParser {
 
@@ -362,6 +362,83 @@ public class JsonParser {
             e.printStackTrace();
         }
         return telephoneBean;
+    }
+
+
+    public   static FaceserviceBean parseResultFaceserviceBean(String json) {
+        FaceserviceBean faceserviceBean = new FaceserviceBean();
+        try {
+            Type type = new TypeToken<FaceserviceBean>() {
+            }.getType();
+            faceserviceBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return faceserviceBean;
+    }
+
+
+    public   static OpenCameraBean parseResultOpenCameraBean(String json) {
+        OpenCameraBean openCameraBean = new OpenCameraBean();
+        try {
+            Type type = new TypeToken<OpenCameraBean>() {
+            }.getType();
+            openCameraBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return openCameraBean;
+    }
+
+
+
+    public   static ShootBean parseResultShootBean(String json) {
+        ShootBean shootBean = new ShootBean();
+        try {
+            Type type = new TypeToken<ShootBean>() {
+            }.getType();
+            shootBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return shootBean;
+    }
+
+    public   static OpenVideoBean parseResultOpenVideoBean(String json) {
+        OpenVideoBean openVideoBean = new OpenVideoBean();
+        try {
+            Type type = new TypeToken<OpenVideoBean>() {
+            }.getType();
+            openVideoBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return openVideoBean;
+    }
+
+    public   static VideoCammandBean parseResultVideoCammandBean(String json) {
+        VideoCammandBean videoBean = new VideoCammandBean();
+        try {
+            Type type = new TypeToken<VideoCammandBean>() {
+            }.getType();
+            videoBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return videoBean;
+    }
+
+
+    public   static IflyJokeBean parseResultIflyJokeBean(String json) {
+        IflyJokeBean iflyJokeBean = new IflyJokeBean();
+        try {
+            Type type = new TypeToken<IflyJokeBean>() {
+            }.getType();
+            iflyJokeBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return iflyJokeBean;
     }
 
 

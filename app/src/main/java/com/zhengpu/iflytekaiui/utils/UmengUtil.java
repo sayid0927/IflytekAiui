@@ -5,6 +5,7 @@ import android.content.Context;
 import com.blankj.utilcode.utils.AppUtils;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.umeng.analytics.MobclickAgent;
+import com.zhengpu.iflytekaiui.base.BaseApplication;
 
 import java.util.HashMap;
 
@@ -16,7 +17,7 @@ public class UmengUtil {
 
     private static UmengUtil umengUtil;
     private static Context context;
-    private static   HashMap<String, String> maps;
+    private static HashMap<String, String> maps;
 
     private UmengUtil(Context context) {
 
@@ -36,13 +37,18 @@ public class UmengUtil {
         if (umengUtil == null) {
             umengUtil = new UmengUtil(context);
         }
-
     }
 
     public static void onEvent(String EventsName) {
-        MobclickAgent.onEvent(context, EventsName, maps);
+        if (BaseApplication.Statistics) {
+            MobclickAgent.onEvent(context, EventsName, maps);
+        }
     }
-    public static void onEvent(Context context, String EventsName) {
-        MobclickAgent.onEvent(context, EventsName, maps);
+
+    public static void onEvent(String EventsName, String putStr) {
+        if (BaseApplication.Statistics) {
+            maps.put("putStr", putStr);
+            MobclickAgent.onEvent(context, EventsName, maps);
+        }
     }
 }

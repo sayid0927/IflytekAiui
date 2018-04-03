@@ -40,6 +40,13 @@ public class SpeechDialog extends Dialog  {
         setCancelable(true);//弹出框不可以换返回键取消
         setCanceledOnTouchOutside(true);//失去焦点不会消失
         textView = (TextView)findViewById(R.id.tv_context) ;
+        Button button = (Button)findViewById(R.id.but_cancel);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                  dismiss();
+            }
+        });
         textView.setText(s);
 
     }

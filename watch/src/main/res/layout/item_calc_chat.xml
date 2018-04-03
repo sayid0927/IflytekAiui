@@ -28,7 +28,8 @@
         android:padding="10dp"
         android:text=""
         android:textColor="@color/black"
-        android:textSize="12sp"
+        android:textSize="@dimen/sp_16"
+
         app:angle="5dp"
         app:arrowCenter="true"
         app:arrowHeight="10dp"

@@ -1,4 +1,4 @@
-include ':app', ':app2', ':watch', ':lib'
+include ':app', ':app2', ':watch', ':Javalib'
 
 //
 //

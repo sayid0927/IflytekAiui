@@ -91,7 +91,7 @@ public class ReceivedSerialPortDataAction {
     private void ParserByte() {
 
         String hongwai = function1(originalBytes[7]);
-        if(hongwai!=null &&!hongwai.equals("null")  && hongwai.length()>=2) {
+        if (hongwai != null && !hongwai.equals("null") && hongwai.length() >= 2) {
             int i = Integer.parseInt(hongwai.substring(hongwai.length() - 2));
             Logger.e("pir  " + String.valueOf(i));
             switch (i) {
@@ -107,84 +107,84 @@ public class ReceivedSerialPortDataAction {
                     break;
             }
         }
-//        if (bytes[8].equals("00")) {  //头顶
-//
-//            if (TimeUtils.getTimeSpanByNow(TouchHeadTime, ConstUtils.TimeUnit.MIN) < 5) {
-//                switch (TouchHeadCount) {
-//                    case 0:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
-//                        break;
-//                    case 1:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_1), context.getResources().getString(R.string.Touch_Head_text_1));
-//                        break;
-//                    case 2:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_2), context.getResources().getString(R.string.Touch_Head_text_2));
-//                        break;
-//                    default:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
-//                }
-//                TouchHeadCount++;
-//                if (TouchHeadCount == 3) TouchHeadCount = 0;
-//                PreferUtil.getInstance().setTouchHeadCount(TouchHeadCount);
-//            } else {
-//                SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
-//                PreferUtil.getInstance().setTouchHeadTime(TimeUtils.getNowTimeMills());
-//                PreferUtil.getInstance().setTouchHeadCount(1);
-//            }
-//        } else if (bytes[8].equals("01") || bytes[6].equals("02")) {  //脸
-//
-//            if (TimeUtils.getTimeSpanByNow(TouchFaceTime, ConstUtils.TimeUnit.MIN) < 5) {
-//                switch (TouchFaceCount) {
-//                    case 0:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchRightFace, context.getResources().getString(R.string.Touch_Face_text_0), context.getResources().getString(R.string.Touch_Face_text_0));
-//                        break;
-//                    case 1:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchRightFace, context.getResources().getString(R.string.Touch_Face_text_1), context.getResources().getString(R.string.Touch_Face_text_1));
-//                        break;
-//                    case 2:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchRightFace, context.getResources().getString(R.string.Touch_Face_text_2), context.getResources().getString(R.string.Touch_Face_text_2));
-//                        break;
-//                    default:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchRightFace, context.getResources().getString(R.string.Touch_Face_text_0), context.getResources().getString(R.string.Touch_Face_text_0));
-//                }
-//                TouchFaceCount++;
-//                if (TouchFaceCount == 3) TouchFaceCount = 0;
-//                PreferUtil.getInstance().setTouchFaceCount(TouchFaceCount);
-//            } else {
-//                SpeechRecognizerService.startSpeech(AppController.TouchRightFace, context.getResources().getString(R.string.Touch_Face_text_0), context.getResources().getString(R.string.Touch_Face_text_0));
-//                PreferUtil.getInstance().setTouchFaceTime(TimeUtils.getNowTimeMills());
-//                PreferUtil.getInstance().setTouchFaceCount(1);
-//            }
-//
-//        } else if (bytes[8].equals("03") || bytes[8].equals("04")) {  //手
-//
-//            if (TimeUtils.getTimeSpanByNow(TouchHandTime, ConstUtils.TimeUnit.MIN) < 5) {
-//                switch (TouchHandCount) {
-//                    case 0:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchRightHand, context.getResources().getString(R.string.Touch_Hand_text_0), context.getResources().getString(R.string.Touch_Hand_text_0));
-//                        break;
-//                    case 1:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchRightHand, context.getResources().getString(R.string.Touch_Hand_text_1), context.getResources().getString(R.string.Touch_Hand_text_1));
-//                        break;
-//                    case 2:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchRightHand, context.getResources().getString(R.string.Touch_Hand_text_2), context.getResources().getString(R.string.Touch_Hand_text_2));
-//                        break;
-//                    default:
-//                        SpeechRecognizerService.startSpeech(AppController.TouchRightHand, context.getResources().getString(R.string.Touch_Hand_text_0), context.getResources().getString(R.string.Touch_Hand_text_0));
-//                }
-//                TouchHandCount++;
-//                if (TouchHandCount == 3) TouchHandCount = 0;
-//                PreferUtil.getInstance().setTouchHandCount(TouchHandCount);
-//            } else {
-//                SpeechRecognizerService.startSpeech(AppController.TouchRightHand, context.getResources().getString(R.string.Touch_Hand_text_0), context.getResources().getString(R.string.Touch_Hand_text_0));
-//                PreferUtil.getInstance().setTouchHandTime(TimeUtils.getNowTimeMills());
-//                PreferUtil.getInstance().setTouchHandCount(1);
-//            }
-//        } else if (bytes[8].equals("05")) {   //前胸
-//            SpeechRecognizerService.startSpeech(AppController.TouchFront, context.getResources().getString(R.string.Touch_Front_text), context.getResources().getString(R.string.Touch_Front_text));
-//        } else if (bytes[8].equals("06")) {   //后背
-//            SpeechRecognizerService.startSpeech(AppController.TouchBack, context.getResources().getString(R.string.Touch_Back_text), context.getResources().getString(R.string.Touch_Back_text));
-//        }
+        if (bytes[9].equals("00")||bytes[9].equals("07")) {  //头顶
+
+            if (TimeUtils.getTimeSpanByNow(TouchHeadTime, ConstUtils.TimeUnit.MIN) < 5) {
+                switch (TouchHeadCount) {
+                    case 0:
+                        SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
+                        break;
+                    case 1:
+                        SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_1), context.getResources().getString(R.string.Touch_Head_text_1));
+                        break;
+                    case 2:
+                        SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_2), context.getResources().getString(R.string.Touch_Head_text_2));
+                        break;
+                    default:
+                        SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
+                }
+                TouchHeadCount++;
+                if (TouchHeadCount == 3) TouchHeadCount = 0;
+                PreferUtil.getInstance().setTouchHeadCount(TouchHeadCount);
+            } else {
+                SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
+                PreferUtil.getInstance().setTouchHeadTime(TimeUtils.getNowTimeMills());
+                PreferUtil.getInstance().setTouchHeadCount(1);
+            }
+        } else if (bytes[9].equals("01") || bytes[9].equals("02")) {  //脸
+
+            if (TimeUtils.getTimeSpanByNow(TouchFaceTime, ConstUtils.TimeUnit.MIN) < 5) {
+                switch (TouchFaceCount) {
+                    case 0:
+                        SpeechRecognizerService.startSpeech(AppController.TouchRightFace, context.getResources().getString(R.string.Touch_Face_text_0), context.getResources().getString(R.string.Touch_Face_text_0));
+                        break;
+                    case 1:
+                        SpeechRecognizerService.startSpeech(AppController.TouchRightFace, context.getResources().getString(R.string.Touch_Face_text_1), context.getResources().getString(R.string.Touch_Face_text_1));
+                        break;
+                    case 2:
+                        SpeechRecognizerService.startSpeech(AppController.TouchRightFace, context.getResources().getString(R.string.Touch_Face_text_2), context.getResources().getString(R.string.Touch_Face_text_2));
+                        break;
+                    default:
+                        SpeechRecognizerService.startSpeech(AppController.TouchRightFace, context.getResources().getString(R.string.Touch_Face_text_0), context.getResources().getString(R.string.Touch_Face_text_0));
+                }
+                TouchFaceCount++;
+                if (TouchFaceCount == 3) TouchFaceCount = 0;
+                PreferUtil.getInstance().setTouchFaceCount(TouchFaceCount);
+            } else {
+                SpeechRecognizerService.startSpeech(AppController.TouchRightFace, context.getResources().getString(R.string.Touch_Face_text_0), context.getResources().getString(R.string.Touch_Face_text_0));
+                PreferUtil.getInstance().setTouchFaceTime(TimeUtils.getNowTimeMills());
+                PreferUtil.getInstance().setTouchFaceCount(1);
+            }
+
+        } else if (bytes[9].equals("03") || bytes[9].equals("04")) {  //手
+
+            if (TimeUtils.getTimeSpanByNow(TouchHandTime, ConstUtils.TimeUnit.MIN) < 5) {
+                switch (TouchHandCount) {
+                    case 0:
+                        SpeechRecognizerService.startSpeech(AppController.TouchRightHand, context.getResources().getString(R.string.Touch_Hand_text_0), context.getResources().getString(R.string.Touch_Hand_text_0));
+                        break;
+                    case 1:
+                        SpeechRecognizerService.startSpeech(AppController.TouchRightHand, context.getResources().getString(R.string.Touch_Hand_text_1), context.getResources().getString(R.string.Touch_Hand_text_1));
+                        break;
+                    case 2:
+                        SpeechRecognizerService.startSpeech(AppController.TouchRightHand, context.getResources().getString(R.string.Touch_Hand_text_2), context.getResources().getString(R.string.Touch_Hand_text_2));
+                        break;
+                    default:
+                        SpeechRecognizerService.startSpeech(AppController.TouchRightHand, context.getResources().getString(R.string.Touch_Hand_text_0), context.getResources().getString(R.string.Touch_Hand_text_0));
+                }
+                TouchHandCount++;
+                if (TouchHandCount == 3) TouchHandCount = 0;
+                PreferUtil.getInstance().setTouchHandCount(TouchHandCount);
+            } else {
+                SpeechRecognizerService.startSpeech(AppController.TouchRightHand, context.getResources().getString(R.string.Touch_Hand_text_0), context.getResources().getString(R.string.Touch_Hand_text_0));
+                PreferUtil.getInstance().setTouchHandTime(TimeUtils.getNowTimeMills());
+                PreferUtil.getInstance().setTouchHandCount(1);
+            }
+        } else if (bytes[9].equals("05")) {   //前胸
+            SpeechRecognizerService.startSpeech(AppController.TouchFront, context.getResources().getString(R.string.Touch_Front_text), context.getResources().getString(R.string.Touch_Front_text));
+        } else if (bytes[9].equals("06")) {   //后背
+            SpeechRecognizerService.startSpeech(AppController.TouchBack, context.getResources().getString(R.string.Touch_Back_text), context.getResources().getString(R.string.Touch_Back_text));
+        }
     }
 
     private static String function1(int n) {

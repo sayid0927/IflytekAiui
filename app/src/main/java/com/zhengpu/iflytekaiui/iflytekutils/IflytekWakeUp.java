@@ -4,10 +4,11 @@ import android.content.Context;
 import android.os.Environment;
 
 import com.iflytek.cloud.SpeechConstant;
-
 import com.iflytek.cloud.VoiceWakeuper;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.orhanobut.logger.Logger;
+
+//
 
 public class IflytekWakeUp {
 
@@ -79,7 +80,7 @@ public class IflytekWakeUp {
      * @return 返回文件位置
      */
     private String getResource() {
-        return ResourceUtil.generateResourcePath(mContext, ResourceUtil.RESOURCE_TYPE.assets, "ivw/" + "5a71aaeb" + ".jet");
+        return ResourceUtil.generateResourcePath(mContext, ResourceUtil.RESOURCE_TYPE.assets, "ivw/" + "5ab86273" + ".jet");
     }
 
     /**

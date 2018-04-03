@@ -251,18 +251,6 @@ public class HotspotUtils implements WifiChangeListener {
                     wifiMgr.openWifi();
                     PreferUtil.getInstance().setConnectWifi(true);
                     PreferUtil.getInstance().setConnectWifiSSID(WIFISSID);
-
-                    // 监听机器人表情发过来的消息  通过UDP发送 有消息自动触发
-//                    UDPReceiveUtils udpReceiveUtils = new UDPReceiveUtils();
-//                    udpReceiveUtils.setUdpReceiveListenter(new UDPReceiveListenter() {
-//                        @Override
-//                        public void UDPReceiveSuccess(String content) {
-//                            if (hotsposListener != null)
-//                                hotsposListener.UDPReceiveSuccess(content);
-//                        }
-//                    });
-//                    udpReceiveUtils.run();
-//                    udpReceiveUtils.start();
                     break;
             }
         }

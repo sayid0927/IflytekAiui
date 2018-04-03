@@ -10,6 +10,7 @@ import com.zhengpu.watch.iflytekbean.CmdBean;
 import com.zhengpu.watch.iflytekbean.CustomBaikeBean;
 import com.zhengpu.watch.iflytekbean.DatetimeBean;
 import com.zhengpu.watch.iflytekbean.FlightBean;
+import com.zhengpu.watch.iflytekbean.IflyJokeBean;
 import com.zhengpu.watch.iflytekbean.JokeBean;
 import com.zhengpu.watch.iflytekbean.MusicXBean;
 import com.zhengpu.watch.iflytekbean.NewsBean;
@@ -246,4 +247,21 @@ public class JsonParser {
         }
         return robotCommandBean;
     }
+
+
+    public   static IflyJokeBean parseResultIflyJokeBean(String json) {
+        IflyJokeBean iflyJokeBean = new IflyJokeBean();
+        try {
+            Type type = new TypeToken<IflyJokeBean>() {
+            }.getType();
+            iflyJokeBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return iflyJokeBean;
+    }
+
+
+
+
 }

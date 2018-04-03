@@ -12,11 +12,6 @@ import android.support.annotation.Nullable;
 
 public class ServiceExisted   extends Service {
 
-
-
-
-
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

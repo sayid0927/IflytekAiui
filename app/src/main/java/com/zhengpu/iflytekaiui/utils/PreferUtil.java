@@ -45,6 +45,14 @@ public final class PreferUtil {
 
     private static final String EMOJI_CONNECT_STATE= "emoji_connect_state";
 
+    private static final String SPEECH_SPEED= "speech_speed";
+
+    private static final String SPEECH_PITCH= "speech_pitch";
+
+
+
+
+
     public  void  setEmojiConnectState(boolean flag){
         putBoolean(EMOJI_CONNECT_STATE,flag);
     }
@@ -125,7 +133,6 @@ public final class PreferUtil {
         return getInt(TOUCH_HEAD_COUNT, 0);
     }
 
-
     public void setTouchFaceTime(long flag) {
         putLong(TOUCH_FACE_TIME, flag);
     }
@@ -190,6 +197,31 @@ public final class PreferUtil {
     public int getSpeechParams() {
         return getInt(SPEECH_PARAMS, 0);
     }
+
+
+
+
+    public void setSpeechSpeed(int flag) {
+        putInt(SPEECH_SPEED, flag);
+    }
+
+    public int getSpeechSpeed() {
+        return getInt(SPEECH_SPEED, 0);
+    }
+
+
+
+    public void setSpeechPitch(int flag) {
+        putInt(SPEECH_PITCH, flag);
+    }
+
+    public int getSpeechPictch() {
+        return getInt(SPEECH_PITCH, 0);
+    }
+
+
+
+
 
 
     private PreferUtil() {

@@ -21,7 +21,6 @@ import com.zhengpu.iflytekaiui.utils.PreferUtil;
  * Created by wengmf on 2017/11/22.
  * <p>
  * 语音合成，文字转语音
- *
  */
 
 public class WordsToVoice {
@@ -61,7 +60,7 @@ public class WordsToVoice {
     /**
      * 开始语音合成
      */
-    public static void startSynthesizer(String service ,String words) {
+    public static void startSynthesizer(String service, String words) {
         setParams();
         ret = mTts.startSpeaking(words, mTtsListener);
         serviceData = service;
@@ -84,26 +83,54 @@ public class WordsToVoice {
         mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
         // 设置在线合成发音人
 
-        switch (PreferUtil.getInstance().getSpeechParams()){
+        switch (PreferUtil.getInstance().getSpeechParams()) {
             case 0:    //卡通
                 // 设置在线合成发音人
                 mTts.setParameter(SpeechConstant.VOICE_NAME, "nannan");
-                //设置合成语速
-                mTts.setParameter(SpeechConstant.SPEED, "58");
+                if (PreferUtil.getInstance().getSpeechSpeed() == 0)
+                    //设置合成语速
+                    mTts.setParameter(SpeechConstant.SPEED, "58");
+                else {
+                    mTts.setParameter(SpeechConstant.SPEED, String.valueOf(PreferUtil.getInstance().getSpeechSpeed()));
+                }
                 //设置合成音调
+                if (PreferUtil.getInstance().getSpeechPictch()==0)
                 mTts.setParameter(SpeechConstant.PITCH, "62");
+                else {
+                    mTts.setParameter(SpeechConstant.PITCH, String.valueOf(PreferUtil.getInstance().getSpeechPictch()));
+                }
                 break;
             case 1:   // 女声音
                 mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");
-                mTts.setParameter(SpeechConstant.SPEED, "50");
-                mTts.setParameter(SpeechConstant.PITCH, "40");
+                if (PreferUtil.getInstance().getSpeechSpeed() == 0)
+                    //设置合成语速
+                    mTts.setParameter(SpeechConstant.SPEED, "50");
+                else {
+                    mTts.setParameter(SpeechConstant.SPEED, String.valueOf(PreferUtil.getInstance().getSpeechSpeed()));
+                }
+                if (PreferUtil.getInstance().getSpeechPictch()==0)
+                    mTts.setParameter(SpeechConstant.PITCH, "40");
+                else {
+                    mTts.setParameter(SpeechConstant.PITCH, String.valueOf(PreferUtil.getInstance().getSpeechPictch()));
+                }
                 break;
             case 2:   //  男声音
                 mTts.setParameter(SpeechConstant.VOICE_NAME, "vixf");
-                mTts.setParameter(SpeechConstant.SPEED, "52");
-                mTts.setParameter(SpeechConstant.PITCH, "62");
+                if (PreferUtil.getInstance().getSpeechSpeed() == 0)
+                    //设置合成语速
+                    mTts.setParameter(SpeechConstant.SPEED, "52");
+                else {
+                    mTts.setParameter(SpeechConstant.SPEED, String.valueOf(PreferUtil.getInstance().getSpeechSpeed()));
+                }
+                if (PreferUtil.getInstance().getSpeechPictch()==0)
+                    mTts.setParameter(SpeechConstant.PITCH, "62");
+                else {
+                    mTts.setParameter(SpeechConstant.PITCH, String.valueOf(PreferUtil.getInstance().getSpeechPictch()));
+                }
                 break;
         }
+
+
         //设置合成音量
         mTts.setParameter(SpeechConstant.VOLUME, "75");
         //设置播放器音频流类型,参考系统AudioManager.STREAM_MUSIC
@@ -203,7 +230,7 @@ public class WordsToVoice {
                 iGetWordToVoice.SpeechEnd(serviceData);
             } else if (error != null) {
                 //showTip(error.getPlainDescription(true));
-                Logger.e("语音合成回调监听-------错误----"+error.getPlainDescription(true));
+                Logger.e("语音合成回调监听-------错误----" + error.getPlainDescription(true));
                 iGetWordToVoice.SpeechError(error);
             }
         }
@@ -212,10 +239,10 @@ public class WordsToVoice {
         public void onEvent(int eventType, int arg1, int arg2, Bundle obj) {
             // 以下代码用于获取与云端的会话id，当业务出错时将会话id提供给技术支持人员，可用于查询会话日志，定位出错原因
             // 若使用本地能力，会话id为null
-            	if (SpeechEvent.EVENT_SESSION_ID == eventType) {
-            		String sid = obj.getString(SpeechEvent.KEY_EVENT_SESSION_ID);
-            		Log.d(TAG, "session id =" + sid);
-            	}
+            if (SpeechEvent.EVENT_SESSION_ID == eventType) {
+                String sid = obj.getString(SpeechEvent.KEY_EVENT_SESSION_ID);
+                Log.d(TAG, "session id =" + sid);
+            }
         }
     };
 }

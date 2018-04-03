@@ -30,6 +30,8 @@
         app:arrowLocation="left"
         app:arrowPosition="200dp"
         app:arrowWidth="15dp"
+        android:textSize="@dimen/sp_16"
+
         app:bubbleColor="@color/white"
         app:strokeColor="#CCCCCC">
 
@@ -61,8 +63,9 @@
                 android:layout_toRightOf="@+id/iv_picUrl"
                 android:maxLines="2"
                 android:text=""
+                android:textSize="@dimen/sp_16"
                 android:textColor="@color/color_1a1a1a"
-                android:textSize="12sp" />
+                />
 
         </RelativeLayout>
 

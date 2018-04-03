@@ -46,7 +46,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
-
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -76,21 +75,30 @@
             android:exported="true" />
 
         <!--<service-->
-        <!--android:name=".service.SpeechRecognizerService"-->
-        <!--android:exported="true"-->
-        <!--android:process=":SpeechRecognizerService">-->
+            <!--android:name=".service.SpeechRecognizerService"-->
+            <!--android:exported="true"-->
+            <!--android:process=":SpeechRecognizerService">-->
 
-        <!--<intent-filter>-->
-        <!--<action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />-->
-        <!--</intent-filter>-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />-->
+            <!--</intent-filter>-->
         <!--</service>-->
+
+        <receiver
+            android:name=".broadcastReceiver.ZpVoiceBroadCast"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="zp_action_voice_set"></action>
+            </intent-filter>
+        </receiver>
 
 
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
 
         <provider
@@ -100,8 +108,12 @@
             android:process=":provider" />
 
 
-        <meta-data android:value="5a7a9eb28f4a9d2a5900017c" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="Umeng" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5a7a9eb28f4a9d2a5900017c" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="10010" />
 
     </application>
 

@@ -44,7 +44,6 @@
 
         <service android:name=".serivce.StartCommandService"/>
 
-
         <meta-data android:value="5a7964eab27b0a6ceb00012f" android:name="UMENG_APPKEY"/>
         <meta-data android:value="Channel_1" android:name="UMENG_CHANNEL"/>
 
