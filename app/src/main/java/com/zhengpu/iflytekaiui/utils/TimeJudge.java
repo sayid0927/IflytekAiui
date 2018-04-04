@@ -15,13 +15,12 @@ public class TimeJudge extends Thread {
      */
     private final static int m_rate = 1000;
 
-    private int timeoutMilli;
+
     public boolean isRun;
-    private long startTime;
     private  int TimeCount;
 
     private OnTimeActionListener onTimeActionListener;
-    private int actionCode;
+
 
     public TimeJudge() {
         isRun = true;
@@ -40,11 +39,9 @@ public class TimeJudge extends Thread {
             } catch (InterruptedException ioe) {
                 continue;
             }
-            if(TimeCount==10){
+            if(TimeCount==12){
                 if(onTimeActionListener!=null){
                     onTimeActionListener.onActionFinished();
-                }else {
-                    TimeCount=0;
                 }
             }
         }
@@ -54,22 +51,16 @@ public class TimeJudge extends Thread {
      * 关闭计时器
      */
     public void close() {
-        isRun = false;
+       this.isRun = false;
     }
 
     /***
      *   重开计时器
      */
     public  void onResart(){
-        isRun = true;
-    }
-
-    /***
-     *    设置倒计时值
-     * @param TimeCount
-     */
-    public void setTimeCount(int TimeCount){
-       this.TimeCount = TimeCount;
+     this.isRun = true;
+      this.TimeCount=0;
+      this.run();
     }
 
 }

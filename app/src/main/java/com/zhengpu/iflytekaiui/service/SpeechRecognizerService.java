@@ -99,8 +99,8 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         wordsToVoice = WordsToVoice.getInstance(this);
         wordsToVoice.setiGetWordToVoice(this);
 
-//        iflytekWakeUp = new IflytekWakeUp(this, new MyWakeuperListener(this, this));
-//        iflytekWakeUp.startWakeuper();
+        iflytekWakeUp = new IflytekWakeUp(this, new MyWakeuperListener(this, this));
+        iflytekWakeUp.startWakeuper();
         kuGuoMuiscPlayThread = KuGuoMuiscPlayThread.getInstance(this);
         startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
 
@@ -175,7 +175,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void showLowVoice(String result) {
-
+        Logger.e("result?>>>>      ",result);
 //        Long showLowVoiceTime = PreferUtil.getInstance().getShowLowVoiceTime();
 //        int showLowVoiceCount = PreferUtil.getInstance().getShowLowVoiceCount();
 //        if (TimeUtils.getTimeSpanByNow(showLowVoiceTime, ConstUtils.TimeUnit.MIN) < 2) {
@@ -212,6 +212,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void SpeechStart() {
+        Logger.e("close?>>>>      ");
         timeJudge.close();
         SendMessage sendMessage = new SendMessage();
         sendMessage.setService(AppController.SPEECH_START);
@@ -236,6 +237,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         if (kuGuoMuiscPlayThread.isPlay())
             kuGuoMuiscPlayThread.pause();
         startSpeech(AppController.WAKEUP_TEXT, getResources().getString(R.string.wakeup_text), getResources().getString(R.string.wakeup_text));
+//        timeJudge.onResart();
+//        timeJudge.run();
+
     }
 
     /**
@@ -297,13 +301,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
                 break;
         }
 
-        if(service.equals(AppController.SHOWLOWVOICE_TEXT)){
-            timeJudge.close();
-        }else {
-            timeJudge.setTimeCount(0);
-           timeJudge.onResart();
+        if(!service.equals(AppController.SHOWLOWVOICE_TEXT)){
+                timeJudge.onResart();
         }
-
     }
 
     /***
@@ -515,7 +515,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
                     wifiInfo.setPassword("ZP1");
                     wifiInfo.setSsid("zeunpro123");
                     wifiInfo.setCode(1002);
-
                     UDPSendUtils.getInstance().sendMessage(WifiData.toJsonStr(wifiInfo));
 
                 }
@@ -528,7 +527,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void onActionFinished() {
-        Logger.e("GGGGGG");
+        timeJudge.close();
         startSpeech(AppController.SHOWLOWVOICE_TEXT, getResources().getString(R.string.showLowVoice_text), getResources().getString(R.string.showLowVoice_text));
     }
+
+
 }
