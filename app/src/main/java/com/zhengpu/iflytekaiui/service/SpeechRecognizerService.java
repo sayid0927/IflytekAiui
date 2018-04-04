@@ -204,7 +204,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         sendMessage.setService(AppController.SPEECH_OVER);
         sendMessage.setMessage(getResources().getString(R.string.user_Speech_Over));
         HermesEventBus.getDefault().post(sendMessage);
-        timeJudge.close();
+
     }
 
     /**
@@ -212,6 +212,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void SpeechStart() {
+        timeJudge.close();
         SendMessage sendMessage = new SendMessage();
         sendMessage.setService(AppController.SPEECH_START);
         sendMessage.setMessage(getResources().getString(R.string.user_Speech_Start));
@@ -300,9 +301,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
             timeJudge.close();
         }else {
             timeJudge.setTimeCount(0);
-            if (!timeJudge.isRun) {
-                timeJudge.isRun = true;
-            }
+           timeJudge.onResart();
         }
 
     }
