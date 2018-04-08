@@ -429,6 +429,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     }
 
 
+
     /***
      * 打开热点成功
      */
