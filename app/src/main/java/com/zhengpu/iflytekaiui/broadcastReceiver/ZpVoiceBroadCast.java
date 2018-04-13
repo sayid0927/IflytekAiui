@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.blankj.utilcode.utils.LogUtils;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -30,6 +31,15 @@ public class ZpVoiceBroadCast extends BroadcastReceiver {
             float voiceSpeed = intent.getExtras().getFloat(VOICE_SPEED);
             float voiceIntonation = intent.getExtras().getFloat(VOICE_INTONATION);
             boolean voiceOpen = intent.getExtras().getBoolean(VOICE_OPEN);
+
+            LogUtils.e("ZpVoiceBroadCast",String.valueOf(voiceSpeed));
+            LogUtils.e("ZpVoiceBroadCast",String.valueOf(voiceIntonation));
+            LogUtils.e("ZpVoiceBroadCast",String.valueOf(voiceOpen));
+            LogUtils.e("ZpVoiceBroadCast",String.valueOf(voiceType));
+            LogUtils.e("ZpVoiceBroadCast",String.valueOf(voiceName));
+
+
+
 
             if(voiceType!=null){
                 switch (voiceType){

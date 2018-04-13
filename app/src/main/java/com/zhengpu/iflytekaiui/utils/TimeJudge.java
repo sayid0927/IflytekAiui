@@ -17,7 +17,7 @@ public class TimeJudge extends Thread {
 
 
     public boolean isRun;
-    private  int TimeCount;
+    private int TimeCount;
 
     private OnTimeActionListener onTimeActionListener;
 
@@ -26,8 +26,8 @@ public class TimeJudge extends Thread {
         isRun = true;
     }
 
-    public  void  setOnTimeActionListener(OnTimeActionListener onTimeActionListener){
-        this.onTimeActionListener =  onTimeActionListener;
+    public void setOnTimeActionListener(OnTimeActionListener onTimeActionListener) {
+        this.onTimeActionListener = onTimeActionListener;
     }
 
     public void run() {
@@ -35,12 +35,12 @@ public class TimeJudge extends Thread {
             try {
                 Thread.sleep(m_rate);
                 TimeCount++;
-                Logger.e(String.valueOf(TimeCount));
+//                Logger.e(String.valueOf(TimeCount));
             } catch (InterruptedException ioe) {
                 continue;
             }
-            if(TimeCount==12){
-                if(onTimeActionListener!=null){
+            if (TimeCount == 12) {
+                if (onTimeActionListener != null) {
                     onTimeActionListener.onActionFinished();
                 }
             }
@@ -51,16 +51,18 @@ public class TimeJudge extends Thread {
      * 关闭计时器
      */
     public void close() {
-       this.isRun = false;
+        this.isRun = false;
     }
 
     /***
      *   重开计时器
      */
-    public  void onResart(){
-     this.isRun = true;
-      this.TimeCount=0;
-      this.run();
+    public void onResart() {
+        if(isRun){
+            close();
+        }
+        this.isRun = true;
+        this.TimeCount = 0;
+        this.run();
     }
-
 }

@@ -93,6 +93,17 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".broadcastReceiver.VideocallBroadCast"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.zeunpro.system.dialer.bro"/>
+                <action android:name="com.zeunpro.im.videocall"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+
 
         <activity android:name=".MainActivity">
         <intent-filter>
@@ -111,6 +122,7 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5a7a9eb28f4a9d2a5900017c" />
+
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="10010" />

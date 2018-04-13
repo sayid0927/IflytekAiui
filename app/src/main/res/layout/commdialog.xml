@@ -13,6 +13,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:text="@string/kindly_reminder"
+
             android:textColor="@color/color_333333"
             android:textSize="23sp" />
 

@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -19,7 +20,10 @@ import com.zhengpu.iflytekaiui.SerialPort.OpenSerialPortListener;
 import com.zhengpu.iflytekaiui.SerialPort.SerialUtils;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.base.BaseApplication;
+import com.zhengpu.iflytekaiui.broadcastReceiver.VideocallBroadCast;
+import com.zhengpu.iflytekaiui.broadcastReceiver.ZpVoiceBroadCast;
 import com.zhengpu.iflytekaiui.iflytekaction.ReceivedSerialPortDataAction;
+import com.zhengpu.iflytekaiui.iflytekaction.SerialPortUtilsAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.HotspotRequest;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.WifiData;
@@ -65,10 +69,11 @@ import static com.zhengpu.iflytekaiui.utils.DeviceUtils.isAccessibilitySettingsO
 public class SpeechRecognizerService extends Service implements IGetVoiceToWord, WakeUpListener, IGetWordToVoice, KuGuoMuiscPlayListener,
         OpenSerialPortListener, HotsposListener, UDPReceiveListenter, OnTimeActionListener {
 
-    private IflytekWakeUp iflytekWakeUp;
+    //    private IflytekWakeUp iflytekWakeUp;
     private static VoiceToWords voiceToWords;
     private static WordsToVoice wordsToVoice;
     private static SerialUtils serialUtils;
+    public static int touch_V = 0;
     private KuGuoMuiscPlayThread kuGuoMuiscPlayThread;
     private String message;
     private String SpeechType = "0";
@@ -77,7 +82,10 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     private static boolean FaceServiceState = false;
     private ScheduledFuture scheduledFuture;
     private static boolean isOpenCamera;
-    private TimeJudge timeJudge;
+    private static TimeJudge timeJudge;
+    public static int microPhone = 0;
+    public static String Service = "AA";
+    public static int pirV = 0;
 
     @Override
     public void onCreate() {
@@ -99,8 +107,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         wordsToVoice = WordsToVoice.getInstance(this);
         wordsToVoice.setiGetWordToVoice(this);
 
-        iflytekWakeUp = new IflytekWakeUp(this, new MyWakeuperListener(this, this));
-        iflytekWakeUp.startWakeuper();
+//        iflytekWakeUp = new IflytekWakeUp(this, new MyWakeuperListener(this, this));
+//        iflytekWakeUp.startWakeuper();
+
         kuGuoMuiscPlayThread = KuGuoMuiscPlayThread.getInstance(this);
         startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
 
@@ -113,16 +122,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         timeJudge.setOnTimeActionListener(this);
         timeJudge.start();
 
-//        byte[] byteAutoReset = new byte[]{0x00, 0x00, 0x0F, 0x00, 0x00}; //复位
-//        byte[] dd = ValueUtil.getInstance().HexStringToBytes("6DD8");
-//        sendSerialMessageBytes(dd);
-
-        //  创建热点
+//        创建热点
 //        HotspotUtils hotspotUtils = HotspotUtils.getHotspotUtils(this);
 //        hotspotUtils.setHotsposListener(this);
-
-//        byte[] byteAutoReset = new byte[]{0x5A,0x50,0x03,0x02,0x02,0x01,0x05,0x0D,0x0A}; //复位
-//        sendSerialMessageBytes(byteAutoReset);
 
     }
 
@@ -131,33 +133,51 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         return super.onStartCommand(intent, flags, startId);
     }
 
-    //获取其他进程的消息 让机器人播报其他进程消息内容
+    //  获取其他进程的消息 让机器人播报其他进程消息内容
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getChildAppEvent(RequestMessage requestMessage) {
         String reqService = requestMessage.getService();
         String reqMessage = requestMessage.getMessage();
-        if (reqService.equals("PlayUrl")) {
-            voiceToWords.mIatDestroy();
-            KuGuoMuiscPlayThread.getInstance(this).playUrl(reqMessage);
-        } else if (reqService.equals("SpeechStart")) {
-            if (reqMessage.equals("1")) {
-                voiceToWords.startRecognizer();
-                startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
-            }
-        } else if (reqService.equals("AAAAA")) {
-            startSpeech("AAAAA", reqMessage, reqMessage);
-        } else if (reqService.equals("state_start")) {
-            FaceServiceState = true;
-        } else if (reqService.equals("state_end")) {
-            FaceServiceState = false;
-        } else if (reqService.equals("ShootAction")) {
-            if (reqMessage.equals("true")) {
-                isOpenCamera = true;
-            } else {
-                isOpenCamera = false;
-            }
-        } else {
-            startSpeech(reqService, reqMessage, reqMessage);
+
+        Logger.e("获取其他进程的消息>>     Service  " + reqService + "   Message >>  " + reqMessage);
+
+        switch (reqService) {
+            case "PlayUrl":
+                voiceToWords.mIatDestroy();
+                KuGuoMuiscPlayThread.getInstance(this).playUrl(reqMessage);
+                break;
+            case "SpeechStart":
+                if (reqMessage.equals("1")) {
+                    voiceToWords.startRecognizer();
+                    startSpeech(AppController.LAUNCHER_TEXT, getResources().getString(R.string.launcher_text), getResources().getString(R.string.launcher_text));
+                }
+                break;
+            case "AAAAA":
+                startSpeech("AAAAA", reqMessage, reqMessage);
+                break;
+            case "state_start":
+                FaceServiceState = true;
+                break;
+            case "state_end":
+                FaceServiceState = false;
+                break;
+            case "ShootAction":
+                if (reqMessage.equals("true")) {
+                    isOpenCamera = true;
+                } else {
+                    isOpenCamera = false;
+                }
+                break;
+            case "microphone":
+                if (reqMessage.equals("0")) {
+                    SpeechRecognizerService.microPhone = 0;
+                } else {
+                    SpeechRecognizerService.microPhone = 1;
+                }
+                break;
+            default:
+                startSpeech(reqService, reqMessage, reqMessage);
+                break;
         }
     }
 
@@ -175,7 +195,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void showLowVoice(String result) {
-        Logger.e("result?>>>>      ",result);
 //        Long showLowVoiceTime = PreferUtil.getInstance().getShowLowVoiceTime();
 //        int showLowVoiceCount = PreferUtil.getInstance().getShowLowVoiceCount();
 //        if (TimeUtils.getTimeSpanByNow(showLowVoiceTime, ConstUtils.TimeUnit.MIN) < 2) {
@@ -200,6 +219,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void SpeechOver() {
+
         SendMessage sendMessage = new SendMessage();
         sendMessage.setService(AppController.SPEECH_OVER);
         sendMessage.setMessage(getResources().getString(R.string.user_Speech_Over));
@@ -212,7 +232,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void SpeechStart() {
-        Logger.e("close?>>>>      ");
         timeJudge.close();
         SendMessage sendMessage = new SendMessage();
         sendMessage.setService(AppController.SPEECH_START);
@@ -236,9 +255,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public void OnWakeUpSuccess() {
         if (kuGuoMuiscPlayThread.isPlay())
             kuGuoMuiscPlayThread.pause();
-        startSpeech(AppController.WAKEUP_TEXT, getResources().getString(R.string.wakeup_text), getResources().getString(R.string.wakeup_text));
-//        timeJudge.onResart();
-//        timeJudge.run();
+
+//        startSpeech(AppController.WAKEUP_TEXT, getResources().getString(R.string.wakeup_text), getResources().getString(R.string.wakeup_text));
+//        stratFaceservice(SpeechRecognizerService.this);
 
     }
 
@@ -251,15 +270,25 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     }
 
     /**
+     * 硬件机器人唤醒成功
+     */
+    public static void stratWakeUp(Context context) {
+
+        if (microPhone == 0) {
+            startSpeech(AppController.WAKEUP_TEXT, "多多在这里", "多多在这里");
+        }
+
+    }
+
+    /**
      * 启动人脸识别服务
      */
     public static void stratFaceservice(Context context) {
-        if (!FaceServiceState) {
+        if (!FaceServiceState && microPhone == 0) {
             try {
                 Intent intent = new Intent();
-                ComponentName componentName = new ComponentName("com.zeunpro.login", "com.zeunpro.login.FaceRecognitionService");
+                ComponentName componentName = new ComponentName("com.zeunpro", "com.zeunpro.login.FaceRecognitionService");
                 intent.setComponent(componentName);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startService(intent);
             } catch (Exception e) {
                 e.toString();
@@ -275,6 +304,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 
     @Override
     public void SpeechEnd(String service) {
+        Service =service;
         switch (service) {
             case AppController.SHOWLOWVOICE_TEXT:
                 voiceToWords.mIatDestroy();
@@ -296,14 +326,20 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
             case AppController.VIDEO:
                 voiceToWords.mIatDestroy();
                 break;
+
+            case AppController.WAKEUP_TEXT:
+                stratFaceservice(SpeechRecognizerService.this);
+                break;
+
             default:
                 voiceToWords.startRecognizer();
                 break;
         }
 
-        if(!service.equals(AppController.SHOWLOWVOICE_TEXT)){
-                timeJudge.onResart();
+        if (!service.equals(AppController.SHOWLOWVOICE_TEXT)) {
+            timeJudge.onResart();
         }
+        Logger.e("摸手Service >>>   " + Service);
     }
 
     /***
@@ -318,6 +354,12 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
                 speechDialog.show();
             }
         }
+        if (code == 10114) {
+            if (speechDialog != null && !speechDialog.isShowing()) {
+                speechDialog.show();
+            }
+        }
+        sendSerialMessageBytes(new byte[]{0x5A, 0x50, 0x05, 0x02, 0x07, 0x00, 0x00, 0x00, 0x09, 0x0D, 0x0A});
     }
 
     /***
@@ -329,13 +371,17 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 
     public static void startSpeech(String service, String text, String request) {
 
-        voiceToWords.mIatDestroy();
-        wordsToVoice.startSynthesizer(service, text);
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setService(service);
-        sendMessage.setMessage(request);
-        HermesEventBus.getDefault().post(sendMessage);
+//        voiceToWords.mIatDestroy();
 
+        if (microPhone == 0) {
+            Service = service;
+            WordsToVoice.startSynthesizer(service, text);
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setService(service);
+            sendMessage.setMessage(request);
+            HermesEventBus.getDefault().post(sendMessage);
+
+        }
     }
 
     public static void SendShootAction(String service, String message) {
@@ -421,13 +467,17 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 
     @Override
     public void onDataReceivedSuccess(byte[] bytes) {
-
         String value = ValueUtil.getInstance().bytesToHexStr(bytes);
-        ReceivedSerialPortDataAction receivedSerialPortDataAction = new ReceivedSerialPortDataAction(bytes, value.split(" "), this);
-        receivedSerialPortDataAction.start();
+        String[] strBytes = value.split(" ");
+        SerialPortUtilsAction serialUtils = new SerialPortUtilsAction(SpeechRecognizerService.this, bytes, strBytes);
+        serialUtils.start();
+
+
+//        String value = ValueUtil.getInstance().bytesToHexStr(bytes);
+//        ReceivedSerialPortDataAction receivedSerialPortDataAction = new ReceivedSerialPortDataAction(bytes, value.split(" "), this);
+//        receivedSerialPortDataAction.start();
 
     }
-
 
 
     /***
@@ -485,7 +535,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 
     /***
      *  注册接收UDP消息线程
-     * @return
+     *
      */
     private Runnable UDPReceive() {
         return new Runnable() {
@@ -502,7 +552,6 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 
     /***
      *  发送UDP消息
-     * @return
      */
 
     private Runnable SendMessage() {
@@ -528,9 +577,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void onActionFinished() {
-        timeJudge.close();
         startSpeech(AppController.SHOWLOWVOICE_TEXT, getResources().getString(R.string.showLowVoice_text), getResources().getString(R.string.showLowVoice_text));
+        sendSerialMessageBytes(new byte[]{0x5A, 0x50, 0x05, 0x02, 0x07, 0x00, 0x00, 0x00, 0x09, 0x0D, 0x0A});
+//        byte[] byteAutoReset = new byte[]{0x5A, 0x50, 0x05, 0x01, 0x07, 0x00, 0x00, 0x00, 0x08, 0x0D, 0x0A}; //复位
+        timeJudge.close();
     }
-
-
 }

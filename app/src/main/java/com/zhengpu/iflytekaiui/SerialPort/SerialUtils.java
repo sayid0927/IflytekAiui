@@ -3,6 +3,7 @@ package com.zhengpu.iflytekaiui.SerialPort;
 import android.content.Context;
 import android.util.Log;
 
+import com.blankj.utilcode.utils.LogUtils;
 import com.kongqw.serialportlibrary.Device;
 import com.kongqw.serialportlibrary.SerialPortFinder;
 import com.kongqw.serialportlibrary.SerialPortManager;
@@ -39,7 +40,7 @@ public class SerialUtils implements OnOpenSerialPortListener {
         ArrayList<Device> devices = serialPortFinder.getDevices();
 
         for(int i =0;i<devices.size();i++){
-           if(devices.get(i).getFile().getAbsolutePath().equals("/dev/ttyMT2")){
+           if(devices.get(i).getFile().getAbsolutePath().equals("/dev/ttyMT1")){
              device = devices.get(i);
              break;
            }
@@ -54,7 +55,7 @@ public class SerialUtils implements OnOpenSerialPortListener {
 //                       Logger.e("onDataReceived  [ byte[] ]: " + Arrays.toString(bytes));
 //                       Logger.e( "onDataReceived [ String ]: " + new String(bytes));
                            String value = ValueUtil.getInstance().bytesToHexStr(bytes);
-                           Logger.e(" 接收成功>>  "+value);
+//                           LogUtils.e("接收成功>>>   ",value);
                            UmengUtil.onEvent("SerialPort",value);
                            //  接收成功
                            if(bytes!=null && bytes.length!=0 &&  serialPortListener!=null)
@@ -64,10 +65,9 @@ public class SerialUtils implements OnOpenSerialPortListener {
                        public void onDataSent(byte[] bytes) {
 //                           Logger.e("onDataSent [ byte[] ]: " + Arrays.toString(bytes));
 //                           Logger.e("onDataSent [ String ]: " + new String(bytes));
-
                            String value = ValueUtil.getInstance().bytesToHexStr(bytes);
-                           Logger.e("发送成功 >>>   " + value);
-                           // 发送成功
+//                           Logger.e("发送成功 >>>   " + value);
+                               // 发送成功
                            if(serialPortListener!=null )
                                serialPortListener.onDataSentSuccess();
                        }

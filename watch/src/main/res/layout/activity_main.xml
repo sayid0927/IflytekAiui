@@ -95,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:visibility="gone"
+            android:visibility="visible"
             app:rb_color="@color/colorText"
             app:rb_duration="1000"
             app:rb_radius="28dp"
@@ -128,6 +128,7 @@
             tools:ignore="RtlHardcoded" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/video_n"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
