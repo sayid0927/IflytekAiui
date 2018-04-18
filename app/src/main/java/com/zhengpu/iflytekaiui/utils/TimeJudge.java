@@ -30,7 +30,7 @@ public class TimeJudge extends Thread {
         while (true) {
             try {
                 Thread.sleep(m_rate);
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             if (isRun) {

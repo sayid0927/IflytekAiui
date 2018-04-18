@@ -48,6 +48,6 @@ dependencies {
     compile 'com.bugtags.library:bugtags-lib:latest.integration'
     compile 'com.github.kongqw:AndroidSerialPort:1.0.1'
     implementation files('libs/Msc.jar')
-    implementation files('libs/Sunflower.jar')
+//    implementation files('libs/Sunflower.jar')
 //    implementation files('libs/AIUI.jar')
 }

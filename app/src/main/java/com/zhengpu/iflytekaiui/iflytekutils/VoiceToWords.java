@@ -3,11 +3,13 @@ package com.zhengpu.iflytekaiui.iflytekutils;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechEvent;
 import com.iflytek.cloud.SpeechUnderstander;
 import com.iflytek.cloud.SpeechUnderstanderListener;
 import com.iflytek.cloud.UnderstanderResult;
@@ -17,6 +19,7 @@ import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekaction.BaikeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.CalcAction;
 import com.zhengpu.iflytekaiui.iflytekaction.CustomBaikeAction;
+import com.zhengpu.iflytekaiui.iflytekaction.DanceAction;
 import com.zhengpu.iflytekaiui.iflytekaction.DateTimeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.FaceserviceAction;
 import com.zhengpu.iflytekaiui.iflytekaction.FlightAction;
@@ -28,6 +31,7 @@ import com.zhengpu.iflytekaiui.iflytekaction.OpenAppAction;
 import com.zhengpu.iflytekaiui.iflytekaction.OpenCameraAction;
 import com.zhengpu.iflytekaiui.iflytekaction.OpenQaAction;
 import com.zhengpu.iflytekaiui.iflytekaction.OpenVideoAction;
+import com.zhengpu.iflytekaiui.iflytekaction.OpenimAction;
 import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
 import com.zhengpu.iflytekaiui.iflytekaction.PoetryAction;
 import com.zhengpu.iflytekaiui.iflytekaction.R4Action;
@@ -43,6 +47,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.BaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CalcBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CustomBaikeBean;
+import com.zhengpu.iflytekaiui.iflytekbean.DanceBean;
 import com.zhengpu.iflytekaiui.iflytekbean.DatetimeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FaceserviceBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FlightBean;
@@ -54,6 +59,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.OpenAppBean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenCameraBean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenQABean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenVideoBean;
+import com.zhengpu.iflytekaiui.iflytekbean.OpenimBean;
 import com.zhengpu.iflytekaiui.iflytekbean.PoetryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.R4Bean;
 import com.zhengpu.iflytekaiui.iflytekbean.RobotCommandBean;
@@ -65,6 +71,8 @@ import com.zhengpu.iflytekaiui.iflytekbean.VideoCammandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WebSearchBean;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.CustomMusicBean;
+import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
+import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
 
 import org.json.JSONException;
@@ -73,6 +81,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Random;
+
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 
 /**
@@ -137,6 +147,7 @@ public class VoiceToWords {
     /**
      * 开始语音听写
      */
+
     public void startRecognizer() {
         //清空听写结果
         mIatResults.clear();
@@ -186,7 +197,7 @@ public class VoiceToWords {
         // mIat.setParameter(SpeechConstant.ASR_SOURCE_PATH, "sdcard/XXX/XXX.pcm");
         mIat.setParameter(SpeechConstant.VAD_ENABLE, "1");
         // 设置语音前端点:静音超时时间，即用户多长时间不说话则当做超时处理
-        mIat.setParameter(SpeechConstant.VAD_BOS, "50000");
+        mIat.setParameter(SpeechConstant.VAD_BOS, "1000");
         // 设置语音后端点:后端点静音检测时间，即用户停止说话多长时间内即认为不再输入， 自动停止录音
         mIat.setParameter(SpeechConstant.VAD_EOS, "1000");
         // 设置标点符号,设置为"0"返回结果无标点,设置为"1"返回结果有标点
@@ -243,9 +254,6 @@ public class VoiceToWords {
                     int rc = jsonObject2.getInt("rc");
                     if (service != "" && rc != 4) {
                         judgeService(service, text);
-
-
-
                     } else {
                         R4Action r4Action = new R4Action(context, text);
                         r4Action.start();
@@ -299,10 +307,13 @@ public class VoiceToWords {
         public void onEvent(int eventType, int arg1, int arg2, Bundle obj) {
             // 以下代码用于获取与云端的会话id，当业务出错时将会话id提供给技术支持人员，可用于查询会话日志，定位出错原因
             // 若使用本地能力，会话id为null
-            //	if (SpeechEvent.EVENT_SESSION_ID == eventType) {
-            //		String sid = obj.getString(SpeechEvent.KEY_EVENT_SESSION_ID);
-            //		Log.d(TAG, "session id =" + sid);
-            //	}
+//            	if (SpeechEvent.EVENT_SESSION_ID == eventType) {
+
+//            		String sid = obj.getString(SpeechEvent.KEY_EVENT_SESSION_ID);
+//            		Logger.e("session id =" + sid);
+////            	Log.d(TAG, "session id =" + sid);
+
+//            	}
         }
     };
 
@@ -353,7 +364,7 @@ public class VoiceToWords {
 
                 case AppController.JOKE:  // 笑话的点播
 
-                    IflyJokeBean iflyJokeBean =  JsonParser.parseResultIflyJokeBean(text);
+                    IflyJokeBean iflyJokeBean = JsonParser.parseResultIflyJokeBean(text);
                     IflyJokeAction iflyJokeAction = new IflyJokeAction(service, iflyJokeBean, text, context);
                     iflyJokeAction.start();
 
@@ -381,7 +392,7 @@ public class VoiceToWords {
                 case AppController.WEBSEARCH:   //  网络搜索
 
                     WebSearchBean webSearchBean = JsonParser.parseResultWebSearchBean(text);
-                    WebSearchAction webSearchAction = new WebSearchAction(service,webSearchBean,text,context);
+                    WebSearchAction webSearchAction = new WebSearchAction(service, webSearchBean, text, context);
                     webSearchAction.start();
 
                     break;
@@ -409,13 +420,20 @@ public class VoiceToWords {
                     openCameraAction.start();
                     break;
 
+                case AppController.OPENAPPTEST_EXITCAMERA:  // 退出相机
+
+                    SendMessage sendMessage = new SendMessage();
+                    sendMessage.setService("exitcamera");
+                    sendMessage.setMessage("true");
+                    HermesEventBus.getDefault().post(sendMessage);
+
+                    break;
 
                 case AppController.OPENAPPTEST_SHOOT:      //声控拍摄相机
                     ShootBean shootBean = JsonParser.parseResultShootBean(text);
                     ShootAction shootAction = new ShootAction(service, context);
                     shootAction.start();
                     break;
-
 
                 case AppController.OPENAPPTEST_OPENVIDEO:      //打开录像机
                     OpenVideoBean openVideoBean = JsonParser.parseResultOpenVideoBean(text);
@@ -428,8 +446,6 @@ public class VoiceToWords {
                     VideoCammandAction videoCammandAction = new VideoCammandAction(videoCammandBean, context);
                     videoCammandAction.start();
                     break;
-
-
 
                 case AppController.OPENQA:   //     开放问答
 
@@ -459,15 +475,15 @@ public class VoiceToWords {
 
                     VideoBean videoBean = JsonParser.parseResultVideoBean(text);
                     if (videoBean.getMoreResults() != null) {
-                       String ser = videoBean.getMoreResults().get(0).getService();
-                        if(ser.equals("musicX")){   //如果在更多的选项中有音乐
-                            MoreMusicXAction moreMusicXAction = new MoreMusicXAction("musicX",videoBean.getMoreResults().get(0),text,context);
+                        String ser = videoBean.getMoreResults().get(0).getService();
+                        if (ser.equals("musicX")) {   //如果在更多的选项中有音乐
+                            MoreMusicXAction moreMusicXAction = new MoreMusicXAction("musicX", videoBean.getMoreResults().get(0), text, context);
                             moreMusicXAction.start();
-                        }else {
+                        } else {
                             ShipingAction shipingAction = new ShipingAction(service, videoBean, context, text);
                             shipingAction.start();
                         }
-                    }else {
+                    } else {
                         ShipingAction shipingAction = new ShipingAction(service, videoBean, context, text);
                         shipingAction.start();
                     }
@@ -489,7 +505,30 @@ public class VoiceToWords {
 
                     break;
 
-                case AppController.TELEPHONE:
+                case AppController.OPENAPPTEST_DANCE:      //  跳个舞
+
+                    DanceBean danceBean = JsonParser.parseResultIflyDanceBean(text);
+                    DanceAction danceAction = new DanceAction(service, danceBean, text, context);
+                    danceAction.start();
+
+                    break;
+
+                case AppController.OPENAPPTEST_OPENIM:   // 打开视频通话
+
+                    OpenimBean openimBean = JsonParser.parseResultIflyOpenimBean(text);
+                    OpenimAction openimAction = new OpenimAction(service, openimBean, text, context);
+                    openimAction.start();
+
+                    break;
+
+                case AppController.OPENAPPTEST_ELECTRICITY:   // 电量
+
+                    byte[] sendByte = {0x5A, 0x50, 0x05, 0x01, 0x02, 0x01, 0x00, 0x00, 0x04, 0x0D, 0x0A};
+                    SpeechRecognizerService.sendSerialMessageBytes(sendByte);
+
+                    break;
+
+                case AppController.TELEPHONE: // 打电话
 
                     TelephoneBean telephoneBean = JsonParser.parseResultTelephoneBean(text);
                     TelephoneAction telephoneAction = new TelephoneAction(service, telephoneBean, text, context);
@@ -497,15 +536,13 @@ public class VoiceToWords {
 
                     break;
 
-                case  AppController.FACESERVICE:
+                case AppController.FACESERVICE:   // 启动人脸服务
 
                     FaceserviceBean faceserviceBean = JsonParser.parseResultFaceserviceBean(text);
                     FaceserviceAction faceserviceAction = new FaceserviceAction(service, faceserviceBean, text, context);
                     faceserviceAction.start();
 
                     break;
-
-
 
 //                case "OPENAPPTEST.music_demo": {  //   艺人跟歌曲 搜索和播放
 //                    CustomMusicBean customMusicBean = JsonParser.parseResultCustomMusicBean(text);

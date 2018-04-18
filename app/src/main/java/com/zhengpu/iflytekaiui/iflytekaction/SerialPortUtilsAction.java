@@ -2,6 +2,7 @@ package com.zhengpu.iflytekaiui.iflytekaction;
 
 import android.content.Context;
 
+import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 
 /**
@@ -14,6 +15,7 @@ public class SerialPortUtilsAction {
     private Context context;
     private byte[] bytes;
     private String[] strBytes;
+    private SerialPortCmdBottmAction serialPortCmdBottmAction;
 
     public SerialPortUtilsAction(Context context, byte[] bytes, String[] strBytes) {
         this.context = context;
@@ -42,17 +44,23 @@ public class SerialPortUtilsAction {
                         strData[i] = strBytes[i + 8];
                     }
                 }
-                switch (bytes[4]) {      //cmd值  设置(0x01)  查询(0x02)  心跳(0x03) 主动上报(0x04)  升级(0x05)  测试(0x06)
+
+                switch (bytes[4]) {      // cmd值  设置(0x01)  查询(0x02)  心跳(0x03) 主动上报(0x04)  升级(0x05)  测试(0x06)
                     case 0x01:
                         break;
                     case 0x02:
+//                        Logger.e("查询结果>>>>>>>>>>     ");
+
+                        serialPortCmdBottmAction = new SerialPortCmdBottmAction(context, dataByte, strData);
+                        serialPortCmdBottmAction.start();
+
                         break;
                     case 0x03:
                         break;
                     case 0x04:
                         switch (bytes[3]) {
                             case 0x10:   // 上报背部板状态.
-                                SerialPortCmdBackgroundAction serialPortCmdBackgroundAction = new SerialPortCmdBackgroundAction(context, dataByte,strData);
+                                SerialPortCmdBackgroundAction serialPortCmdBackgroundAction = new SerialPortCmdBackgroundAction(context, dataByte, strData);
                                 serialPortCmdBackgroundAction.start();
                                 break;
                             case 0x20:   // 上报头部板状态
@@ -60,7 +68,7 @@ public class SerialPortUtilsAction {
                                 serialPortCmdHeadAction.start();
                                 break;
                             case 0x30:  //  上报底板状态
-                                SerialPortCmdBottmAction serialPortCmdBottmAction = new SerialPortCmdBottmAction(context, dataByte,strData);
+                                serialPortCmdBottmAction = new SerialPortCmdBottmAction(context, dataByte, strData);
                                 serialPortCmdBottmAction.start();
                                 break;
                         }
@@ -70,18 +78,17 @@ public class SerialPortUtilsAction {
                 if (strBytes[6].equals("01")) {
                     SendByte();
                 }
-
             }
         }
     }
 
     private void SendByte() {
-        byte sum=0;
+        byte sum = 0;
         byte[] sendByte = new byte[11];
         sendByte[0] = 0x5A;
         sendByte[1] = 0x50;
         sendByte[2] = 0x05;
-        switch (bytes[3]){
+        switch (bytes[3]) {
             case 0x10:
                 sendByte[3] = 0x01;
                 break;
@@ -95,9 +102,9 @@ public class SerialPortUtilsAction {
         sendByte[4] = bytes[4];
         sendByte[5] = bytes[5];
         sendByte[6] = bytes[6];
-        sendByte[7] =0x00;
+        sendByte[7] = 0x00;
 
-        for (int i = 3; i <8; i++) {
+        for (int i = 3; i < 8; i++) {
             sum = (byte) (sum + sendByte[i]);
         }
 

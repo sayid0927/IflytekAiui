@@ -30,9 +30,14 @@ public class AppController {
     public static final String STORY = "story";          // 故事
     public static final String VIDEO = "video";   // 视频
     public static final String OPENAPPTEST_OPENCAMERA = "OPENAPPTEST.OpenCamera";   // 打开相机
+    public static final String OPENAPPTEST_EXITCAMERA = "OPENAPPTEST.ExitCamera";   // 退出相机
+
+
     public static final String OPENAPPTEST_SHOOT = "OPENAPPTEST.Shoot";   // 打开相机
     public static final String OPENAPPTEST_OPENVIDEO = "OPENAPPTEST.OpenVideo";   // 打开相机
     public static final String OPENAPPTEST_VIDEO_ACTION = "OPENAPPTEST.Video_Action";   // 打开相机
+    public static final String OPENAPPTEST_OPENIM = "OPENAPPTEST.Openim";   // 打开视频通话
+    public static final String OPENAPPTEST_ELECTRICITY = "OPENAPPTEST.Electricity";   // 电量
 
 
 
@@ -46,6 +51,8 @@ public class AppController {
     public static final String OPENAPPTEST_MUSIC_DEMO = "OPENAPPTEST.music_demo";
     public static final String OPENAPPTEST_CUSTOM_BAIKE = "OPENAPPTEST.custom_baike";     //自定义百科
     public static final String OPENAPPTEST_ROBOTCOMMAND = "OPENAPPTEST.RobotCommand";// 机器人指令
+    public static final String OPENAPPTEST_DANCE = "OPENAPPTEST.Dance";// 机器人指令
+
 
 
     public static final String WEATHER = "weather";
@@ -56,10 +63,11 @@ public class AppController {
 
 
    //  发送给机器人基本指令
-    public static final byte[] byteWalkForward =new byte[]{0x5A,0x50,0x03,0x02,             0x01,0x01,0x4,0x0D,0x0A} ; //前进
-    public static final byte[] byteWalkBack =new byte[]{0x5A,0x50,0x03,0x02,                   0x01,0x02,0x5,0x0D,0x0A} ; //后退
-    public static final byte[] byteWalkLeft =new byte[]{0x5A,0x50,0x03,0x02,                    0x01,0x03,0x6,0x0D,0x0A} ; //左转
-    public static final byte[] byteWalkRight =new byte[]{0x5A,0x50,0x03,0x02,                   0x01,0x04,0x7,0x0D,0x0A} ; //右转
+    public static final byte[] byteWalkForward =new byte[]{0x5A,0x50,0x05,0x03,0x01,0x02,0x00,0x00,0x06,0x0D,0x0A} ; //前进
+    public static final byte[] byteWalkBack =new byte[]{0x5A,0x50,0x05,0x03,0x01,0x03,0x00,0x00,0x07,0x0D,0x0A} ; //后退
+    public static final byte[] byteWalkLeft =new byte[]{0x5A,0x50,0x05,0x03,0x01,0x04,0x00,0x00,0x08,0x0D,0x0A} ; //左转
+    public static final byte[] byteWalkRight =new byte[]{0x5A,0x50,0x05,0x03,0x01,0x05,0x00,0x00,0x09,0x0D,0x0A} ; //右转
+
     public static final byte[] byteWalkForwardLeft =new byte[]{0x5A,0x50,0x03,0x02,      0x05,0x01,0x4,0x0D,0x0A} ; //前进左转
     public static final byte[] byteWalkForwardRight =new byte[]{0x5A,0x50,0x03,0x02,     0x06,0x01,0x4,0x0D,0x0A} ; //前进右转
     public static final byte[] byteWalkBackLeft =new byte[]{0x5A,0x50,0x03,0x02,             0x07,0x01,0x4,0x0D,0x0A} ; //后退左转

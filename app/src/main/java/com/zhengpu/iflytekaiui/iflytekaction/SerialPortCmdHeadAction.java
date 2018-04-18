@@ -32,65 +32,44 @@ public class SerialPortCmdHeadAction {
     }
 
     public void start() {
-
-        if (strData.length >= 17) {
-            String wak = strData[17];
-//            Logger.e("科大讯飞唤醒标志>>>  " + wak);
-            if (wak.equals("01")) {
+        if (bytes.length > 17) {
+            Logger.e("唤醒位 》》》  "+ strData[17]);
+            if (ValueUtil.isBitnTrue(bytes[17], 0)) {
                 SpeechRecognizerService.stratWakeUp(context);
+                Logger.e("唤醒成功>>>>>>>>>>>>>>>>>    ");
             }
         }
-
         touTouch(bytes[2]);
     }
 
     private void touTouch(byte data) {
-        Logger.e("摸头>>>     " + strData[2]);
-        Logger.e("摸头>>>     " + SpeechRecognizerService.Service);
-
-        if (!SpeechRecognizerService.Service.equals(AppController.TouchHead) && !SpeechRecognizerService.Service.equals(AppController.TouchRightHand)) {
-            if (ValueUtil.isBitnTrue(data, 0) || ValueUtil.isBitnTrue(data, 1) || ValueUtil.isBitnTrue(data, 2)) {
-                // 摸头
-                if (SpeechRecognizerService.touch_V != 1) {
-                    if (TimeUtils.getTimeSpanByNow(TouchHeadTime, ConstUtils.TimeUnit.MIN) < 5) {
-                        switch (TouchHeadCount) {
-                            case 0:
-                                SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
-                                SpeechRecognizerService.touch_V = 1;
-                                SpeechRecognizerService.Service = AppController.TouchHead;
-                                break;
-                            case 1:
-                                SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_1), context.getResources().getString(R.string.Touch_Head_text_1));
-                                SpeechRecognizerService.touch_V = 1;
-                                SpeechRecognizerService.Service = AppController.TouchHead;
-                                break;
-                            case 2:
-                                SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_2), context.getResources().getString(R.string.Touch_Head_text_2));
-                                SpeechRecognizerService.touch_V = 1;
-                                SpeechRecognizerService.Service = AppController.TouchHead;
-                                break;
-                            default:
-                                SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
-                                SpeechRecognizerService.touch_V = 1;
-                                SpeechRecognizerService.Service = AppController.TouchHead;
-                        }
-                        TouchHeadCount++;
-                        if (TouchHeadCount == 3) TouchHeadCount = 0;
-                        PreferUtil.getInstance().setTouchHeadCount(TouchHeadCount);
-                    } else {
-                        SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
-                        PreferUtil.getInstance().setTouchHeadTime(TimeUtils.getNowTimeMills());
-                        PreferUtil.getInstance().setTouchHeadCount(1);
-                        SpeechRecognizerService.touch_V = 1;
-                        SpeechRecognizerService.Service = AppController.TouchHead;
+        if (ValueUtil.isBitnTrue(data, 0) || ValueUtil.isBitnTrue(data, 1) || ValueUtil.isBitnTrue(data, 2)) {
+            if (!SpeechRecognizerService.isSpeech) {
+                SpeechRecognizerService.isSpeech = true;
+                if (TimeUtils.getTimeSpanByNow(TouchHeadTime, ConstUtils.TimeUnit.MIN) < 5) {
+                    switch (TouchHeadCount) {
+                        case 0:
+                            SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
+                            break;
+                        case 1:
+                            SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_1), context.getResources().getString(R.string.Touch_Head_text_1));
+                            break;
+                        case 2:
+                            SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_2), context.getResources().getString(R.string.Touch_Head_text_2));
+                            break;
+                        default:
+                            SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
                     }
+
+                    TouchHeadCount++;
+                    if (TouchHeadCount == 3) TouchHeadCount = 0;
+                    PreferUtil.getInstance().setTouchHeadCount(TouchHeadCount);
                 } else {
-                    SpeechRecognizerService.touch_V = 0;
-                    SpeechRecognizerService.Service = "AA";
+                    SpeechRecognizerService.isSpeech = true;
+                    PreferUtil.getInstance().setTouchHeadTime(TimeUtils.getNowTimeMills());
+                    PreferUtil.getInstance().setTouchHeadCount(1);
+                    SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
                 }
-            } else {
-                SpeechRecognizerService.touch_V = 0;
-                SpeechRecognizerService.Service = "AA";
             }
         }
     }

@@ -8,6 +8,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.BaikeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CalcBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CmdBean;
 import com.zhengpu.iflytekaiui.iflytekbean.CustomBaikeBean;
+import com.zhengpu.iflytekaiui.iflytekbean.DanceBean;
 import com.zhengpu.iflytekaiui.iflytekbean.DatetimeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FaceserviceBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FlightBean;
@@ -19,6 +20,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.OpenAppBean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenCameraBean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenQABean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenVideoBean;
+import com.zhengpu.iflytekaiui.iflytekbean.OpenimBean;
 import com.zhengpu.iflytekaiui.iflytekbean.PoetryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.R4Bean;
 import com.zhengpu.iflytekaiui.iflytekbean.RobotCommandBean;
@@ -441,7 +443,29 @@ public class JsonParser {
         return iflyJokeBean;
     }
 
+    public   static DanceBean parseResultIflyDanceBean(String json) {
+        DanceBean danceBean = new DanceBean();
+        try {
+            Type type = new TypeToken<DanceBean>() {
+            }.getType();
+            danceBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return danceBean;
+    }
 
+    public   static OpenimBean parseResultIflyOpenimBean(String json) {
+        OpenimBean openimBean = new OpenimBean();
+        try {
+            Type type = new TypeToken<OpenimBean>() {
+            }.getType();
+            openimBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return openimBean;
+    }
 
 
 }
