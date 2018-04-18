@@ -8,7 +8,6 @@ import com.orhanobut.logger.Logger;
  * @author luozhi
  */
 public class TimeJudge extends Thread {
-    private final static String TAG = "TimeJudge";
 
     /**
      * 计时单位
@@ -16,32 +15,36 @@ public class TimeJudge extends Thread {
     private final static int m_rate = 1000;
 
 
-    public boolean isRun;
+    private boolean isRun;
     private int TimeCount;
 
     private OnTimeActionListener onTimeActionListener;
 
-
-    public TimeJudge() {
-        isRun = true;
-    }
 
     public void setOnTimeActionListener(OnTimeActionListener onTimeActionListener) {
         this.onTimeActionListener = onTimeActionListener;
     }
 
     public void run() {
-        while (isRun) {
+        super.run();
+        while (true) {
             try {
                 Thread.sleep(m_rate);
-                TimeCount++;
-//                Logger.e(String.valueOf(TimeCount));
-            } catch (InterruptedException ioe) {
-                continue;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            if (TimeCount == 12) {
-                if (onTimeActionListener != null) {
-                    onTimeActionListener.onActionFinished();
+            if (isRun) {
+                try {
+                    Thread.sleep(m_rate);
+                    TimeCount++;
+                    Logger.e(String.valueOf(TimeCount));
+                    if (TimeCount == 10) {
+                        if (onTimeActionListener != null) {
+                            onTimeActionListener.onActionFinished();
+                        }
+                    }
+                } catch (InterruptedException ioe) {
+                    return;
                 }
             }
         }
@@ -52,17 +55,14 @@ public class TimeJudge extends Thread {
      */
     public void close() {
         this.isRun = false;
+        this.TimeCount = 0;
     }
 
     /***
      *   重开计时器
      */
     public void onResart() {
-        if(isRun){
-            close();
-        }
         this.isRun = true;
         this.TimeCount = 0;
-        this.run();
     }
 }
