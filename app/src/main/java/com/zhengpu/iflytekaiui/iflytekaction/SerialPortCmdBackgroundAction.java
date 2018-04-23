@@ -32,17 +32,14 @@ public class SerialPortCmdBackgroundAction {
     }
 
     public void start() {
-
         bodyinfrared(bytes[5]);
         bodyTouch(bytes[3]);
-
     }
 
     private void bodyTouch(byte data) {
         // 摸手
         if (ValueUtil.isBitnTrue(data, 0) || ValueUtil.isBitnTrue(data, 1) || ValueUtil.isBitnTrue(data, 2) || ValueUtil.isBitnTrue(data, 3)) {
-            if (!SpeechRecognizerService.isSpeech) {
-                SpeechRecognizerService.isSpeech = true;
+            if (!SpeechRecognizerService.isIsSpeech() && SpeechRecognizerService.microPhone == 0 && !SpeechRecognizerService.isKuGuoMuiscPlay() && !SpeechRecognizerService.FaceServiceState ) {
                 if (TimeUtils.getTimeSpanByNow(TouchHandTime, ConstUtils.TimeUnit.MIN) < 5) {
                     switch (TouchHandCount) {
                         case 0:
@@ -63,7 +60,6 @@ public class SerialPortCmdBackgroundAction {
                 } else {
                     PreferUtil.getInstance().setTouchHandTime(TimeUtils.getNowTimeMills());
                     PreferUtil.getInstance().setTouchHandCount(1);
-                    SpeechRecognizerService.isSpeech = true;
                     SpeechRecognizerService.startSpeech(AppController.TouchRightHand, context.getResources().getString(R.string.Touch_Hand_text_0), context.getResources().getString(R.string.Touch_Hand_text_0));
                 }
             }
@@ -72,7 +68,6 @@ public class SerialPortCmdBackgroundAction {
 
 
     private void bodyinfrared(byte data) {
-
         if (ValueUtil.isBitnTrue(data, 0) || ValueUtil.isBitnTrue(data, 1)) {
             if (SpeechRecognizerService.pirV != 1) {
 //                Logger.e("人体红外触发>>>>>>>>>>>>>>>>>>>>>>>>>>>>   ");

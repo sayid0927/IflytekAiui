@@ -5,12 +5,18 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.blankj.utilcode.utils.FileUtils;
 import com.blankj.utilcode.utils.RegexUtils;
+import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.base.BaseActivity;
+import com.zhengpu.iflytekaiui.iflytekbean.otherbean.PortData;
 import com.zhengpu.iflytekaiui.utils.UmengUtil;
 
 import java.io.BufferedReader;
@@ -18,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.sql.PreparedStatement;
 
 
 /**
@@ -43,7 +50,6 @@ public class MainActivity extends BaseActivity {
     }
 
 
-
     @Override
     public void initView() {
 
@@ -54,7 +60,12 @@ public class MainActivity extends BaseActivity {
         startService(intent);
         UmengUtil.onEvent("Test");
 //        Log.e("TAG",getDeviceInfo(this));
+
     }
+
+
+
+
 
     public static boolean checkPermission(Context context, String permission) {
         boolean result = false;
@@ -79,6 +90,7 @@ public class MainActivity extends BaseActivity {
         }
         return result;
     }
+
     public static String getDeviceInfo(Context context) {
         try {
             org.json.JSONObject json = new org.json.JSONObject();

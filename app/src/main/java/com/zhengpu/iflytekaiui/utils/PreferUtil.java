@@ -49,6 +49,13 @@ public final class PreferUtil {
 
     private static final String SPEECH_PITCH= "speech_pitch";
 
+    private static final String ELECTRICITY= "electricity";
+
+    private static final String TEMPERATURE= "temperature";
+
+    private static final String HUMIDITY= "humidity";
+
+
 
 
 
@@ -219,8 +226,42 @@ public final class PreferUtil {
         return getInt(SPEECH_PITCH, 0);
     }
 
+    public void setTemperature(int flag) {
+        putInt(TEMPERATURE, flag);
+    }
+
+    public int getTemperature() {
+        return getInt(TEMPERATURE, 0);
+    }
+
+    public void setHumidity(int flag) {
+        putInt(HUMIDITY, flag);
+    }
+
+    public int getHumidity() {
+        return getInt(HUMIDITY, 0);
+    }
 
 
+
+    public void setbatteryState(String flag) {
+        putString(HUMIDITY, flag);
+    }
+
+    public String getbatteryState() {
+        return getString(HUMIDITY,"");
+    }
+
+
+
+
+    public void setElectricity(int flag) {
+        putInt(ELECTRICITY, flag);
+    }
+
+    public int getElectricity() {
+        return getInt(ELECTRICITY, 0);
+    }
 
 
 

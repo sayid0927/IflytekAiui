@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
+import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
 /**
  * Created by Administrator on 2017/12/27 0027.
@@ -49,11 +50,14 @@ public class SerialPortUtilsAction {
                     case 0x01:
                         break;
                     case 0x02:
-//                        Logger.e("查询结果>>>>>>>>>>     ");
-
-                        serialPortCmdBottmAction = new SerialPortCmdBottmAction(context, dataByte, strData);
-                        serialPortCmdBottmAction.start();
-
+                        if (PreferUtil.getInstance().getTemperature() == 1) {
+                            PreferUtil.getInstance().setTemperature(0);
+                            SerialPortCmdTemperatureAction serialPortCmdTemperatureAction = new SerialPortCmdTemperatureAction(context, dataByte, strData);
+                            serialPortCmdTemperatureAction.start();
+                        } else {
+                            serialPortCmdBottmAction = new SerialPortCmdBottmAction(context, dataByte, strData);
+                            serialPortCmdBottmAction.start();
+                        }
                         break;
                     case 0x03:
                         break;
@@ -107,13 +111,9 @@ public class SerialPortUtilsAction {
         for (int i = 3; i < 8; i++) {
             sum = (byte) (sum + sendByte[i]);
         }
-
         sendByte[8] = sum;
         sendByte[9] = 0x0D;
         sendByte[10] = 0x0A;
-
         SpeechRecognizerService.sendSerialMessageBytes(sendByte);
-
     }
-
 }

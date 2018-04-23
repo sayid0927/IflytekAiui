@@ -97,7 +97,8 @@
         <receiver
             android:name=".broadcastReceiver.StratFaceserBroadCast"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="com.zeunpro.login.FaceRecognitionService"></action>
             </intent-filter>

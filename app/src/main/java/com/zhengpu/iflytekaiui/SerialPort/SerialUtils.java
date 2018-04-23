@@ -55,7 +55,7 @@ public class SerialUtils implements OnOpenSerialPortListener {
 //                       Logger.e("onDataReceived  [ byte[] ]: " + Arrays.toString(bytes));
 //                       Logger.e( "onDataReceived [ String ]: " + new String(bytes));
                            String value = ValueUtil.getInstance().bytesToHexStr(bytes);
-//                           LogUtils.e("接收成功>>>   ",value);
+//                       LogUtils.e("接收成功>>>   ",value);
                            UmengUtil.onEvent("SerialPort",value);
                            //  接收成功
                            if(bytes!=null && bytes.length!=0 &&  serialPortListener!=null)
@@ -63,11 +63,11 @@ public class SerialUtils implements OnOpenSerialPortListener {
                        }
                        @Override
                        public void onDataSent(byte[] bytes) {
-//                           Logger.e("onDataSent [ byte[] ]: " + Arrays.toString(bytes));
-//                           Logger.e("onDataSent [ String ]: " + new String(bytes));
+//                       Logger.e("onDataSent [ byte[] ]: " + Arrays.toString(bytes));
+//                       Logger.e("onDataSent [ String ]: " + new String(bytes));
                            String value = ValueUtil.getInstance().bytesToHexStr(bytes);
-//                           Logger.e("发送成功 >>>   " + value);
-                               // 发送成功
+//                        Logger.e("发送成功 >>>   " + value);
+                            // 发送成功
                            if(serialPortListener!=null )
                                serialPortListener.onDataSentSuccess();
                        }

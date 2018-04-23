@@ -1,6 +1,7 @@
 package com.zhengpu.iflytekaiui.utils;
 
 import com.orhanobut.logger.Logger;
+import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 
 /**
  * 计时器，超时触发指定监听器
@@ -37,7 +38,7 @@ public class TimeJudge extends Thread {
                 try {
                     Thread.sleep(m_rate);
                     TimeCount++;
-                    Logger.e(String.valueOf(TimeCount));
+//                    Logger.e("SS>>"+String.valueOf(TimeCount));
                     if (TimeCount == 10) {
                         if (onTimeActionListener != null) {
                             onTimeActionListener.onActionFinished();

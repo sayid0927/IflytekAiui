@@ -16,6 +16,8 @@ public class AppController {
     public  static  final  String WAKEUP_TEXT="wakeup_text";
     public  static  final  String SPEECH_START="speech_start";
     public  static  final  String SPEECH_OVER="speech_over";
+    public  static  final  String STRATFACESER="StratFaceser";
+
 
     public static final String BAIKE = "baike";               //互动百科词条查询。
     public static final String CALC = "calc";                   //  数值计算

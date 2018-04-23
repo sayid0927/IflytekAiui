@@ -33,12 +33,11 @@ public class OpenimAction {
 
         if (openimBean != null && openimBean.getSemantic() != null && openimBean.getSemantic().size() != 0 &&
                 openimBean.getSemantic().get(0).getSlots() != null && openimBean.getSemantic().get(0).getSlots().size() != 0) {
-
             try {
-                Intent gotoDance = new Intent();
-                gotoDance.setComponent(new ComponentName("com.zeunpro.im", "com.zeunpro.im.SplashActivity"));
-                context.startActivity(gotoDance);
-                SpeechRecognizerService.Destroy();
+                Intent gotoIm = new Intent();
+                gotoIm.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                gotoIm.setComponent(new ComponentName("com.zeunpro.im", "com.zeunpro.im.SplashActivity"));
+                context.startActivity(gotoIm);
             }catch (Exception e){
                 e.printStackTrace();
             }

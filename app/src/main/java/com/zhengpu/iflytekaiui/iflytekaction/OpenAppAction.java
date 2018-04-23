@@ -18,10 +18,12 @@ public class OpenAppAction {
 
     private Context context;
     private String mAppName;
+    private int startType;
 
     public OpenAppAction(String appname, Context context) {
         this.mAppName = appname;
         this.context = context;
+        this.startType = 0;
     }
 
     public void start() {
@@ -45,14 +47,17 @@ public class OpenAppAction {
                     Uri uri = Uri.parse("content://contacts/people");
                     Intent i = new Intent("android.intent.action.VIEW", uri);
                     context.startActivity(i);
+                    startType = 1;
                 } else {
                     intent = pm.getLaunchIntentForPackage(pkgname);
                     intent.addCategory("android.intent.category.LAUNCHER");
                     context.startActivity(intent);
+                    startType = 1;
                 }
                 return;
             }
         }
-        SpeechRecognizerService.startSpeech(AppController.OPENAPPTEST_APP, "没有找到你所说的应用哦","没有找到你所说的应用哦");
+        if (startType == 0)
+            SpeechRecognizerService.startSpeech(AppController.OPENAPPTEST_APP, "没有找到你所说的应用哦", "没有找到你所说的应用哦");
     }
 }

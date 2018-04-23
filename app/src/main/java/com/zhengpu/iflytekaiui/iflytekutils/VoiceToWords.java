@@ -74,6 +74,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.otherbean.CustomMusicBean;
 import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
+import com.zhengpu.iflytekaiui.utils.PreferUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -153,6 +154,7 @@ public class VoiceToWords {
         mIatResults.clear();
         if (mIat.startUnderstanding(mSpeechUnderstanderListener) != ErrorCode.SUCCESS)
             Logger.e("听写失败,错误码：" + mIat.startUnderstanding(mSpeechUnderstanderListener));
+
     }
 
     /**
@@ -208,6 +210,7 @@ public class VoiceToWords {
         mIat.setParameter(SpeechConstant.ASR_AUDIO_PATH, Environment.getExternalStorageDirectory() + "/abcd/iat.wav");
         // 设置返回结果格式
         mIat.setParameter(SpeechConstant.RESULT_TYPE, "json");
+
     }
 
     public boolean isIatListening() {
@@ -270,6 +273,7 @@ public class VoiceToWords {
         public void onVolumeChanged(int volume, byte[] data) {
             //showTip("当前正在说话，音量大小：" + volume);
             //Log.d(TAG, "返回音频数据：" + data.length);
+//            Logger.e("返回音频数据：" + data.length);
         }
 
         @Override
@@ -525,6 +529,7 @@ public class VoiceToWords {
 
                     byte[] sendByte = {0x5A, 0x50, 0x05, 0x01, 0x02, 0x01, 0x00, 0x00, 0x04, 0x0D, 0x0A};
                     SpeechRecognizerService.sendSerialMessageBytes(sendByte);
+                    PreferUtil.getInstance().setElectricity(1);
 
                     break;
 

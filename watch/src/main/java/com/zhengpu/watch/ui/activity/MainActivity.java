@@ -505,6 +505,30 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                 UmengUtil.onEvent("showLowVoice_text");
                 break;
 
+            case "TouchHead_service":   //摸头
+
+                robotCommandRequest = new RobotCommandRequest();
+                robotCommandRequest.setText(Message);
+                mData.add(robotCommandRequest);
+//                UmengUtil.onEvent("showLowVoice_text");
+                break;
+
+            case "TouchRightHand_service":   //摸手
+
+                robotCommandRequest = new RobotCommandRequest();
+                robotCommandRequest.setText(Message);
+                mData.add(robotCommandRequest);
+//                UmengUtil.onEvent("showLowVoice_text");
+                break;
+
+            case "DanceAction":   // 跳舞
+
+                robotCommandRequest = new RobotCommandRequest();
+                robotCommandRequest.setText(Message);
+                mData.add(robotCommandRequest);
+
+                break;
+
             case "flight":   //订票服务
 
                 FlightBean flightBean = JsonParser.parseResultFlightoBean(Message);

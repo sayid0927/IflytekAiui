@@ -191,6 +191,10 @@ public class WordsToVoice {
         }
     }
 
+    public boolean   isSpeaking(){
+        return  mTts.isSpeaking();
+    }
+
 
     /**
      * 合成回调监听。
