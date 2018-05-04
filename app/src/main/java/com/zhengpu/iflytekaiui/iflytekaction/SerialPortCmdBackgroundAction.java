@@ -21,6 +21,7 @@ public class SerialPortCmdBackgroundAction {
     private byte[] bytes;
     private long TouchHandTime;
     private int TouchHandCount;
+    private long infraredTime;
     private String[] strData;
 
     public SerialPortCmdBackgroundAction(Context context, byte[] bytes, String[] strData) {
@@ -28,18 +29,22 @@ public class SerialPortCmdBackgroundAction {
         this.bytes = bytes;
         this.strData = strData;
         this.TouchHandTime = PreferUtil.getInstance().getTouchHandTime(); // 上次的时间戳
+        this.infraredTime = PreferUtil.getInstance().getInfraredTime();
         this.TouchHandCount = PreferUtil.getInstance().getTouchHandCount();
+
     }
 
     public void start() {
+
         bodyinfrared(bytes[5]);
         bodyTouch(bytes[3]);
+
     }
 
     private void bodyTouch(byte data) {
         // 摸手
         if (ValueUtil.isBitnTrue(data, 0) || ValueUtil.isBitnTrue(data, 1) || ValueUtil.isBitnTrue(data, 2) || ValueUtil.isBitnTrue(data, 3)) {
-            if (!SpeechRecognizerService.isIsSpeech() && SpeechRecognizerService.microPhone == 0 && !SpeechRecognizerService.isKuGuoMuiscPlay() && !SpeechRecognizerService.FaceServiceState ) {
+            if (!SpeechRecognizerService.isIsSpeech() && SpeechRecognizerService.microPhone == 0 && !SpeechRecognizerService.isKuGuoMuiscPlay() && !SpeechRecognizerService.FaceServiceState) {
                 if (TimeUtils.getTimeSpanByNow(TouchHandTime, ConstUtils.TimeUnit.MIN) < 5) {
                     switch (TouchHandCount) {
                         case 0:
@@ -66,17 +71,29 @@ public class SerialPortCmdBackgroundAction {
         }
     }
 
-
     private void bodyinfrared(byte data) {
-        if (ValueUtil.isBitnTrue(data, 0) || ValueUtil.isBitnTrue(data, 1)) {
-            if (SpeechRecognizerService.pirV != 1) {
-//                Logger.e("人体红外触发>>>>>>>>>>>>>>>>>>>>>>>>>>>>   ");
-                SpeechRecognizerService.stratWakeUp(context);
+        Logger.e("红外》》》    "+strData[5] );
+        if (strData[5].equals("01")) {
+            Logger.e("红外 >>人体红外");
+            Logger.e("红外>>infraredTime >> "+String.valueOf(infraredTime));
+            Logger.e("红外 >>TimeUtils.getNowTimeMills() >> "+String.valueOf(TimeUtils.getNowTimeMills()));
+            if (TimeUtils.getTimeSpanByNow(infraredTime, ConstUtils.TimeUnit.MIN) > 1 ) {
+
+                Logger.e("红外>>  人体红外触发>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                SpeechRecognizerService.stratInfrared(context);
                 SpeechRecognizerService.pirV = 1;
+                PreferUtil.getInstance().setInfraredTime(TimeUtils.getNowTimeMills());
+
+            }else {
+                if(SpeechRecognizerService.isPir) {
+                    Logger.e("红外>>  人体红外触发>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                    SpeechRecognizerService.isPir= false;
+                    SpeechRecognizerService.stratInfrared(context);
+                    PreferUtil.getInstance().setInfraredTime(TimeUtils.getNowTimeMills());
+                }
             }
         } else {
             SpeechRecognizerService.pirV = 0;
         }
     }
-
 }

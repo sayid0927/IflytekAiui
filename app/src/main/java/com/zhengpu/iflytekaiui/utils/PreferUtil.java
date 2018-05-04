@@ -36,6 +36,9 @@ public final class PreferUtil {
 
     private static final String TOUCH_HAND_TIME = "touch_hand_time";
     private static final String TOUCH_HAND_COUNT = "touch_hand_count";
+    private static final String INFRARED_TIME = "infrared_time";
+
+
 
     private static final String SHOW_LOW_VOICE_TIME = "show_low_voice_time";
     private static final String SHOW_LOW_VOICE_COUNT = "show_low_voice_count";
@@ -160,9 +163,26 @@ public final class PreferUtil {
         putLong(TOUCH_HAND_TIME, flag);
     }
 
+    public long getInfraredTime() {
+        return getLong(INFRARED_TIME, TimeUtils.getNowTimeMills());
+    }
+
+
+    public void setInfraredTime(long flag) {
+        putLong(INFRARED_TIME, flag);
+    }
+
     public long getTouchHandTime() {
         return getLong(TOUCH_HAND_TIME, TimeUtils.getNowTimeMills());
     }
+
+
+
+
+
+
+
+
 
     public void setTouchHandCount(int flag) {
         putInt(TOUCH_HAND_COUNT, flag);

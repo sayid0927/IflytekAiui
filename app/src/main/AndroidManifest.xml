@@ -75,13 +75,13 @@
             android:exported="true" />
 
         <!--<service-->
-            <!--android:name=".service.SpeechRecognizerService"-->
-            <!--android:exported="true"-->
-            <!--android:process=":SpeechRecognizerService">-->
+        <!--android:name=".service.SpeechRecognizerService"-->
+        <!--android:exported="true"-->
+        <!--android:process=":SpeechRecognizerService">-->
 
-            <!--<intent-filter>-->
-                <!--<action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />-->
-            <!--</intent-filter>-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />-->
+        <!--</intent-filter>-->
         <!--</service>-->
 
         <receiver
@@ -97,8 +97,7 @@
         <receiver
             android:name=".broadcastReceiver.StratFaceserBroadCast"
             android:enabled="true"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.zeunpro.login.FaceRecognitionService"></action>
             </intent-filter>
@@ -109,18 +108,18 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.zeunpro.system.dialer.bro"/>
-                <action android:name="com.zeunpro.im.videocall"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.zeunpro.system.dialer.bro" />
+                <action android:name="com.zeunpro.im.videocall" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-
         <activity android:name=".MainActivity">
-        <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <provider
@@ -128,7 +127,6 @@
             android:authorities="com.zhengpu.iflytekaiui.provider"
             android:exported="true"
             android:process=":provider" />
-
 
         <meta-data
             android:name="UMENG_APPKEY"

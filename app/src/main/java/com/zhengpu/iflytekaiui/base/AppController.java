@@ -103,6 +103,7 @@ public class AppController {
     public static final  String WalkBack ="后退";
     public static final  String WalkLeft ="左转";
     public static final  String WalkRight ="右转";
+    public static final  String WalkTurnBack ="后转";
     public static final  String WalkForwardLeft ="前进左转";
     public static final  String WalkForwardRight ="前进右转";
     public static final  String WalkBackLeft ="后退左转";

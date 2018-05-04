@@ -29,10 +29,10 @@ android {
             keyPassword "000000"
         }
         debug {
-            storeFile file("app.jks")
-            storePassword "000000"
-            keyAlias "app"
-            keyPassword "000000"
+//            storeFile file("app.jks")
+//            storePassword "000000"
+//            keyAlias "app"
+//            keyPassword "000000"
         }
     }
 
@@ -46,16 +46,16 @@ android {
             signingConfig signingConfigs.release //设置签名
         }
         debug {
-            debuggable true
-            zipAlignEnabled true //zip对齐
-            minifyEnabled true  //设置混淆
-            shrinkResources true //删除多余的资源文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release //设置签名
+//            debuggable true
+//            zipAlignEnabled true //zip对齐
+//            minifyEnabled true  //设置混淆
+//            shrinkResources true //删除多余的资源文件
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release //设置签名
         }
     }
     productFlavors {
-        xiaomi {}
+        iflytekaiui {}
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
@@ -64,7 +64,7 @@ android {
 }
 
 dependencies {
-//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:25.0.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.umeng.sdk:common:latest.integration'
@@ -78,6 +78,6 @@ dependencies {
     compile 'com.bugtags.library:bugtags-lib:latest.integration'
     compile 'com.github.kongqw:AndroidSerialPort:1.0.1'
     implementation files('libs/Msc.jar')
-//    implementation files('libs/Sunflower.jar')
+    //    implementation files('libs/Sunflower.jar')
 //    implementation files('libs/AIUI.jar')
 }

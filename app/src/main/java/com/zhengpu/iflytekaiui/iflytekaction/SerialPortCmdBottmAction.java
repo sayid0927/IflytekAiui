@@ -42,18 +42,21 @@ public class SerialPortCmdBottmAction {
 
         if (bytes.length >= 12) {
             byte[] bit = getBooleanArray(bytes[12]);
-            if (bit[7] == 0 && bit[6] == 0) {
-                // 未充电
-                service = "未充电";
-            } else if(bit[7] == 1 && bit[6] == 1){
-                // 未充电
-                service = "未充电";
-            } else if (bit[7] == 1 && bit[6] == 0) {
+//            if (bit[7] == 0 && bit[6] == 0) {
+//                // 未充电
+//                service = "未充电";
+//            } else if(bit[7] == 1 && bit[6] == 1){
+//                // 未充电
+//                service = "未充电";
+
+            if (bit[7] == 1 && bit[6] == 0) {
                 //bit0 == 1  冲电中
                 service = "充电中";
             } else if (bit[7] == 0 && bit[6] == 1) {
                 //bit1 == 1  // 充电完成
                 service = "充电完成";
+            }else {
+                service = "未充电";
             }
 
             high4bitsVal = (bytes[12] & 0xF0) >> 4;
@@ -79,8 +82,8 @@ public class SerialPortCmdBottmAction {
             }
         }
 
-//        com.orhanobut.logger.Logger.e("冲电  service>>   "+ service);
-//        com.orhanobut.logger.Logger.e("冲电  电量  >>   "+ String.valueOf(high4bitsVal) + "    >>"+message );
+        com.orhanobut.logger.Logger.e("冲电  service>>   "+ service);
+        com.orhanobut.logger.Logger.e("冲电  电量  >>   "+ String.valueOf(high4bitsVal) + "    >>"+message );
 
         if (PreferUtil.getInstance().getElectricity() == 1) {
             PreferUtil.getInstance().setElectricity(0);
@@ -100,6 +103,12 @@ public class SerialPortCmdBottmAction {
         portData.setBatteryLevel(message);
         savePortFileData(portData);
 
+    }
+
+
+    public static int byteToInt(byte b) {
+        //Java 总是把 byte 当做有符处理；我们可以通过将其和 0xFF 进行二进制与得到它的无符值
+        return b & 0xFF;
     }
 
     /**
