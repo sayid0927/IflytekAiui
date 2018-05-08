@@ -58,7 +58,7 @@ public class ShipingAction {
 
                 } else {
 //                没有安装爱奇艺APP  打开浏览器 下载APP
-                    SpeechRecognizerService.startSpeech(service, context.getResources().getString(R.string.aiqiyi_tip), request);
+                    SpeechRecognizerService.startSpeech(AppController.OPENAPPTEST_APP, context.getResources().getString(R.string.aiqiyi_tip), request);
                     showDialog();
                 }
             }

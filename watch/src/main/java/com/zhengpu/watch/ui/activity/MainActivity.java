@@ -320,6 +320,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                     mData.add(robotCommandRequest);
                     UmengUtil.onEvent("r4_2");
                 }
+
                 break;
 
             case "openQA":  //开放问答

@@ -104,6 +104,16 @@
         </receiver>
 
         <receiver
+            android:name=".broadcastReceiver.HumanCheckBroadCast"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.zp.action.bodyset"></action>
+            </intent-filter>
+        </receiver>
+
+
+        <receiver
             android:name=".broadcastReceiver.VideocallBroadCast"
             android:enabled="true"
             android:exported="true">

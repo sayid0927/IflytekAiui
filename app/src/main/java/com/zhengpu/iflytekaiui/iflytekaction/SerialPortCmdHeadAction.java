@@ -8,6 +8,7 @@ import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.R;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.base.BaseApplication;
+import com.zhengpu.iflytekaiui.ipc.entity.DanceMessage;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
 import com.zhengpu.iflytekaiui.utils.UDPReceiveUtils;
@@ -15,6 +16,10 @@ import com.zhengpu.iflytekaiui.utils.ValueUtil;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+
+import xiaofei.library.hermeseventbus.HermesEventBus;
+
+import static com.zhengpu.iflytekaiui.service.SpeechRecognizerService.stopDanceAction;
 
 /**
  * Created by Administrator on 2017/12/27 0027.
@@ -41,10 +46,10 @@ public class SerialPortCmdHeadAction {
 
     public void start() {
         if (bytes.length > 17) {
-//            Logger.e("唤醒位 》》》  " + strData[17]);
+            Logger.e("唤醒位 》》》  " + strData[17]);
             if (ValueUtil.isBitnTrue(bytes[17], 0)) {
                 SpeechRecognizerService.stratWakeUp(context);
-//                Logger.e("唤醒成功>>>>>>>>>>>>>>>>>    ");
+                Logger.e("唤醒成功>>>>>>>>>>>>>>>>>    ");
                 scheduledFuture = BaseApplication.MAIN_EXECUTOR.scheduleWithFixedDelay(senByte(), 0, 3, TimeUnit.MILLISECONDS);
             }
         }
@@ -68,9 +73,8 @@ public class SerialPortCmdHeadAction {
 
     private void touTouch(byte data) {
 
-
         if (ValueUtil.isBitnTrue(data, 0) || ValueUtil.isBitnTrue(data, 1) || ValueUtil.isBitnTrue(data, 2)) {
-            if (!SpeechRecognizerService.isIsSpeech() && SpeechRecognizerService.microPhone == 0 && !SpeechRecognizerService.isKuGuoMuiscPlay() && !SpeechRecognizerService.FaceServiceState) {
+            if (!SpeechRecognizerService.isIsSpeech() && SpeechRecognizerService.microPhone == 0 && !SpeechRecognizerService.isKuGuoMuiscPlay() && !SpeechRecognizerService.FaceServiceState && !SpeechRecognizerService.isDance ) {
                 if (TimeUtils.getTimeSpanByNow(TouchHeadTime, ConstUtils.TimeUnit.MIN) < 5) {
                     switch (TouchHeadCount) {
                         case 0:
@@ -93,6 +97,9 @@ public class SerialPortCmdHeadAction {
                     PreferUtil.getInstance().setTouchHeadCount(1);
                     SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
                 }
+            }
+            if(SpeechRecognizerService.isDance){
+                 stopDanceAction();
             }
         }
     }

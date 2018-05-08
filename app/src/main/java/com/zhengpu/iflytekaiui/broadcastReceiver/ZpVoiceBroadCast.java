@@ -63,7 +63,6 @@ public class ZpVoiceBroadCast extends BroadcastReceiver {
             if(voiceIntonation!=0){
                 PreferUtil.getInstance().setSpeechPitch((int)voiceIntonation);
             }
-
         }
     }
 }

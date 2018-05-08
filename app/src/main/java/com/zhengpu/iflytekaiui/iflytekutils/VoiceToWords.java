@@ -3,6 +3,7 @@ package com.zhengpu.iflytekaiui.iflytekutils;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
@@ -129,7 +130,7 @@ public class VoiceToWords {
         @Override
         public void onInit(int code) {
             if (code != ErrorCode.SUCCESS) {
-                Logger.e("初始化失败，错误码：" + code);
+//                Logger.e("初始化失败，错误码：" + code);
             }
         }
     };
@@ -158,8 +159,12 @@ public class VoiceToWords {
 //    mIat.setParameter(SpeechConstant.NET_TIMEOUT,"30000");
         mIat.setParameter(SpeechConstant.PARAMS, null);
         //设置语音输入超时时间
-        mIat.setParameter(SpeechConstant.KEY_SPEECH_TIMEOUT, "10000");
+//        mIat.setParameter(SpeechConstant.KEY_SPEECH_TIMEOUT, "20000");
+        // 设置语音前端点:静音超时时间，即用户多长时间不说话则当做超时处理
+//        mIat.setParameter(SpeechConstant.VAD_BOS,  "20000");
         mIat.setParameter(SpeechConstant.SAMPLE_RATE, "16000");
+//        mIat.setParameter(SpeechConstant.SAMPLE_RATE, "8000");
+
         // 设置听写引擎
         mIat.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
         // 设置返回结果格式
@@ -186,7 +191,7 @@ public class VoiceToWords {
         // 也可以像以下这样直接设置音频文件路径识别（要求设置文件在sdcard上的全路径）：
         // mIat.setParameter(SpeechConstant.AUDIO_SOURCE, "-2");
         // mIat.setParameter(SpeechConstant.ASR_SOURCE_PATH, "sdcard/XXX/XXX.pcm");
-        mIat.setParameter(SpeechConstant.VAD_ENABLE, "1");
+        mIat.setParameter(SpeechConstant.VAD_ENABLE, "0");
         // 设置语音前端点:静音超时时间，即用户多长时间不说话则当做超时处理
         mIat.setParameter(SpeechConstant.VAD_BOS, "1000");
         // 设置语音后端点:后端点静音检测时间，即用户停止说话多长时间内即认为不再输入， 自动停止录音
@@ -195,10 +200,10 @@ public class VoiceToWords {
         mIat.setParameter(SpeechConstant.ASR_PTT, "0");
         // 设置音频保存路径，保存音频格式支持pcm、wav，设置路径为sd卡请注意WRITE_EXTERNAL_STORAGE权限
         // 注：AUDIO_FORMAT参数语记需要更新版本才能生效
-        mIat.setParameter(SpeechConstant.AUDIO_FORMAT, "wav");
-        mIat.setParameter(SpeechConstant.ASR_AUDIO_PATH, Environment.getExternalStorageDirectory() + "/abcd/iat.wav");
+//        mIat.setParameter(SpeechConstant.AUDIO_FORMAT, "wav");
+//        mIat.setParameter(SpeechConstant.ASR_AUDIO_PATH, Environment.getExternalStorageDirectory() + "/abcd/iat.wav");
         // 设置返回结果格式
-        mIat.setParameter(SpeechConstant.RESULT_TYPE, "json");
+//        mIat.setParameter(SpeechConstant.RESULT_TYPE, "json");
 
     }
 
@@ -234,7 +239,7 @@ public class VoiceToWords {
         @Override
         public void onResult(final UnderstanderResult result) {
             if (null != result) {
-                Logger.e(result.getResultString());
+                Logger.e("识别结果》"+result.getResultString());
                 String text = result.getResultString();
                 JSONObject jsonObject2;
                 String service = "";
@@ -261,7 +266,8 @@ public class VoiceToWords {
         @Override
         public void onVolumeChanged(int volume, byte[] data) {
             //showTip("当前正在说话，音量大小：" + volume);
-            //Log.d(TAG, "返回音频数据：" + data.length);
+//            Log.d(TAG, "返回音频数据：" + data.length);
+//            Logger.e("识别结果 》SS>>"+"返回音频数据：" + data.length);
 //            Logger.e("返回音频数据：" + data.length);
         }
 
@@ -270,6 +276,7 @@ public class VoiceToWords {
             // 此回调表示：检测到了语音的尾端点，已经进入识别过程，不再接受语音输入
             //showTip("结束说话");
 //            Logger.e("结束说话");
+//            Logger.e("识别结果 》SS>>  结束说话");
             if (mIGetVoiceToWord != null) {
                 mIGetVoiceToWord.SpeechOver();
             }
@@ -279,6 +286,7 @@ public class VoiceToWords {
         public void onBeginOfSpeech() {
             // 此回调表示：检测到了语音的前端点，已经进入识别
 //            Logger.e("开始说话");
+            Logger.e("识别结果 》SS>>  开始说话");
             if (mIGetVoiceToWord != null)
                 mIGetVoiceToWord.SpeechStart();
         }
@@ -288,11 +296,13 @@ public class VoiceToWords {
             // Tips：
             // 错误码：10118(您没有说话)，可能是录音机权限被禁，需要提示用户打开应用的录音权限。
             // 如果使用本地功能（语记）需要提示用户开启语记的录音权限。
-            // showTip(error.getPlainDescription(true));
+            Logger.e("识别结果 》SS>>"+error.getPlainDescription(true));
+//             Logger.e(error.getPlainDescription(true));
             if ("您好像没有说话哦.(错误码:10118)".equals(error.getPlainDescription(true))) {
-                String lowVoiceTip = "";
-                if (mIGetVoiceToWord != null)
-                    mIGetVoiceToWord.showLowVoice(lowVoiceTip);
+                voiceToWords.startRecognizer();
+//                String lowVoiceTip = "";
+//                if (mIGetVoiceToWord != null)
+//                    mIGetVoiceToWord.showLowVoice(lowVoiceTip);
             }
         }
 

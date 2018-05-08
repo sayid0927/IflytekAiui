@@ -82,8 +82,8 @@ public class SerialPortCmdBottmAction {
             }
         }
 
-        com.orhanobut.logger.Logger.e("冲电  service>>   "+ service);
-        com.orhanobut.logger.Logger.e("冲电  电量  >>   "+ String.valueOf(high4bitsVal) + "    >>"+message );
+//        com.orhanobut.logger.Logger.e("冲电  service>>   "+ service);
+//        com.orhanobut.logger.Logger.e("冲电  电量  >>   "+ String.valueOf(high4bitsVal) + "    >>"+message );
 
         if (PreferUtil.getInstance().getElectricity() == 1) {
             PreferUtil.getInstance().setElectricity(0);

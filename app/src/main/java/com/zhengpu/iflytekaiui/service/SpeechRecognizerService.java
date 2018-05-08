@@ -26,6 +26,7 @@ import com.zhengpu.iflytekaiui.SerialPort.OpenSerialPortListener;
 import com.zhengpu.iflytekaiui.SerialPort.SerialUtils;
 import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.base.BaseApplication;
+import com.zhengpu.iflytekaiui.broadcastReceiver.HumanCheckBroadCast;
 import com.zhengpu.iflytekaiui.broadcastReceiver.StratFaceserBroadCast;
 import com.zhengpu.iflytekaiui.iflytekaction.SerialPortUtilsAction;
 import com.zhengpu.iflytekaiui.iflytekbean.BaseBean;
@@ -37,6 +38,7 @@ import com.zhengpu.iflytekaiui.iflytekutils.JsonParser;
 import com.zhengpu.iflytekaiui.iflytekutils.VoiceToWords;
 import com.zhengpu.iflytekaiui.iflytekutils.WakeUpListener;
 import com.zhengpu.iflytekaiui.iflytekutils.WordsToVoice;
+import com.zhengpu.iflytekaiui.ipc.entity.DanceMessage;
 import com.zhengpu.iflytekaiui.ipc.entity.RequestMessage;
 import com.zhengpu.iflytekaiui.ipc.entity.SendMessage;
 import com.zhengpu.iflytekaiui.thread.KuGuoMuiscPlayListener;
@@ -88,8 +90,8 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public static int microPhone = 0;
     public static int pirV = 0;
     public static boolean isStartFacse = false;
-    public static  boolean isPir = true;
-
+    public static boolean isPir = true;
+    public static boolean isDance = false;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -149,7 +151,13 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
         StratFaceserBroadCast stratFaceserBroadCast = new StratFaceserBroadCast();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.zeunpro.login.FaceRecognitionService");
-        registerReceiver(stratFaceserBroadCast,intentFilter);
+        registerReceiver(stratFaceserBroadCast, intentFilter);
+
+        HumanCheckBroadCast humanCheckBroadCast = new HumanCheckBroadCast();
+        IntentFilter humanCheckintentFilter = new IntentFilter();
+        intentFilter.addAction("com.zp.action.bodyset");
+        registerReceiver(humanCheckBroadCast, humanCheckintentFilter);
+
 
     }
 
@@ -157,6 +165,30 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
     public int onStartCommand(Intent intent, int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getDanceAppEvent(DanceMessage danceMessage) {
+        ////                       dance.action
+////                        -1 没有播放
+////                         1 播放中
+        String Dancemessage = danceMessage.getMessage();
+        String DanceService = danceMessage.getService();
+        String DancePag = danceMessage.getPkg();
+
+        Logger.e("获取跳舞进程的消息>>     Service  " + DanceService
+                + "   Message >>  " + Dancemessage + "   DancePag >>  " + DancePag);
+
+        if (DancePag.equals("com.zeunpro.dance")) {
+            if (DanceService.equals("dance.action")) {
+                if (Dancemessage.equals("1")) {
+                    isDance = true;
+                } else if (Dancemessage.equals("-1")) {
+                    isDance = false;
+                }
+            }
+        }
+    }
+
 
     //  获取其他进程的消息 让机器人播报其他进程消息内容
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -227,7 +259,7 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
      */
     @Override
     public void showLowVoice(String result) {
-        voiceToWords.startRecognizer();
+//        voiceToWords.startRecognizer();
 //        Long showLowVoiceTime = PreferUtil.getInstance().getShowLowVoiceTime();
 //        int showLowVoiceCount = PreferUtil.getInstance().getShowLowVoiceCount();
 //        if (TimeUtils.getTimeSpanByNow(showLowVoiceTime, ConstUtils.TimeUnit.MIN) < 2) {
@@ -312,9 +344,23 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
             if (kuGuoMuiscPlayThread.isPlay()) {
                 kuGuoMuiscPlayThread.stop();
             }
-//            stratFaceservice(context);
+            if (PreferUtil.getInstance().getfaceCheck())
+                stratFaceservice(context);
             startSpeech(AppController.WAKEUP_TEXT, "多多在这里", "多多在这里");
+        } else {
+            if (isDance) {
+                stopDanceAction();
+                startSpeech(AppController.WAKEUP_TEXT, "多多在这里", "多多在这里");
+            }
         }
+    }
+
+    public static void stopDanceAction() {
+        DanceMessage danceMessage = new DanceMessage();
+        danceMessage.setService("dance.action");
+        danceMessage.setMessage("-1");
+        danceMessage.setPkg("com.zhengpu.iflytekaiui");
+        HermesEventBus.getDefault().post(danceMessage);
     }
 
 
@@ -329,8 +375,9 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
             BaseApplication.MAIN_EXECUTOR.schedule(new Runnable() {
                 @Override
                 public void run() {
-                    sendSerialMessageBytes(new byte[]{0x5A,0x50,0x05,0x03,0x01,0x06,0x00,0x00,0x0A,0x0D,0x0A});
-//                    stratFaceservice(context);
+                    sendSerialMessageBytes(new byte[]{0x5A, 0x50, 0x05, 0x03, 0x01, 0x06, 0x00, 0x00, 0x0A, 0x0D, 0x0A});
+                    if (PreferUtil.getInstance().getfaceCheck())
+                        stratFaceservice(context);
                 }
             }, 7, TimeUnit.SECONDS);
         }
@@ -667,10 +714,10 @@ public class SpeechRecognizerService extends Service implements IGetVoiceToWord,
 
     @Override
     public void onActionFinished() {
-        if (!wordsToVoice.isSpeaking() && !isKuGuoMuiscPlay() && microPhone == 0) {
+        if (!wordsToVoice.isSpeaking() && !isKuGuoMuiscPlay() && microPhone == 0 && !isDance) {
             startSpeech(AppController.SHOWLOWVOICE_TEXT, getResources().getString(R.string.showLowVoice_text), getResources().getString(R.string.showLowVoice_text));
             sendSerialMessageBytes(new byte[]{0x5A, 0x50, 0x05, 0x02, 0x07, 0x00, 0x00, 0x00, 0x09, 0x0D, 0x0A}); //科大讯飞复位
-        }else
+        } else
             voiceToWords.mIatDestroy();
         timeJudge.close();
     }

@@ -27,6 +27,11 @@ public final class PreferUtil {
     private static final String R4_SPACE_TIME = "r4_space_time";
     private static final String R4_SPACE_COUNT = "r4_space_count";
     private static final String SPEECH_PARAMS = "speech_params";
+    private static final String BODY_CHECK = "body_check";
+    private static final String FACE_CHECK = "face_check";
+
+
+
 
     private static final String TOUCH_HEAD_TIME = "touch_head_time";
     private static final String TOUCH_HEAD_COUNT = "touch_head_count";
@@ -225,8 +230,22 @@ public final class PreferUtil {
         return getInt(SPEECH_PARAMS, 0);
     }
 
+    public void setbodyCheck(boolean flag) {
+        putBoolean(BODY_CHECK, flag);
+    }
+
+    public boolean getbodyCheck() {
+        return getBoolean(BODY_CHECK, false);
+    }
 
 
+    public void setfaceCheck(boolean flag) {
+        putBoolean(FACE_CHECK, flag);
+    }
+
+    public boolean getfaceCheck() {
+        return getBoolean(FACE_CHECK, false);
+    }
 
     public void setSpeechSpeed(int flag) {
         putInt(SPEECH_SPEED, flag);
