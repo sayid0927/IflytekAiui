@@ -1,7 +1,6 @@
 package com.zhengpu.iflytekaiui.iflytekutils;
 
 
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zhengpu.iflytekaiui.iflytekbean.BaikeBean;
@@ -12,6 +11,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.DanceBean;
 import com.zhengpu.iflytekaiui.iflytekbean.DatetimeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FaceserviceBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FlightBean;
+import com.zhengpu.iflytekaiui.iflytekbean.HotelSearchBean;
 import com.zhengpu.iflytekaiui.iflytekbean.IflyJokeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.JokeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.MusicXBean;
@@ -23,10 +23,13 @@ import com.zhengpu.iflytekaiui.iflytekbean.OpenVideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenimBean;
 import com.zhengpu.iflytekaiui.iflytekbean.PoetryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.R4Bean;
+import com.zhengpu.iflytekaiui.iflytekbean.RadioBean;
 import com.zhengpu.iflytekaiui.iflytekbean.RobotCommandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.ShootBean;
+import com.zhengpu.iflytekaiui.iflytekbean.StockBean;
 import com.zhengpu.iflytekaiui.iflytekbean.StoryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.TelephoneBean;
+import com.zhengpu.iflytekaiui.iflytekbean.TranslationBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoCammandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
@@ -57,7 +60,7 @@ public class JsonParser {
     }
 
 
-     static BaikeBean parseResultBaikeBean(String json) {
+    static BaikeBean parseResultBaikeBean(String json) {
         BaikeBean baikeBean = new BaikeBean();
         try {
             Type type = new TypeToken<BaikeBean>() {
@@ -83,7 +86,7 @@ public class JsonParser {
     }
 
 
-     static WeatherBean parseResultWeatherBean(String json) {
+    static WeatherBean parseResultWeatherBean(String json) {
         WeatherBean weatherBean = new WeatherBean();
         try {
             Type type = new TypeToken<WeatherBean>() {
@@ -109,7 +112,7 @@ public class JsonParser {
     }
 
 
-   public   static MusicXBean parseResultMusicXBean(String json) {
+    public static MusicXBean parseResultMusicXBean(String json) {
         MusicXBean musicXBean = new MusicXBean();
         try {
             Type type = new TypeToken<MusicXBean>() {
@@ -262,8 +265,7 @@ public class JsonParser {
     }
 
 
-
-    public   static IfCustomBaikeBean parseResultIfCustomBaikeBean(String json) {
+    public static IfCustomBaikeBean parseResultIfCustomBaikeBean(String json) {
         IfCustomBaikeBean ifCustomBaikeBean = new IfCustomBaikeBean();
         try {
             Type type = new TypeToken<IfCustomBaikeBean>() {
@@ -275,7 +277,7 @@ public class JsonParser {
         return ifCustomBaikeBean;
     }
 
-     static IfMusicBean parseResultIfMusicBean(String json) {
+    static IfMusicBean parseResultIfMusicBean(String json) {
         IfMusicBean ifMusicBean = new IfMusicBean();
         try {
             Type type = new TypeToken<IfMusicBean>() {
@@ -287,7 +289,7 @@ public class JsonParser {
         return ifMusicBean;
     }
 
-     static IfMusicResBean parseResultIfMusicResBean(String json) {
+    static IfMusicResBean parseResultIfMusicResBean(String json) {
         IfMusicResBean ifMusicResBean = new IfMusicResBean();
         try {
             Type type = new TypeToken<IfMusicResBean>() {
@@ -299,7 +301,7 @@ public class JsonParser {
         return ifMusicResBean;
     }
 
-     public    static TianJokeBean parseResultTianJokeBean(String json) {
+    public static TianJokeBean parseResultTianJokeBean(String json) {
         TianJokeBean tianJokeBean = new TianJokeBean();
         try {
             Type type = new TypeToken<TianJokeBean>() {
@@ -325,7 +327,7 @@ public class JsonParser {
     }
 
 
-   public   static WebSearchBean parseResultWebSearchBean(String json) {
+    public static WebSearchBean parseResultWebSearchBean(String json) {
         WebSearchBean webSearchBean = new WebSearchBean();
         try {
             Type type = new TypeToken<WebSearchBean>() {
@@ -338,9 +340,7 @@ public class JsonParser {
     }
 
 
-
-
-    public   static HotspotRequest parseHotspotRequest(String json) {
+    public static HotspotRequest parseHotspotRequest(String json) {
         HotspotRequest hotspotRequest = new HotspotRequest();
         try {
             Type type = new TypeToken<HotspotRequest>() {
@@ -353,8 +353,7 @@ public class JsonParser {
     }
 
 
-
-    public   static TelephoneBean parseResultTelephoneBean(String json) {
+    public static TelephoneBean parseResultTelephoneBean(String json) {
         TelephoneBean telephoneBean = new TelephoneBean();
         try {
             Type type = new TypeToken<TelephoneBean>() {
@@ -367,7 +366,7 @@ public class JsonParser {
     }
 
 
-    public   static FaceserviceBean parseResultFaceserviceBean(String json) {
+    public static FaceserviceBean parseResultFaceserviceBean(String json) {
         FaceserviceBean faceserviceBean = new FaceserviceBean();
         try {
             Type type = new TypeToken<FaceserviceBean>() {
@@ -380,7 +379,7 @@ public class JsonParser {
     }
 
 
-    public   static OpenCameraBean parseResultOpenCameraBean(String json) {
+    public static OpenCameraBean parseResultOpenCameraBean(String json) {
         OpenCameraBean openCameraBean = new OpenCameraBean();
         try {
             Type type = new TypeToken<OpenCameraBean>() {
@@ -393,8 +392,7 @@ public class JsonParser {
     }
 
 
-
-    public   static ShootBean parseResultShootBean(String json) {
+    public static ShootBean parseResultShootBean(String json) {
         ShootBean shootBean = new ShootBean();
         try {
             Type type = new TypeToken<ShootBean>() {
@@ -406,7 +404,7 @@ public class JsonParser {
         return shootBean;
     }
 
-    public   static OpenVideoBean parseResultOpenVideoBean(String json) {
+    public static OpenVideoBean parseResultOpenVideoBean(String json) {
         OpenVideoBean openVideoBean = new OpenVideoBean();
         try {
             Type type = new TypeToken<OpenVideoBean>() {
@@ -418,7 +416,7 @@ public class JsonParser {
         return openVideoBean;
     }
 
-    public   static VideoCammandBean parseResultVideoCammandBean(String json) {
+    public static VideoCammandBean parseResultVideoCammandBean(String json) {
         VideoCammandBean videoBean = new VideoCammandBean();
         try {
             Type type = new TypeToken<VideoCammandBean>() {
@@ -431,7 +429,7 @@ public class JsonParser {
     }
 
 
-    public   static IflyJokeBean parseResultIflyJokeBean(String json) {
+    public static IflyJokeBean parseResultIflyJokeBean(String json) {
         IflyJokeBean iflyJokeBean = new IflyJokeBean();
         try {
             Type type = new TypeToken<IflyJokeBean>() {
@@ -443,7 +441,7 @@ public class JsonParser {
         return iflyJokeBean;
     }
 
-    public   static DanceBean parseResultIflyDanceBean(String json) {
+    public static DanceBean parseResultIflyDanceBean(String json) {
         DanceBean danceBean = new DanceBean();
         try {
             Type type = new TypeToken<DanceBean>() {
@@ -455,7 +453,7 @@ public class JsonParser {
         return danceBean;
     }
 
-    public   static OpenimBean parseResultIflyOpenimBean(String json) {
+    public static OpenimBean parseResultIflyOpenimBean(String json) {
         OpenimBean openimBean = new OpenimBean();
         try {
             Type type = new TypeToken<OpenimBean>() {
@@ -466,6 +464,58 @@ public class JsonParser {
         }
         return openimBean;
     }
+
+    public static RadioBean parseResultRadioBean(String json) {
+        RadioBean radioBean = new RadioBean();
+        try {
+            Type type = new TypeToken<RadioBean>() {
+            }.getType();
+            radioBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return radioBean;
+    }
+
+    public static StockBean parseResultStockBean(String json) {
+        StockBean stockBean = new StockBean();
+        try {
+            Type type = new TypeToken<StockBean>() {
+            }.getType();
+            stockBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stockBean;
+    }
+
+    public static TranslationBean parseResultTranslationBean(String json) {
+        TranslationBean translationBean = new TranslationBean();
+        try {
+            Type type = new TypeToken<TranslationBean>() {
+            }.getType();
+            translationBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return translationBean;
+    }
+
+
+    public static HotelSearchBean parseResultHotelSearchBean(String json) {
+        HotelSearchBean hotelSearchBean = new HotelSearchBean();
+        try {
+            Type type = new TypeToken<HotelSearchBean>() {
+            }.getType();
+            hotelSearchBean = new Gson().fromJson(json, type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hotelSearchBean;
+    }
+
+
+
 
 
 }

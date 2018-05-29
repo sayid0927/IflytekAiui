@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
+import com.blankj.utilcode.utils.LocationUtils;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
@@ -20,6 +21,7 @@ import com.zhengpu.iflytekaiui.iflytekaction.DanceAction;
 import com.zhengpu.iflytekaiui.iflytekaction.DateTimeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.FaceserviceAction;
 import com.zhengpu.iflytekaiui.iflytekaction.FlightAction;
+import com.zhengpu.iflytekaiui.iflytekaction.HotelSearchAction;
 import com.zhengpu.iflytekaiui.iflytekaction.IflyJokeAction;
 import com.zhengpu.iflytekaiui.iflytekaction.MoreMusicXAction;
 import com.zhengpu.iflytekaiui.iflytekaction.NewsAction;
@@ -31,11 +33,14 @@ import com.zhengpu.iflytekaiui.iflytekaction.OpenimAction;
 import com.zhengpu.iflytekaiui.iflytekaction.PlayMusicxAction;
 import com.zhengpu.iflytekaiui.iflytekaction.PoetryAction;
 import com.zhengpu.iflytekaiui.iflytekaction.R4Action;
+import com.zhengpu.iflytekaiui.iflytekaction.RadioAction;
 import com.zhengpu.iflytekaiui.iflytekaction.RobotCommandAction;
 import com.zhengpu.iflytekaiui.iflytekaction.ShipingAction;
 import com.zhengpu.iflytekaiui.iflytekaction.ShootAction;
+import com.zhengpu.iflytekaiui.iflytekaction.StockAction;
 import com.zhengpu.iflytekaiui.iflytekaction.StoryAction;
 import com.zhengpu.iflytekaiui.iflytekaction.TelephoneAction;
+import com.zhengpu.iflytekaiui.iflytekaction.TranslationAction;
 import com.zhengpu.iflytekaiui.iflytekaction.VideoCammandAction;
 import com.zhengpu.iflytekaiui.iflytekaction.WeatherAction;
 import com.zhengpu.iflytekaiui.iflytekaction.WebSearchAction;
@@ -45,6 +50,7 @@ import com.zhengpu.iflytekaiui.iflytekbean.DanceBean;
 import com.zhengpu.iflytekaiui.iflytekbean.DatetimeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FaceserviceBean;
 import com.zhengpu.iflytekaiui.iflytekbean.FlightBean;
+import com.zhengpu.iflytekaiui.iflytekbean.HotelSearchBean;
 import com.zhengpu.iflytekaiui.iflytekbean.IflyJokeBean;
 import com.zhengpu.iflytekaiui.iflytekbean.MusicXBean;
 import com.zhengpu.iflytekaiui.iflytekbean.NewsBean;
@@ -54,10 +60,14 @@ import com.zhengpu.iflytekaiui.iflytekbean.OpenQABean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenVideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.OpenimBean;
 import com.zhengpu.iflytekaiui.iflytekbean.PoetryBean;
+import com.zhengpu.iflytekaiui.iflytekbean.R4Bean;
+import com.zhengpu.iflytekaiui.iflytekbean.RadioBean;
 import com.zhengpu.iflytekaiui.iflytekbean.RobotCommandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.ShootBean;
+import com.zhengpu.iflytekaiui.iflytekbean.StockBean;
 import com.zhengpu.iflytekaiui.iflytekbean.StoryBean;
 import com.zhengpu.iflytekaiui.iflytekbean.TelephoneBean;
+import com.zhengpu.iflytekaiui.iflytekbean.TranslationBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoBean;
 import com.zhengpu.iflytekaiui.iflytekbean.VideoCammandBean;
 import com.zhengpu.iflytekaiui.iflytekbean.WeatherBean;
@@ -72,6 +82,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
@@ -105,7 +116,6 @@ public class VoiceToWords {
         mIat = SpeechUnderstander.createUnderstander(context, mInitListener);
         //设置参数
         setParams();
-
     }
 
     public static synchronized VoiceToWords getInstance(Context context) {
@@ -125,6 +135,7 @@ public class VoiceToWords {
     /**
      * 初始化监听器
      */
+
     private static InitListener mInitListener = new InitListener() {
 
         @Override
@@ -138,7 +149,6 @@ public class VoiceToWords {
     /**
      * 开始语音听写
      */
-
     public void startRecognizer() {
         //清空听写结果
         mIatResults.clear();
@@ -181,8 +191,13 @@ public class VoiceToWords {
             // 设置语言区域
             mIat.setParameter(SpeechConstant.ACCENT, "mandarin");
         }
+
         //应用领域
-//        mIat.setParameter(SpeechConstant.DOMAIN, "iat");
+        mIat.setParameter(SpeechConstant.DOMAIN, "iat");
+//        mIat.setParameter("msc.lng","");
+
+        mIat.setParameter("domain", "fariat");
+        mIat.setParameter("aue", "speex-wb;10");
 
         // 传入音频源。
         //录音机的录音方式，默认为MIC(MediaRecorder.AudioSource.MIC)
@@ -198,6 +213,7 @@ public class VoiceToWords {
         mIat.setParameter(SpeechConstant.VAD_EOS, "1000");
         // 设置标点符号,设置为"0"返回结果无标点,设置为"1"返回结果有标点
         mIat.setParameter(SpeechConstant.ASR_PTT, "0");
+
         // 设置音频保存路径，保存音频格式支持pcm、wav，设置路径为sd卡请注意WRITE_EXTERNAL_STORAGE权限
         // 注：AUDIO_FORMAT参数语记需要更新版本才能生效
 //        mIat.setParameter(SpeechConstant.AUDIO_FORMAT, "wav");
@@ -239,7 +255,7 @@ public class VoiceToWords {
         @Override
         public void onResult(final UnderstanderResult result) {
             if (null != result) {
-                Logger.e("识别结果》"+result.getResultString());
+                Logger.e("识别结果》" + result.getResultString());
                 String text = result.getResultString();
                 JSONObject jsonObject2;
                 String service = "";
@@ -249,11 +265,14 @@ public class VoiceToWords {
                         service = jsonObject2.getString("service");
                     }
                     int rc = jsonObject2.getInt("rc");
-                    if (service != "" && rc != 4) {
+                    if (!Objects.equals(service, "") && rc != 4) {
                         judgeService(service, text);
                     } else {
-                        R4Action r4Action = new R4Action(context, text);
-                        r4Action.start();
+                        R4Bean r4Bean = JsonParser.parseResultR4Bean(text);
+                        if (!new PinyinFuzzyMatching(context, r4Bean.getText()).isMatching()) {
+                            R4Action r4Action = new R4Action(context, text);
+                            r4Action.start();
+                        }
                     }
                 } catch (JSONException e) {
                     R4Action r4Action = new R4Action(context, text);
@@ -276,7 +295,8 @@ public class VoiceToWords {
             // 此回调表示：检测到了语音的尾端点，已经进入识别过程，不再接受语音输入
             //showTip("结束说话");
 //            Logger.e("结束说话");
-//            Logger.e("识别结果 》SS>>  结束说话");
+            Logger.e("识别结果 》SS>>  结束说话");
+
             if (mIGetVoiceToWord != null) {
                 mIGetVoiceToWord.SpeechOver();
             }
@@ -296,7 +316,7 @@ public class VoiceToWords {
             // Tips：
             // 错误码：10118(您没有说话)，可能是录音机权限被禁，需要提示用户打开应用的录音权限。
             // 如果使用本地功能（语记）需要提示用户开启语记的录音权限。
-            Logger.e("识别结果 》SS>>"+error.getPlainDescription(true));
+            Logger.e("识别结果 》SS>>" + error.getPlainDescription(true));
 //             Logger.e(error.getPlainDescription(true));
             if ("您好像没有说话哦.(错误码:10118)".equals(error.getPlainDescription(true))) {
                 voiceToWords.startRecognizer();
@@ -315,7 +335,6 @@ public class VoiceToWords {
 //            		String sid = obj.getString(SpeechEvent.KEY_EVENT_SESSION_ID);
 //            		Logger.e("session id =" + sid);
 ////            	Log.d(TAG, "session id =" + sid);
-
 //            	}
         }
     };
@@ -490,6 +509,7 @@ public class VoiceToWords {
                         ShipingAction shipingAction = new ShipingAction(service, videoBean, context, text);
                         shipingAction.start();
                     }
+
                     break;
 
                 case AppController.WEATHER:   //  天气情况的查询。
@@ -548,6 +568,38 @@ public class VoiceToWords {
 
                     break;
 
+                case AppController.RADIO:  //广播电台
+
+                    RadioBean radioBean = JsonParser.parseResultRadioBean(text);
+                    RadioAction radioAction = new RadioAction(service, radioBean, text, context);
+                    radioAction.start();
+
+                    break;
+
+                case AppController.STOCK:  // 股票
+
+                    StockBean stockBean = JsonParser.parseResultStockBean(text);
+                    StockAction stockAction = new StockAction(service, stockBean, text, context);
+                    stockAction.start();
+
+                    break;
+
+                case AppController.TRANSLATION:  // 翻译
+
+                    new TranslationAction(service, JsonParser.parseResultTranslationBean(text), text, context).start();
+                    break;
+
+                case AppController.DRAMA:  // 戏曲
+
+                    break;
+
+
+                case AppController.HOTELSEARCH:  // 酒店搜索
+
+                    new HotelSearchAction(service, JsonParser.parseResultHotelSearchBean(text), text, context).start();
+
+                    break;
+
 //                case "OPENAPPTEST.music_demo": {  //   艺人跟歌曲 搜索和播放
 //                    CustomMusicBean customMusicBean = JsonParser.parseResultCustomMusicBean(text);
 //                    if (customMusicBean != null && customMusicBean.getSemantic().size() != 0 && customMusicBean.getSemantic().get(0).getSlots().size() != 0) {
@@ -565,4 +617,5 @@ public class VoiceToWords {
             }
         }
     }
+
 }

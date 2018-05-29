@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -178,16 +179,15 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
     @Override
     public void initView() {
 
-        try {
-            Intent intent = new Intent();
-            ComponentName componentName = new ComponentName("com.zhengpu.iflytekaiui",
-                    "com.zhengpu.iflytekaiui.service.SpeechRecognizerService");
-            intent.setComponent(componentName);
-            startService(intent);
-
-        } catch (Exception e) {
-            e.toString();
-        }
+//        try {
+//            Intent intent = new Intent();
+//            ComponentName componentName = new ComponentName("com.zhengpu.iflytekaiui",
+//                    "com.zhengpu.iflytekaiui.service.SpeechRecognizerService");
+//            intent.setComponent(componentName);
+//            startService(intent);
+//        } catch (Exception e) {
+//            e.toString();
+//        }
 
         startService(new Intent(this, StartCommandService.class));
 
@@ -226,7 +226,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 //            map.put(DATA, DesBase64Util.encryptDES(json.toString(), DES_KEY));
 //        }catch (Exception e ){
 //            e.toString();
-//        }
+//       ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd }
 //        mPresenter.Apk_Update(map);
 
     }
@@ -498,6 +498,16 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
                 }
                 break;
 
+
+            case "OPENAPPTEST.RobotCommandPinYin":  // 机器人指令
+
+
+                robotCommandRequest = new RobotCommandRequest();
+                robotCommandRequest.setText(Message);
+                mData.add(robotCommandRequest);
+                UmengUtil.onEvent("OPENAPPTEST.RobotCommandPinYin");
+                break;
+
             case "showLowVoice_text":  //机器人 去休息
 
                 robotCommandRequest = new RobotCommandRequest();
@@ -667,25 +677,5 @@ public class MainActivity extends BaseActivity implements MainContract.View, Tal
 
         }
     };
-
-//
-//    @Override
-//    public void Apk_Update_Info(AppUpdateModel appUpdateModel) {
-//        int versioncode = Integer.parseInt(appUpdateModel.getVersioncode());
-//        if (AppUtils.getAppVersionCode(this)!= versioncode) {
-//            //升级App
-//          mPresenter.Apk_Update_Path(appUpdateModel.getApk_download_path());
-//        }
-//    }
-//
-//    @Override
-//    public void Apk_Update_Path(File file) {
-//        Uri uri = Uri.fromFile(file);
-//        Intent install = new Intent(Intent.ACTION_VIEW);
-//        install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        install.setDataAndType(uri, "application/vnd.android.package-archive");
-//        this.startActivity(install);
-//    }
-
 
 }

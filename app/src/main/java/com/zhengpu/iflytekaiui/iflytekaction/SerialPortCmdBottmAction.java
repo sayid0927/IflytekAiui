@@ -10,6 +10,7 @@ import com.zhengpu.iflytekaiui.base.AppController;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.PortData;
 import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 import com.zhengpu.iflytekaiui.utils.PreferUtil;
+import com.zhengpu.iflytekaiui.utils.ValueUtil;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -25,91 +26,56 @@ public class SerialPortCmdBottmAction {
     private String[] strData;
 
     public SerialPortCmdBottmAction(Context context, byte[] bytes, String[] strData) {
+
         this.context = context;
         this.bytes = bytes;
         this.strData = strData;
+
     }
 
     public void start() {
-
-//   未充电:bit0=0,bit1=0
-//   充电中:bit0=1,bit1=0
-//   充满:bit0=0,bit1=1
-
         String service = "";
         String message = "";
-        int high4bitsVal = 0;
-
-        if (bytes.length >= 12) {
-            byte[] bit = getBooleanArray(bytes[12]);
-//            if (bit[7] == 0 && bit[6] == 0) {
-//                // 未充电
-//                service = "未充电";
-//            } else if(bit[7] == 1 && bit[6] == 1){
-//                // 未充电
-//                service = "未充电";
-
-            if (bit[7] == 1 && bit[6] == 0) {
-                //bit0 == 1  冲电中
-                service = "充电中";
-            } else if (bit[7] == 0 && bit[6] == 1) {
-                //bit1 == 1  // 充电完成
-                service = "充电完成";
-            }else {
-                service = "未充电";
-            }
-
-            high4bitsVal = (bytes[12] & 0xF0) >> 4;
-            switch (high4bitsVal) {
-                case 0:
-                    message = "0%";
+        int levi = 0;
+        if (bytes.length >= 9) {
+            switch (strData[8]) {
+                case "01":
+                    service = "充电中";
                     break;
-                case 1:
-                    message = "20%";
+                case "10":
+                    service = "充电完成";
                     break;
-                case 2:
-                    message = "40%";
-                    break;
-                case 3:
-                    message = "60%";
-                    break;
-                case 4:
-                    message = "80%";
-                    break;
-                case 5:
-                    message = "100%";
+                default:
+                    service = "未充电";
                     break;
             }
+            levi = ValueUtil.getInstance().hexToDecimal(strData[9]);
+            message = String.valueOf(levi + "%");
+//            com.orhanobut.logger.Logger.e("冲电  service>>   " + service);
+//            com.orhanobut.logger.Logger.e("冲电  电量  >>   " + message);
         }
-
-//        com.orhanobut.logger.Logger.e("冲电  service>>   "+ service);
-//        com.orhanobut.logger.Logger.e("冲电  电量  >>   "+ String.valueOf(high4bitsVal) + "    >>"+message );
-
         if (PreferUtil.getInstance().getElectricity() == 1) {
             PreferUtil.getInstance().setElectricity(0);
             String lile;
-            if (high4bitsVal <= 1) {
+            if (levi <= 20) {
                 lile = "多多电量不够了，多多得补充电量了";
             } else {
                 lile = "当前剩余电量" + message;
             }
             SpeechRecognizerService.startSpeech(AppController.OPENAPPTEST_ROBOTCOMMAND, lile, lile);
         }
-
-        SpeechRecognizerService.sendHermesMessage(service,message);
-
-        PortData   portData = new PortData();
+        SpeechRecognizerService.sendHermesMessage(service, message);
+        PortData portData = new PortData();
         portData.setBatteryState(service);
         portData.setBatteryLevel(message);
         savePortFileData(portData);
 
     }
 
-
-    public static int byteToInt(byte b) {
-        //Java 总是把 byte 当做有符处理；我们可以通过将其和 0xFF 进行二进制与得到它的无符值
-        return b & 0xFF;
-    }
+//    public static int byteToInt(byte b) {
+//        //Java 总是把 byte 当做有符处理；我们可以通过将其和 0xFF 进行二进制与得到它的无符值
+//        return b & 0xFF;
+//    }
 
     /**
      * 将byte转换为一个长度为8的byte数组，数组每个值代表bit
@@ -125,14 +91,14 @@ public class SerialPortCmdBottmAction {
     }
 
 
-    private  void savePortFileData(PortData portData){
+    private void savePortFileData(PortData portData) {
         String foldName = "ZPUSER";
         String fileName = "portData";
-        String filePath = Environment.getExternalStorageDirectory()+"/"+
-                foldName +"/"+fileName;
-        boolean  createSuccess = FileUtils.createFileByDeleteOldFile(filePath);
-        if(createSuccess){
-           FileUtils.writeFileFromString(filePath,  PortData.toJsonStr(portData), false);
+        String filePath = Environment.getExternalStorageDirectory() + "/" +
+                foldName + "/" + fileName;
+        boolean createSuccess = FileUtils.createFileByDeleteOldFile(filePath);
+        if (createSuccess) {
+            FileUtils.writeFileFromString(filePath, PortData.toJsonStr(portData), false);
         }
     }
 }

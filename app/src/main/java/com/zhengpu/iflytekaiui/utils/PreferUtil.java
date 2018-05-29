@@ -24,12 +24,14 @@ public final class PreferUtil {
     private static final String PLAY_MUSIC_NAME = "play_music_name";
     private static final String PLAY_VIDEO_NAME = "play_video_name";
     private static final String PLAY_STORY_URL = "play_story_url";
+    private static final String PLAY_RADIO_URL = "play_radio_url";
+
     private static final String R4_SPACE_TIME = "r4_space_time";
     private static final String R4_SPACE_COUNT = "r4_space_count";
     private static final String SPEECH_PARAMS = "speech_params";
     private static final String BODY_CHECK = "body_check";
     private static final String FACE_CHECK = "face_check";
-
+    private static final String BODY_CHECK_MODE = "body_check_mode";
 
 
 
@@ -63,7 +65,7 @@ public final class PreferUtil {
 
     private static final String HUMIDITY= "humidity";
 
-
+    private static final String IS_BODY_INFRARED= "IS_BODY_INFRARED";
 
 
 
@@ -123,6 +125,24 @@ public final class PreferUtil {
     public String getPlayStoryUrl() {
         return getString(PLAY_STORY_URL, "");
     }
+
+
+
+    public void setPlayRadioUrl(String flag) {
+        putString(PLAY_RADIO_URL, flag);
+    }
+
+    public String getPlayRadioUrl() {
+        return getString(PLAY_RADIO_URL, "");
+    }
+
+
+
+
+
+
+
+
 
     public void setR4SpaceTime(long flag) {
         putLong(R4_SPACE_TIME, flag);
@@ -237,6 +257,27 @@ public final class PreferUtil {
     public boolean getbodyCheck() {
         return getBoolean(BODY_CHECK, false);
     }
+
+    public void setbodyCheckMode(int flag) {
+        putInt(BODY_CHECK_MODE, flag);
+    }
+
+    public int getbodyCheckMode() {
+        return getInt(BODY_CHECK_MODE, 0);
+    }
+
+
+    public void setisbodyInfrared(boolean flag) {
+        putBoolean(IS_BODY_INFRARED, flag);
+    }
+
+    public boolean getisbodyInfrared() {
+        return getBoolean(IS_BODY_INFRARED, true);
+    }
+
+
+
+
 
 
     public void setfaceCheck(boolean flag) {

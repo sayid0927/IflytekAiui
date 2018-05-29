@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="Head_PinYin">
+        <item>tao</item>
+        <item>tou</item>
+        <item>dou</item>
+        <item> dao</item>
+    </string-array>
+
+    <string-array name="Right_PinYin">
+        <item>you</item>
+        <item>yong</item>
+    </string-array>
+
+    <string-array name="Left_PinYin">
+        <item>zhuo</item>
+        <item>zuo</item>
+        <item>chuo</item>
+        <item>cuo</item>
+        <item>zhe</item>
+        <item>ze</item>
+    </string-array>
+
+    <string-array name="zhuang_PinYin">
+        <item>zhuan</item>
+        <item>zhuang</item>
+        <item>zuan</item>
+        <item>cuan</item>
+        <item>chuan</item>
+    </string-array>
+
+</resources>

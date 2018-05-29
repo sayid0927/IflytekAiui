@@ -3,9 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IflytekAiui.iml" filepath="$PROJECT_DIR$/IflytekAiui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Javalib/Javalib.iml" filepath="$PROJECT_DIR$/Javalib/Javalib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app2/app2.iml" filepath="$PROJECT_DIR$/app2/app2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
+      <module fileurl="file://E:\192.168.35.241\ANDROID_APP\AIUI\IflytekAiui\lib\lib.iml" filepath="E:\192.168.35.241\ANDROID_APP\AIUI\IflytekAiui\lib\lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/watch/watch.iml" filepath="$PROJECT_DIR$/watch/watch.iml" />
     </modules>
   </component>

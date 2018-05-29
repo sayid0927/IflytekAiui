@@ -222,17 +222,6 @@ public class DeviceUtils {
         }
     }
 
-
-
-    public static Intent IntentcreateExplicitFromImplicitIntent() {
-
-        ComponentName component = new ComponentName("com.zeunpro.login", "com.zeunpro.sevice.FaceRecognitionService");
-        Intent explicitIntent = new Intent();
-        explicitIntent.setComponent(component);
-        return explicitIntent;
-
-    }
-
 }
 
 

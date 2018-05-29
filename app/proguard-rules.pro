@@ -306,6 +306,15 @@ public static java.lang.String TABLENAME;
 -dontwarn com.xiaofei.library.hermeseventbus.**
 
 
+-keep class com.hp.hpl.sparta.xpath.**{*;}
+-dontwarn com.hp.hpl.sparta.xpath.**
+
+-keep class demo.Pinyin4jAppletDemo.**{*;}
+-dontwarn demo.Pinyin4jAppletDemo.**
+
+-keep class net.sourceforge.pinyin4j.**{*;}
+-dontwarn net.sourceforge.pinyin4j.**
+
 
 # ProGuard configurations for umeng  友盟
 

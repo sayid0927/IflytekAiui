@@ -35,11 +35,22 @@ public class SerialPortCmdBackgroundAction {
     }
 
     public void start() {
+//        Logger.e(" 红外 >>>    " + strData[5]);
 
-        if (PreferUtil.getInstance().getbodyCheck())
+        if(PreferUtil.getInstance().getbodyCheckMode()==0){
+            bodyinfrareds(bytes[5]);
+        }else {
             bodyinfrared(bytes[5]);
-        bodyTouch(bytes[3]);
+        }
 
+//        if (PreferUtil.getInstance().getbodyCheck()) {
+//            bodyinfrared(bytes[5]);
+//        }
+//        else  if(){
+//            bodyinfrareds(bytes[5]);
+//        }
+
+        bodyTouch(bytes[3]);
     }
 
     private void bodyTouch(byte data) {
@@ -72,22 +83,28 @@ public class SerialPortCmdBackgroundAction {
         }
     }
 
-    private void bodyinfrared(byte data) {
-        Logger.e("红外》》》    " + strData[5]);
-        if (strData[5].equals("01")) {
-            Logger.e("红外 >>人体红外");
-            Logger.e("红外>>infraredTime >> " + String.valueOf(infraredTime));
-            Logger.e("红外 >>TimeUtils.getNowTimeMills() >> " + String.valueOf(TimeUtils.getNowTimeMills()));
-            if (TimeUtils.getTimeSpanByNow(infraredTime, ConstUtils.TimeUnit.MIN) > 1) {
+    private void bodyinfrareds(byte data) {
+//        Logger.e(" 红外 >>>    " + strData[5]);
+        if (strData[5].equals("01") && PreferUtil.getInstance().getisbodyInfrared()) {
+//            Logger.e(" 红外  触发 >>>    " );
+            PreferUtil.getInstance().setisbodyInfrared(false);
+            SpeechRecognizerService.stratInfrared(context);
+            SpeechRecognizerService.pirV = 1;
+            PreferUtil.getInstance().setInfraredTime(TimeUtils.getNowTimeMills());
+        }
+    }
 
-                Logger.e("红外>>  人体红外触发>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    private void bodyinfrared(byte data) {
+//        Logger.e(" 红外 >>>    " + strData[5]);
+        if (strData[5].equals("01")) {
+            if (TimeUtils.getTimeSpanByNow(infraredTime, ConstUtils.TimeUnit.MIN) > 1) {
+//                Logger.e(" 红外  触发 >>>    " );
                 SpeechRecognizerService.stratInfrared(context);
                 SpeechRecognizerService.pirV = 1;
                 PreferUtil.getInstance().setInfraredTime(TimeUtils.getNowTimeMills());
 
             } else {
                 if (SpeechRecognizerService.isPir) {
-                    Logger.e("红外>>  人体红外触发>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
                     SpeechRecognizerService.isPir = false;
                     SpeechRecognizerService.stratInfrared(context);
                     PreferUtil.getInstance().setInfraredTime(TimeUtils.getNowTimeMills());

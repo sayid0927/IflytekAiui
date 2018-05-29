@@ -32,6 +32,7 @@
     <!-- 获取地理位置权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <!-- 获取设置闹钟权限 -->
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
@@ -44,7 +45,7 @@
     <!-- 往sdcard中读写数据的权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".base.BaseApplication"
@@ -75,13 +76,13 @@
             android:exported="true" />
 
         <!--<service-->
-        <!--android:name=".service.SpeechRecognizerService"-->
-        <!--android:exported="true"-->
-        <!--android:process=":SpeechRecognizerService">-->
+            <!--android:name=".service.SpeechRecognizerService"-->
+            <!--android:exported="true"-->
+            <!--android:process=":SpeechRecognizerService">-->
 
-        <!--<intent-filter>-->
-        <!--<action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />-->
-        <!--</intent-filter>-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.zhengpu.iflytekaiui.service.SpeechRecognizerService" />-->
+            <!--</intent-filter>-->
         <!--</service>-->
 
         <receiver
@@ -125,11 +126,22 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".MainActivity">
+
+        <receiver android:name=".broadcastReceiver.BootReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <!--注册开机广播地址-->
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </receiver>
+
+
+        <activity android:name=".MainActivity">
+        <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
 
         <provider

@@ -85,55 +85,62 @@ public class WordsToVoice {
         // 设置在线合成发音人
 
         // 需下载使用对应的离线合成SDK
-//        mTts.setParameter(ResourceUtil.TTS_RES_PATH, getResourcePath());
-        switch (PreferUtil.getInstance().getSpeechParams()) {
-            case 0:    //卡通
-                // 设置在线合成发音人
-                mTts.setParameter(SpeechConstant.VOICE_NAME, "nannan");
-                if (PreferUtil.getInstance().getSpeechSpeed() == 0)
-                    //设置合成语速
-                    mTts.setParameter(SpeechConstant.SPEED, "58");
-                else {
-                    mTts.setParameter(SpeechConstant.SPEED, String.valueOf(PreferUtil.getInstance().getSpeechSpeed()));
-                }
-                //设置合成音调
-                if (PreferUtil.getInstance().getSpeechPictch() == 0)
-                    mTts.setParameter(SpeechConstant.PITCH, "62");
-                else {
-                    mTts.setParameter(SpeechConstant.PITCH, String.valueOf(PreferUtil.getInstance().getSpeechPictch()));
-                }
-                break;
-            case 1:   // 女声音
-                mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");
-                if (PreferUtil.getInstance().getSpeechSpeed() == 0)
-                    //设置合成语速
-                    mTts.setParameter(SpeechConstant.SPEED, "50");
-                else {
-                    mTts.setParameter(SpeechConstant.SPEED, String.valueOf(PreferUtil.getInstance().getSpeechSpeed()));
-                }
-                if (PreferUtil.getInstance().getSpeechPictch() == 0)
-                    mTts.setParameter(SpeechConstant.PITCH, "40");
-                else {
-                    mTts.setParameter(SpeechConstant.PITCH, String.valueOf(PreferUtil.getInstance().getSpeechPictch()));
-                }
-                break;
-            case 2:   //  男声音
-                mTts.setParameter(SpeechConstant.VOICE_NAME, "vixf");
-                if (PreferUtil.getInstance().getSpeechSpeed() == 0)
-                    //设置合成语速
-                    mTts.setParameter(SpeechConstant.SPEED, "52");
-                else {
-                    mTts.setParameter(SpeechConstant.SPEED, String.valueOf(PreferUtil.getInstance().getSpeechSpeed()));
-                }
-                if (PreferUtil.getInstance().getSpeechPictch() == 0)
-                    mTts.setParameter(SpeechConstant.PITCH, "62");
-                else {
-                    mTts.setParameter(SpeechConstant.PITCH, String.valueOf(PreferUtil.getInstance().getSpeechPictch()));
-                }
-                break;
-        }
+//    mTts.setParameter(ResourceUtil.TTS_RES_PATH, getResourcePath());
+
+        mTts.setParameter(SpeechConstant.VOICE_NAME, "nannan");
+        mTts.setParameter(SpeechConstant.SPEED, "58");
+        mTts.setParameter(SpeechConstant.PITCH, "62");
+
+
+//        switch (PreferUtil.getInstance().getSpeechParams()) {
+//            case 0:    //卡通
+//                // 设置在线合成发音人
+//                mTts.setParameter(SpeechConstant.VOICE_NAME, "nannan");
+//                if (PreferUtil.getInstance().getSpeechSpeed() == 0)
+//                    //设置合成语速
+//                    mTts.setParameter(SpeechConstant.SPEED, "58");
+//                else {
+//                    mTts.setParameter(SpeechConstant.SPEED, String.valueOf(PreferUtil.getInstance().getSpeechSpeed()));
+//                }
+//                //设置合成音调
+//                if (PreferUtil.getInstance().getSpeechPictch() == 0)
+//                    mTts.setParameter(SpeechConstant.PITCH, "62");
+//                else {
+//                    mTts.setParameter(SpeechConstant.PITCH, String.valueOf(PreferUtil.getInstance().getSpeechPictch()));
+//                }
+//                break;
+//            case 1:   // 女声音
+//                mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");
+//                if (PreferUtil.getInstance().getSpeechSpeed() == 0)
+//                    //设置合成语速
+//                    mTts.setParameter(SpeechConstant.SPEED, "50");
+//                else {
+//                    mTts.setParameter(SpeechConstant.SPEED, String.valueOf(PreferUtil.getInstance().getSpeechSpeed()));
+//                }
+//                if (PreferUtil.getInstance().getSpeechPictch() == 0)
+//                    mTts.setParameter(SpeechConstant.PITCH, "40");
+//                else {
+//                    mTts.setParameter(SpeechConstant.PITCH, String.valueOf(PreferUtil.getInstance().getSpeechPictch()));
+//                }
+//                break;
+//            case 2:   //  男声音
+//                mTts.setParameter(SpeechConstant.VOICE_NAME, "vixf");
+//                if (PreferUtil.getInstance().getSpeechSpeed() == 0)
+//                    //设置合成语速
+//                    mTts.setParameter(SpeechConstant.SPEED, "52");
+//                else {
+//                    mTts.setParameter(SpeechConstant.SPEED, String.valueOf(PreferUtil.getInstance().getSpeechSpeed()));
+//                }
+//                if (PreferUtil.getInstance().getSpeechPictch() == 0)
+//                    mTts.setParameter(SpeechConstant.PITCH, "62");
+//                else {
+//                    mTts.setParameter(SpeechConstant.PITCH, String.valueOf(PreferUtil.getInstance().getSpeechPictch()));
+//                }
+//                break;
+//        }
 //        mTts.setParameter(SpeechConstant.SPEED, "50");
 //        mTts.setParameter(SpeechConstant.PITCH, "40");
+
         //设置合成音量
         mTts.setParameter(SpeechConstant.VOLUME, "75");
         //设置播放器音频流类型,参考系统AudioManager.STREAM_MUSIC
@@ -144,6 +151,7 @@ public class WordsToVoice {
         // 注：AUDIO_FORMAT参数语记需要更新版本才能生效
         mTts.setParameter(SpeechConstant.AUDIO_FORMAT, "wav");
         mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, context.getFilesDir().getAbsolutePath() + "/tts.wav");
+
     }
 
     //判断是否正在播放

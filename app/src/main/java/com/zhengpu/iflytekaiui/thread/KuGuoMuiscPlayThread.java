@@ -56,10 +56,7 @@ public class KuGuoMuiscPlayThread implements MediaPlayer.OnBufferingUpdateListen
     }
 
     public boolean isPlay() {
-        if(mediaPlayer!=null) {
-            return mediaPlayer.isPlaying();
-        }else
-            return  false;
+        return mediaPlayer != null && mediaPlayer.isPlaying();
     }
 
     // 停止

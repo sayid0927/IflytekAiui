@@ -1,6 +1,8 @@
 package com.zhengpu.iflytekaiui.SerialPort;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.blankj.utilcode.utils.LogUtils;
@@ -10,6 +12,9 @@ import com.kongqw.serialportlibrary.SerialPortManager;
 import com.kongqw.serialportlibrary.listener.OnOpenSerialPortListener;
 import com.kongqw.serialportlibrary.listener.OnSerialPortDataListener;
 import com.orhanobut.logger.Logger;
+import com.zhengpu.iflytekaiui.broadcastReceiver.ZpVoiceBroadCast;
+import com.zhengpu.iflytekaiui.iflytekaction.SerialPortUtilsAction;
+import com.zhengpu.iflytekaiui.service.SpeechRecognizerService;
 import com.zhengpu.iflytekaiui.utils.UmengUtil;
 import com.zhengpu.iflytekaiui.utils.ValueUtil;
 
@@ -32,7 +37,7 @@ public class SerialUtils implements OnOpenSerialPortListener {
     private  Device device;
 
 
-    public SerialUtils(Context context) {
+    public SerialUtils(final Context context) {
         this.context = context;
 
         mSerialPortManager = new SerialPortManager();
@@ -54,12 +59,16 @@ public class SerialUtils implements OnOpenSerialPortListener {
                        public void onDataReceived(byte[] bytes) {
 //                       Logger.e("onDataReceived  [ byte[] ]: " + Arrays.toString(bytes));
 //                       Logger.e( "onDataReceived [ String ]: " + new String(bytes));
-                           String value = ValueUtil.getInstance().bytesToHexStr(bytes);
-//                       LogUtils.e("接收成功>>>   ",value);
-                           UmengUtil.onEvent("SerialPort",value);
                            //  接收成功
-                           if(bytes!=null && bytes.length!=0 &&  serialPortListener!=null)
-                               serialPortListener.onDataReceivedSuccess(bytes);
+                           if(bytes!=null && bytes.length!=0 ){
+                               String value = ValueUtil.getInstance().bytesToHexStr(bytes);
+                               UmengUtil.onEvent("SerialPort",value);
+                               sendSerialPortDataBroadCast(bytes,value);
+                               String[] strBytes = value.split(" ");
+                               SerialPortUtilsAction serialUtils = new SerialPortUtilsAction(context, bytes, strBytes);
+                               serialUtils.start();
+                           }
+//                               serialPortListener.onDataReceivedSuccess(bytes);
                        }
                        @Override
                        public void onDataSent(byte[] bytes) {
@@ -79,7 +88,6 @@ public class SerialUtils implements OnOpenSerialPortListener {
     public  void setSerialPortListener(OpenSerialPortListener serialPortListener) {
         this.serialPortListener = serialPortListener;
     }
-
 
     public static synchronized SerialUtils getInstance(Context context) {
         if (serialUtils == null)
@@ -113,5 +121,15 @@ public class SerialUtils implements OnOpenSerialPortListener {
     public void onFail(File file, Status status) {
         if(serialPortListener!=null )
             serialPortListener.onOPenSerialFail();
+    }
+
+    private void sendSerialPortDataBroadCast(byte[] bytes, String value) {
+        Intent intent = new Intent("SerialPort_Data");
+        Bundle bundle = new Bundle();
+        bundle.putByteArray("bytesData",bytes);
+        bundle.putString("bytesValue",value);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        context.sendBroadcast(intent);
     }
 }

@@ -46,7 +46,7 @@ public class SerialPortUtilsAction {
                     }
                 }
 
-                switch (bytes[4]) {      // cmd值  设置(0x01)  查询(0x02)  心跳(0x03) 主动上报(0x04)  升级(0x05)  测试(0x06)
+                switch (bytes[4]) {// cmd值  设置(0x01)  查询(0x02)  心跳(0x03) 主动上报(0x04)  升级(0x05)  测试(0x06)
                     case 0x01:
                         break;
                     case 0x02:
@@ -55,7 +55,7 @@ public class SerialPortUtilsAction {
                             SerialPortCmdTemperatureAction serialPortCmdTemperatureAction = new SerialPortCmdTemperatureAction(context, dataByte, strData);
                             serialPortCmdTemperatureAction.start();
                         } else {
-                            serialPortCmdBottmAction = new SerialPortCmdBottmAction(context, dataByte, strData);
+                            serialPortCmdBottmAction = new SerialPortCmdBottmAction(context, bytes, strBytes);
                             serialPortCmdBottmAction.start();
                         }
                         break;
@@ -72,8 +72,8 @@ public class SerialPortUtilsAction {
                                 serialPortCmdHeadAction.start();
                                 break;
                             case 0x30:  //  上报底板状态
-                                serialPortCmdBottmAction = new SerialPortCmdBottmAction(context, dataByte, strData);
-                                serialPortCmdBottmAction.start();
+//                                serialPortCmdBottmAction = new SerialPortCmdBottmAction(context, dataByte, strData);
+//                                serialPortCmdBottmAction.start();
                                 break;
                         }
                         break;

@@ -23,10 +23,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("app.jks")
-            storePassword "000000"
-            keyAlias "app"
-            keyPassword "000000"
+//            storeFile file("app.jks")
+//            storePassword "000000"
+//            keyAlias "app"
+//            keyPassword "000000"
         }
         debug {
 //            storeFile file("app.jks")
@@ -38,12 +38,13 @@ android {
 
     buildTypes {
         release {
-            debuggable false
-            zipAlignEnabled true
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release //设置签名
+//            debuggable false
+//            zipAlignEnabled true
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release //设置签名
+            debuggable true
         }
         debug {
 //            debuggable true
@@ -79,5 +80,6 @@ dependencies {
     compile 'com.github.kongqw:AndroidSerialPort:1.0.1'
     implementation files('libs/Msc.jar')
     //    implementation files('libs/Sunflower.jar')
-//    implementation files('libs/AIUI.jar')
+    //    implementation files('libs/AIUI.jar')
+    implementation files('libs/pinyin4j-2.5.0.jar')
 }

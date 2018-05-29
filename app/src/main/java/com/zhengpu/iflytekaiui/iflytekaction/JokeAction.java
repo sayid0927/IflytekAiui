@@ -29,7 +29,7 @@ public class JokeAction {
     private Context context;
     private String service;
     private String strRequest;
-private  JokeBean jokeBean;
+    private JokeBean jokeBean;
 
     public JokeAction(String service, JokeBean jokeBean, String strRequest, Context context) {
 
@@ -74,13 +74,13 @@ private  JokeBean jokeBean;
 
                         SpeechRecognizerService.startSpeech(service, "请欣赏笑话" + tianJokeBean.getNewslist().get(0).getTitle() + tianJokeBean.getNewslist().get(0).getContent(), strRequest);
                     } else {
-                        R4Action r4Action = new R4Action(context,strRequest);
+                        R4Action r4Action = new R4Action(context, strRequest);
                         r4Action.start();
                     }
                 }
             });
-        }else {
-            R4Action r4Action = new R4Action(context,strRequest);
+        } else {
+            R4Action r4Action = new R4Action(context, strRequest);
             r4Action.start();
         }
     }

@@ -32,7 +32,7 @@ public class SerialPortCmdHeadAction {
     private String[] strData;
     private long TouchHeadTime;
     private int TouchHeadCount;
-    private  int count=0;
+    private int count = 0;
 
     private ScheduledFuture scheduledFuture;
 
@@ -42,6 +42,7 @@ public class SerialPortCmdHeadAction {
         this.strData = strData;
         this.TouchHeadTime = PreferUtil.getInstance().getTouchHeadTime(); // 上次的时间戳
         this.TouchHeadCount = PreferUtil.getInstance().getTouchHeadCount();
+
     }
 
     public void start() {
@@ -60,11 +61,11 @@ public class SerialPortCmdHeadAction {
         return new Runnable() {
             @Override
             public void run() {
-                if(count <4){
+                if (count < 4) {
                     SpeechRecognizerService.sendSerialMessageBytes(new byte[]{0x5A, 0x50, 0x05, 0x02, 0x07, 0x01, 0x00,
                             0x00, 0x0A, 0x0D, 0x0A});
                     count++;
-                }else {
+                } else {
                     scheduledFuture.cancel(false);
                 }
             }
@@ -74,7 +75,7 @@ public class SerialPortCmdHeadAction {
     private void touTouch(byte data) {
 
         if (ValueUtil.isBitnTrue(data, 0) || ValueUtil.isBitnTrue(data, 1) || ValueUtil.isBitnTrue(data, 2)) {
-            if (!SpeechRecognizerService.isIsSpeech() && SpeechRecognizerService.microPhone == 0 && !SpeechRecognizerService.isKuGuoMuiscPlay() && !SpeechRecognizerService.FaceServiceState && !SpeechRecognizerService.isDance ) {
+            if (!SpeechRecognizerService.isIsSpeech() && SpeechRecognizerService.microPhone == 0 && !SpeechRecognizerService.isKuGuoMuiscPlay() && !SpeechRecognizerService.FaceServiceState && !SpeechRecognizerService.isDance) {
                 if (TimeUtils.getTimeSpanByNow(TouchHeadTime, ConstUtils.TimeUnit.MIN) < 5) {
                     switch (TouchHeadCount) {
                         case 0:
@@ -98,9 +99,7 @@ public class SerialPortCmdHeadAction {
                     SpeechRecognizerService.startSpeech(AppController.TouchHead, context.getResources().getString(R.string.Touch_Head_text_0), context.getResources().getString(R.string.Touch_Head_text_0));
                 }
             }
-            if(SpeechRecognizerService.isDance){
-                 stopDanceAction();
-            }
+            stopDanceAction();
         }
     }
 }

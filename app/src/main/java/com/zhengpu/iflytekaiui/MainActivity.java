@@ -11,12 +11,14 @@ import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.blankj.utilcode.utils.FileUtils;
 import com.blankj.utilcode.utils.RegexUtils;
 import com.orhanobut.logger.Logger;
 import com.zhengpu.iflytekaiui.base.BaseActivity;
 import com.zhengpu.iflytekaiui.iflytekbean.otherbean.PortData;
+import com.zhengpu.iflytekaiui.utils.ConvertPinyin;
 import com.zhengpu.iflytekaiui.utils.UmengUtil;
 
 import java.io.BufferedReader;
@@ -33,6 +35,8 @@ import java.sql.PreparedStatement;
 
 public class MainActivity extends BaseActivity {
 
+
+    private static final int WRITE_SETTINGS = 2;
 
     @Override
     public int getLayoutId() {
@@ -61,11 +65,9 @@ public class MainActivity extends BaseActivity {
         UmengUtil.onEvent("Test");
 //        Log.e("TAG",getDeviceInfo(this));
 
+
+
     }
-
-
-
-
 
     public static boolean checkPermission(Context context, String permission) {
         boolean result = false;
